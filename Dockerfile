@@ -33,8 +33,10 @@ RUN composer install \
 # Build frontend assets
 RUN npm ci && npm run build
 
-# Storage permissions
-RUN chmod -R 775 storage bootstrap/cache \
+# Strip Windows CRLF from shell script (safety net for Windows dev machines)
+# and set permissions
+RUN sed -i 's/\r$//' docker/start.sh \
+    && chmod -R 775 storage bootstrap/cache \
     && chmod +x docker/start.sh
 
 EXPOSE 10000
