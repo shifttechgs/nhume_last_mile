@@ -1,23 +1,21 @@
 FROM php:8.4-cli-alpine
 
 # System dependencies
+# Note: oniguruma-dev and sqlite-dev omitted — mbstring and pdo_sqlite
+# are already compiled into php:8.4-cli-alpine
 RUN apk add --no-cache \
     curl \
     libzip-dev \
-    oniguruma-dev \
-    sqlite-dev \
     nodejs \
     npm \
     zip \
     unzip
 
-# PHP extensions required by Laravel
-RUN docker-php-ext-install \
-    pdo_sqlite \
-    zip \
-    mbstring \
-    bcmath \
-    opcache
+# Only install extensions NOT already built into the base image.
+# pdo_sqlite, mbstring, openssl are compiled in. opcache is compiled in
+# but needs enabling. zip and bcmath must be installed.
+RUN docker-php-ext-install zip bcmath \
+    && docker-php-ext-enable opcache
 
 # Composer
 COPY --from=composer:2 /usr/bin/composer /usr/bin/composer
