@@ -1,8 +1,6 @@
 FROM php:8.4-cli-alpine
 
 # System dependencies
-# Note: oniguruma-dev and sqlite-dev omitted — mbstring and pdo_sqlite
-# are already compiled into php:8.4-cli-alpine
 RUN apk add --no-cache \
     curl \
     libzip-dev \
@@ -11,9 +9,7 @@ RUN apk add --no-cache \
     zip \
     unzip
 
-# Only install extensions NOT already built into the base image.
-# pdo_sqlite, mbstring, openssl are compiled in. opcache is compiled in
-# but needs enabling. zip and bcmath must be installed.
+# PHP extensions (only those NOT already compiled into php:8.4-cli-alpine)
 RUN docker-php-ext-install zip bcmath \
     && docker-php-ext-enable opcache
 
@@ -22,22 +18,32 @@ COPY --from=composer:2 /usr/bin/composer /usr/bin/composer
 
 WORKDIR /var/www/html
 
-# Copy project files
+# Copy project (excludes .env, vendor, node_modules — see .dockerignore)
 COPY . .
 
-# PHP dependencies
+# Set permissions before running artisan
+RUN chmod -R 775 storage bootstrap/cache \
+    && chmod +x docker/start.sh
+
+# Create a build-time .env so composer post-install scripts (package:discover)
+# can run. start.sh overwrites this with the real production config at runtime.
+RUN touch database/database.sqlite \
+    && cp .env.example .env \
+    && sed -i 's|^DB_CONNECTION=.*|DB_CONNECTION=sqlite|' .env \
+    && sed -i 's|^SESSION_DRIVER=.*|SESSION_DRIVER=file|' .env \
+    && sed -i 's|^CACHE_STORE=.*|CACHE_STORE=file|' .env \
+    && sed -i 's|^QUEUE_CONNECTION=.*|QUEUE_CONNECTION=sync|' .env \
+    && php artisan key:generate
+
+# PHP dependencies (scripts enabled — package:discover runs here)
 RUN composer install \
     --no-dev \
     --optimize-autoloader \
     --no-interaction \
     --prefer-dist
 
-# JS dependencies and compile assets
+# Build frontend assets
 RUN npm ci && npm run build
-
-# Storage permissions
-RUN chmod -R 775 storage bootstrap/cache \
-    && chmod +x docker/start.sh
 
 EXPOSE 10000
 
