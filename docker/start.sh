@@ -39,6 +39,9 @@ touch database/database.sqlite
 echo "==> Generating app key"
 php artisan key:generate --force
 
+echo "==> Discovering packages"
+php artisan package:discover --ansi
+
 echo "==> Running migrations and seeding"
 php artisan migrate:fresh --seed --force
 
