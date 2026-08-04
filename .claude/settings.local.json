@@ -1,0 +1,30 @@
+{
+  "permissions": {
+    "allow": [
+      "PowerShell(composer *)",
+      "PowerShell(Get-Command *)",
+      "PowerShell($env:PATH -split ';' | Where-Object { $_ -match 'php|xampp|laragon|wamp|herd' })",
+      "PowerShell(Test-Path *)",
+      "PowerShell(npm *)",
+      "PowerShell(winget install *)",
+      "PowerShell(winget search *)",
+      "PowerShell($env:PATH = [System.Environment]::GetEnvironmentVariable\\(\"PATH\", \"Machine\"\\) + \";\" + [System.Environment]::GetEnvironmentVariable\\(\"PATH\", \"User\"\\); php --version)",
+      "PowerShell($env:PATH = [System.Environment]::GetEnvironmentVariable\\(\"PATH\", \"Machine\"\\) + \";\" + [System.Environment]::GetEnvironmentVariable\\(\"PATH\", \"User\"\\); Invoke-WebRequest -Uri \"https://getcomposer.org/installer\" -OutFile \"$env:TEMP\\\\composer-setup.php\"; php \"$env:TEMP\\\\composer-setup.php\" --install-dir=\"C:\\\\ProgramData\\\\ComposerSetup\\\\bin\" --filename=composer; echo \"Exit: $LASTEXITCODE\")",
+      "PowerShell(New-Item *)",
+      "PowerShell($env:PATH = [System.Environment]::GetEnvironmentVariable\\(\"PATH\", \"Machine\"\\) + \";\" + [System.Environment]::GetEnvironmentVariable\\(\"PATH\", \"User\"\\); php -r \"echo php_ini_loaded_file\\(\\);\")",
+      "PowerShell(Copy-Item *)",
+      "PowerShell($env:PATH = [System.Environment]::GetEnvironmentVariable\\(\"PATH\", \"Machine\"\\) + \";\" + [System.Environment]::GetEnvironmentVariable\\(\"PATH\", \"User\"\\); php -m | Select-String \"openssl|curl|mbstring|pdo\")",
+      "PowerShell(Get-ChildItem *)",
+      "PowerShell(Set-Content *)",
+      "PowerShell($env:PATH = [System.Environment]::GetEnvironmentVariable\\(\"PATH\", \"Machine\"\\) + \";\" + [System.Environment]::GetEnvironmentVariable\\(\"PATH\", \"User\"\\); php -m 2>&1 | Select-String \"openssl|curl|mbstring|pdo|zip\" | Select-Object -First 10)",
+      "PowerShell($env:PATH = [System.Environment]::GetEnvironmentVariable\\(\"PATH\", \"Machine\"\\) + \";\" + [System.Environment]::GetEnvironmentVariable\\(\"PATH\", \"User\"\\); php --ini 2>&1)",
+      "PowerShell($env:PATH = [System.Environment]::GetEnvironmentVariable\\(\"PATH\", \"Machine\"\\) + \";\" + [System.Environment]::GetEnvironmentVariable\\(\"PATH\", \"User\"\\); php -m 2>&1 | Select-String \"^openssl$|^mbstring$|^PDO$|^pdo_sqlite$\")",
+      "PowerShell($env:PATH = [System.Environment]::GetEnvironmentVariable\\(\"PATH\", \"Machine\"\\) + \";\" + [System.Environment]::GetEnvironmentVariable\\(\"PATH\", \"User\"\\); php \"$env:TEMP\\\\composer-setup.php\" --install-dir=\"C:\\\\ProgramData\\\\ComposerSetup\\\\bin\" --filename=composer 2>&1)",
+      "PowerShell($env:PATH = [System.Environment]::GetEnvironmentVariable\\(\"PATH\", \"Machine\"\\) + \";\" + [System.Environment]::GetEnvironmentVariable\\(\"PATH\", \"User\"\\); Set-Location \"C:\\\\WCBS_Projects\\\\Experiments\\\\Claude\"; php C:\\\\ProgramData\\\\ComposerSetup\\\\bin\\\\composer create-project laravel/laravel nhume_laravel --prefer-dist 2>&1)",
+      "PowerShell($env:PATH = [System.Environment]::GetEnvironmentVariable\\(\"PATH\", \"Machine\"\\) + \";\" + [System.Environment]::GetEnvironmentVariable\\(\"PATH\", \"User\"\\); Set-Location \"C:\\\\WCBS_Projects\\\\Experiments\\\\Claude\\\\nhume\"; php artisan breeze:install blade --quiet 2>&1; Write-Host \"Breeze installed: $LASTEXITCODE\")",
+      "PowerShell($env:PATH = [System.Environment]::GetEnvironmentVariable\\(\"PATH\", \"Machine\"\\) + \";\" + [System.Environment]::GetEnvironmentVariable\\(\"PATH\", \"User\"\\); Set-Location \"C:\\\\WCBS_Projects\\\\Experiments\\\\Claude\\\\nhume\"; php C:\\\\ProgramData\\\\ComposerSetup\\\\bin\\\\composer require livewire/livewire 2>&1 | Select-Object -Last 8)",
+      "PowerShell(Set-Location \"C:\\\\WCBS_Projects\\\\Experiments\\\\Claude\\\\nhume\"; $dirs = @\\( \"app/Actions\", \"app/DTOs\", \"app/Enums\", \"app/Events\", \"app/Jobs\", \"app/Policies\", \"app/Repositories\", \"app/Services\", \"app/Traits\", \"app/ViewModels\", \"app/Livewire/Parcel\", \"app/Livewire/Journey\", \"app/Livewire/Transporter\", \"app/Livewire/Shared\", \"resources/views/layouts\", \"resources/views/components/landing\", \"resources/views/components/journeys\", \"resources/views/components/parcels\", \"resources/views/components/dashboard\", \"resources/views/pages\", \"resources/views/emails\", \"docs\" \\); foreach \\($d in $dirs\\) { New-Item -ItemType Directory -Force $d | Out-Null }; Write-Host \"Directories created\")",
+      "PowerShell(Set-Location \"C:\\\\WCBS_Projects\\\\Experiments\\\\Claude\\\\nhume\"; $emptyDirs = @\\( \"app/Actions\", \"app/DTOs\", \"app/Events\", \"app/Jobs\", \"app/Policies\", \"app/Repositories\", \"app/Services\", \"app/Traits\", \"app/ViewModels\", \"app/Livewire/Parcel\", \"app/Livewire/Journey\", \"app/Livewire/Transporter\", \"app/Livewire/Shared\", \"resources/views/components/landing\", \"resources/views/components/journeys\", \"resources/views/components/parcels\", \"resources/views/components/dashboard\", \"resources/views/pages\", \"resources/views/emails\" \\); foreach \\($d in $emptyDirs\\) { $keep = \"$d/.gitkeep\"; if \\(-not \\(Get-ChildItem $d -ErrorAction SilentlyContinue\\)\\) { New-Item -ItemType File -Force $keep | Out-Null } }; Write-Host \"Done\")"
+    ]
+  }
+}
