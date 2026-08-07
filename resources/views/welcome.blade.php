@@ -848,15 +848,21 @@ body { font-family: var(--font); color: var(--text); background: #fff; -webkit-f
     background: transparent;
     border-radius: 16px;
     border: 1px solid transparent;
-    transition: background 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
+    transition: top 0.35s ease, left 0.35s ease, right 0.35s ease,
+                border-radius 0.35s ease, background 0.35s ease,
+                box-shadow 0.35s ease, border-color 0.35s ease;
     pointer-events: all;
 }
 .nav-outer.is-scrolled {
-    background: rgba(255,255,255,0.92);
+    top: 0;
+    left: 0;
+    right: 0;
+    border-radius: 0;
+    background: rgba(255,255,255,0.95);
     backdrop-filter: blur(20px) saturate(180%);
     -webkit-backdrop-filter: blur(20px) saturate(180%);
     border-color: rgba(12,26,15,0.07);
-    box-shadow: 0 4px 24px rgba(28,56,41,0.07);
+    box-shadow: 0 2px 16px rgba(28,56,41,0.07);
 }
 .nav-bar {
     max-width: 1360px;
@@ -887,17 +893,16 @@ body { font-family: var(--font); color: var(--text); background: #fff; -webkit-f
 .logo-u {
     position: relative;
     display: inline-block;
+    color: var(--green);
 }
-.logo-u::after {
-    content: '';
+.logo-u::after { display: none; }
+.logo-u-icon {
     position: absolute;
-    bottom: -5px;
+    bottom: -11px;
     left: 50%;
     transform: translateX(-50%);
-    width: 5px;
-    height: 5px;
-    border-radius: 50%;
-    background: var(--green);
+    display: block;
+    pointer-events: none;
 }
 /* centered links group */
 .nav-center {
@@ -1947,7 +1952,7 @@ body { font-family: var(--font); color: var(--text); background: #fff; -webkit-f
 
         {{-- Logo (left) — Kose-style wordmark with green dot under the "u" --}}
         <a href="/" class="nav-logo" aria-label="Nhume home">
-            <span class="logo-word">Nh<span class="logo-u">u</span>me</span>
+            <span class="logo-word">Nh<span class="logo-u">u<svg class="logo-u-icon" width="9" height="12" viewBox="0 0 9 12" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M4.5 0C2 0 0 2 0 4.5C0 7.5 4.5 12 4.5 12C4.5 12 9 7.5 9 4.5C9 2 7 0 4.5 0Z" fill="var(--green)"/><circle cx="4.5" cy="4.5" r="1.8" fill="white"/></svg></span>me</span>
         </a>
 
         {{-- Centered links pill (desktop) --}}
@@ -2013,7 +2018,7 @@ body { font-family: var(--font); color: var(--text); background: #fff; -webkit-f
     </div>
 
     <div class="mx-auto px-6 sm:px-8" style="position:relative;z-index:2;max-width:1180px;flex:1;display:flex;flex-direction:column;width:100%;">
-        <div style="flex:1;display:flex;flex-direction:column;padding-top:clamp(112px,13vh,144px);padding-bottom:0;">
+        <div style="flex:1;display:flex;flex-direction:column;padding-top:clamp(180px,22vh,240px);padding-bottom:0;">
 
             {{-- ── Centered copy ── --}}
             <div class="reveal" style="max-width:1000px;margin:0 auto;text-align:center;">
@@ -3004,7 +3009,7 @@ body { font-family: var(--font); color: var(--text); background: #fff; -webkit-f
                     <div style="width:32px;height:32px;border-radius:8px;background:var(--green-mid);display:flex;align-items:center;justify-content:center;">
                         <svg width="15" height="15" fill="none" stroke="white" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M20 7l-8-4-8 4m16 0v10l-8 4m0-14L4 17m8 4V11"/></svg>
                     </div>
-                    <span style="font-family:'General Sans',var(--font),sans-serif;font-weight:800;color:#fff;font-size:20px;letter-spacing:-0.025em">Nhume</span>
+                    <span style="font-family:'General Sans',var(--font),sans-serif;font-weight:800;color:#fff;font-size:20px;letter-spacing:-0.025em;line-height:1">Nh<span class="logo-u" style="color:var(--green)">u<svg class="logo-u-icon" width="9" height="12" viewBox="0 0 9 12" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M4.5 0C2 0 0 2 0 4.5C0 7.5 4.5 12 4.5 12C4.5 12 9 7.5 9 4.5C9 2 7 0 4.5 0Z" fill="var(--green)"/><circle cx="4.5" cy="4.5" r="1.8" fill="white"/></svg></span>me</span>
                 </div>
                 <p style="font-family:var(--font);font-size:13.5px;color:rgba(255,255,255,0.28);line-height:1.7;margin-bottom:22px;max-width:210px">Moving parcels with drivers already in motion.</p>
                 <div style="display:flex;gap:8px;">
