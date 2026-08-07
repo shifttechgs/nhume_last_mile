@@ -684,6 +684,107 @@ body { font-family: var(--font); color: var(--text); background: #fff; -webkit-f
     .roles-section { margin: 0; }
 }
 
+/* ══════════════════════════════════════════
+   RESPONSIVE — section-level grids
+══════════════════════════════════════════ */
+
+/* Routes 3-card grid */
+.routes-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 18px;
+    margin-bottom: 52px;
+}
+@media (max-width: 900px) { .routes-grid { grid-template-columns: 1fr 1fr; } }
+@media (max-width: 580px) { .routes-grid { grid-template-columns: 1fr; } }
+
+/* Routes heading row */
+.routes-head {
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    gap: 32px;
+    flex-wrap: wrap;
+    margin-bottom: 52px;
+}
+@media (max-width: 700px) {
+    .routes-head { align-items: flex-start; flex-direction: column; gap: 16px; }
+}
+
+/* Testimonials top (heading + photo) */
+.testimonials-top {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 40px;
+    align-items: center;
+    margin-bottom: 64px;
+}
+@media (max-width: 768px) {
+    .testimonials-top { grid-template-columns: 1fr; }
+    .testimonials-top > div:last-child { display: none; } /* hide photo on mobile */
+}
+
+/* Testimonials 3-card grid */
+.testimonials-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+}
+@media (max-width: 900px) { .testimonials-grid { grid-template-columns: 1fr 1fr; } }
+@media (max-width: 580px) { .testimonials-grid { grid-template-columns: 1fr; } }
+
+/* FAQ two-column */
+.faq-layout {
+    display: grid;
+    grid-template-columns: 5fr 7fr;
+    gap: 80px;
+    align-items: start;
+    margin-bottom: 48px;
+}
+@media (max-width: 860px) {
+    .faq-layout { grid-template-columns: 1fr; gap: 36px; }
+    .faq-sticky  { position: static !important; }
+}
+
+/* Transporter section */
+.transporter-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    overflow: hidden;
+}
+@media (max-width: 768px) {
+    .transporter-grid { grid-template-columns: 1fr; }
+    .transporter-photo { min-height: 320px; }
+}
+
+/* CTA hero scene — hide on small screens */
+@media (max-width: 640px) {
+    .cta-scene { display: none; }
+}
+
+/* General mobile spacing */
+@media (max-width: 640px) {
+    :root { --section-y: 64px; }
+    .nav-outer { top: 10px !important; left: 8px !important; right: 8px !important; }
+}
+
+/* Mobile text adjustments */
+@media (max-width: 480px) {
+    .section-title  { font-size: clamp(26px, 7vw, 36px); }
+    .roles-heading  { font-size: clamp(26px, 7vw, 36px); }
+    .why-big        { font-size: clamp(38px, 10vw, 56px); }
+}
+
+/* Testimonials card border on dark bg */
+@media (max-width: 580px) {
+    .testimonials-grid > div { border-radius: 12px; }
+}
+
+/* FAQ bottom bar stack */
+@media (max-width: 560px) {
+    .faq-layout + div { flex-direction: column; align-items: flex-start; }
+}
+
 /* Journey card CTA — matches hero submit */
 .journey-book {
     display: flex;
@@ -2633,7 +2734,7 @@ body { font-family: var(--font); color: var(--text); background: #fff; -webkit-f
 {{-- ══════════════════════════════════════════════════
      FOR TRANSPORTERS
 ══════════════════════════════════════════════════ --}}
-<section id="transporters" style="background:var(--forest-deep);display:grid;grid-template-columns:1fr 1fr;overflow:hidden">
+<section id="transporters" class="transporter-grid" style="background:var(--forest-deep)">
 
     {{-- LEFT: text --}}
     <div class="reveal" style="padding:var(--section-y) clamp(28px,5vw,72px);display:flex;flex-direction:column;justify-content:center">
@@ -2665,7 +2766,7 @@ body { font-family: var(--font); color: var(--text); background: #fff; -webkit-f
     </div>
 
     {{-- RIGHT: full-bleed driver face photo --}}
-    <div class="reveal" style="position:relative;overflow:hidden;min-height:0">
+    <div class="reveal transporter-photo" style="position:relative;overflow:hidden;min-height:0">
         <img src="/images/driver-1.jpg" alt="Nhume driver Tendai"
              style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:15% 18%">
         {{-- subtle dark gradient on left edge to blend into section bg --}}
@@ -2692,7 +2793,7 @@ body { font-family: var(--font); color: var(--text); background: #fff; -webkit-f
     <div style="max-width:1120px;margin:0 auto;padding:0 clamp(20px,4vw,48px)">
 
         {{-- Heading row --}}
-        <div class="reveal" style="display:flex;align-items:flex-end;justify-content:space-between;gap:32px;flex-wrap:wrap;margin-bottom:52px">
+        <div class="reveal routes-head">
             <div>
                 <p class="eyebrow mb-4" style="display:inline-flex;align-items:center;gap:6px">
                     <svg width="13" height="13" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
@@ -2704,7 +2805,7 @@ body { font-family: var(--font); color: var(--text); background: #fff; -webkit-f
         </div>
 
         {{-- Route cards --}}
-        <div class="reveal" style="display:grid;grid-template-columns:repeat(3,1fr);gap:18px;margin-bottom:52px">
+        <div class="reveal routes-grid">
 
             {{-- Card 1: LIVE --}}
             <div style="background:#fff;border:1px solid #e5e7eb;border-radius:16px;padding:28px;display:flex;flex-direction:column">
@@ -2767,7 +2868,7 @@ body { font-family: var(--font); color: var(--text); background: #fff; -webkit-f
     <div style="max-width:1120px;margin:0 auto;padding:0 clamp(20px,4vw,48px)">
 
         {{-- TOP: heading left + photo right --}}
-        <div class="reveal" style="display:grid;grid-template-columns:1fr 1fr;gap:40px;align-items:center;margin-bottom:64px">
+        <div class="reveal testimonials-top">
             <div>
                 <p class="eyebrow" style="color:rgba(255,255,255,0.5);margin-bottom:16px;display:inline-flex;align-items:center;gap:7px">
                     <svg width="14" height="14" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0"/></svg>
@@ -2791,7 +2892,7 @@ body { font-family: var(--font); color: var(--text); background: #fff; -webkit-f
             ['Rudo K.',      null,                    false, 'Harare · SME owner',     'Consistent, affordable, and the drivers actually pick up when you call. Nothing else on this route compares.'],
         ];
         @endphp
-        <div class="reveal" style="display:grid;grid-template-columns:repeat(3,1fr);gap:20px">
+        <div class="reveal testimonials-grid">
             @foreach ($reviews as [$name, $img, $hasImg, $role, $quote])
             <div style="background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.09);border-radius:14px;padding:24px;display:flex;flex-direction:column;gap:16px">
                 {{-- name row --}}
@@ -2821,10 +2922,10 @@ body { font-family: var(--font); color: var(--text); background: #fff; -webkit-f
 <section id="faq" style="padding:var(--section-y) 0;background:var(--shade)">
     <div style="max-width:1120px;margin:0 auto;padding:0 clamp(20px,4vw,48px)">
 
-        <div class="reveal" style="display:grid;grid-template-columns:5fr 7fr;gap:80px;align-items:start;margin-bottom:48px">
+        <div class="reveal faq-layout">
 
             {{-- Left: sticky heading --}}
-            <div style="position:sticky;top:100px">
+            <div class="faq-sticky" style="position:sticky;top:100px">
                 <p style="font-family:var(--font);font-size:12px;font-weight:600;letter-spacing:0.06em;color:#6b7280;display:inline-flex;align-items:center;gap:7px;margin:0 0 20px">
                     <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><path stroke-linecap="round" d="M8.228 9c.549-1.165 2.03-2 3.772-2 2.21 0 4 1.343 4 3 0 1.4-1.278 2.575-3.006 2.907-.542.104-.994.54-.994 1.093m0 3h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
                     Need help?
