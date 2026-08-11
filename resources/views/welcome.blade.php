@@ -2103,7 +2103,7 @@ body { font-family: var(--font); color: var(--text); background: #fff; -webkit-f
                     <span class="h1-nowrap">Parcels, deliveries &amp; errands</span><br><span style="color:var(--green-mid)">moving with purpose.</span>
                 </h1>
 
-                <p style="font-family:var(--font);font-size:19px;color:#5f6560;line-height:1.6;margin:0 auto 34px;max-width:580px;">
+                <p style="font-family:var(--font);font-size:22px;color:#5f6560;line-height:1.6;margin:0 auto 34px;max-width:580px;">
                     Send intercity parcels, get same-day local deliveries, or have someone run an errand for you. One platform, real people, fair prices.
                 </p>
 
@@ -2121,10 +2121,10 @@ body { font-family: var(--font); color: var(--text); background: #fff; -webkit-f
 
                     {{-- Service context chips — not buttons, just "Available for X" context --}}
                     <div style="display:flex;align-items:center;gap:10px;flex-wrap:wrap;justify-content:center;">
-                        <span style="font-family:var(--font);font-size:12.5px;color:#8a9187;">Available for</span>
+                        <span style="font-family:var(--font);font-size:15px;color:#8a9187;">Available for</span>
                         @foreach(['Intercity Parcels','Local Delivery','Errands'] as $s)
-                            <span style="display:inline-flex;align-items:center;gap:5px;font-family:var(--font);font-size:12.5px;font-weight:500;color:var(--text-2);">
-                                <span style="width:5px;height:5px;border-radius:50%;background:var(--green);display:inline-block;"></span>
+                            <span style="display:inline-flex;align-items:center;gap:6px;font-family:var(--font);font-size:15px;font-weight:500;color:var(--text-2);">
+                                <span style="width:6px;height:6px;border-radius:50%;background:var(--green);display:inline-block;"></span>
                                 {{ $s }}
                             </span>
                         @endforeach
