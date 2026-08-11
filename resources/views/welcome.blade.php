@@ -2100,54 +2100,36 @@ body { font-family: var(--font); color: var(--text); background: #fff; -webkit-f
             {{-- ── Centered copy ── --}}
             <div class="reveal" style="max-width:1000px;margin:0 auto;text-align:center;">
                 <h1 style="font-family:var(--head);font-size:clamp(38px,5.6vw,68px);font-weight:600;letter-spacing:-0.03em;line-height:1.06;color:var(--forest);margin:0 0 22px;">
-                    <span class="h1-nowrap">Parcels, deliveries &amp; errands—</span><br><span style="color:var(--green-mid)">moving with purpose.</span>
+                    <span class="h1-nowrap">Parcels, deliveries &amp; errands</span><br><span style="color:var(--green-mid)">moving with purpose.</span>
                 </h1>
 
                 <p style="font-family:var(--font);font-size:19px;color:#5f6560;line-height:1.6;margin:0 auto 34px;max-width:580px;">
                     Send intercity parcels, get same-day local deliveries, or have someone run an errand for you. One platform, real people, fair prices.
                 </p>
 
-                {{-- Hero service picker ── --}}
+                {{-- Hero CTAs ── --}}
                 <div class="hero-cta-wrap">
-                    <div style="display:flex;gap:12px;flex-wrap:wrap;justify-content:center;margin-bottom:20px;">
-                        <a href="{{ route('register') }}" style="display:inline-flex;flex-direction:column;align-items:flex-start;gap:4px;background:#fff;border:1.5px solid var(--border);border-radius:14px;padding:16px 22px;text-decoration:none;transition:border-color 0.18s,box-shadow 0.18s;min-width:160px;" onmouseover="this.style.borderColor='var(--green)';this.style.boxShadow='0 0 0 3px rgba(107,198,48,0.12)'" onmouseout="this.style.borderColor='var(--border)';this.style.boxShadow='none'">
-                            <span style="width:32px;height:32px;border-radius:8px;background:var(--green-light);display:flex;align-items:center;justify-content:center;margin-bottom:6px;">
-                                <svg width="16" height="16" fill="none" stroke="var(--green-mid)" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 7l-8-4-8 4m16 0v10l-8 4m0-14L4 17m8 4V11"/></svg>
-                            </span>
-                            <span style="font-family:var(--head);font-size:13.5px;font-weight:700;color:var(--forest);">Intercity Parcel</span>
-                            <span style="font-family:var(--font);font-size:11.5px;color:var(--text-2);">Harare → Bulawayo &amp; beyond</span>
+                    <div class="hero-cta-btns">
+                        <a href="{{ route('register') }}" class="hero-cta-primary">
+                            Get Started
+                            <svg width="15" height="15" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"/></svg>
                         </a>
-                        <a href="{{ route('register') }}" style="display:inline-flex;flex-direction:column;align-items:flex-start;gap:4px;background:#fff;border:1.5px solid var(--border);border-radius:14px;padding:16px 22px;text-decoration:none;transition:border-color 0.18s,box-shadow 0.18s;min-width:160px;" onmouseover="this.style.borderColor='var(--green)';this.style.boxShadow='0 0 0 3px rgba(107,198,48,0.12)'" onmouseout="this.style.borderColor='var(--border)';this.style.boxShadow='none'">
-                            <span style="width:32px;height:32px;border-radius:8px;background:var(--green-light);display:flex;align-items:center;justify-content:center;margin-bottom:6px;">
-                                <svg width="16" height="16" fill="none" stroke="var(--green-mid)" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z"/></svg>
-                            </span>
-                            <span style="font-family:var(--head);font-size:13.5px;font-weight:700;color:var(--forest);">Local Delivery</span>
-                            <span style="font-family:var(--font);font-size:11.5px;color:var(--text-2);">Same-day, within your city</span>
-                        </a>
-                        <a href="{{ route('register') }}" style="display:inline-flex;flex-direction:column;align-items:flex-start;gap:4px;background:#fff;border:1.5px solid var(--border);border-radius:14px;padding:16px 22px;text-decoration:none;transition:border-color 0.18s,box-shadow 0.18s;min-width:160px;" onmouseover="this.style.borderColor='var(--green)';this.style.boxShadow='0 0 0 3px rgba(107,198,48,0.12)'" onmouseout="this.style.borderColor='var(--border)';this.style.boxShadow='none'">
-                            <span style="width:32px;height:32px;border-radius:8px;background:var(--green-light);display:flex;align-items:center;justify-content:center;margin-bottom:6px;">
-                                <svg width="16" height="16" fill="none" stroke="var(--green-mid)" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4"/></svg>
-                            </span>
-                            <span style="font-family:var(--head);font-size:13.5px;font-weight:700;color:var(--forest);">Run an Errand</span>
-                            <span style="font-family:var(--font);font-size:11.5px;color:var(--text-2);">We send someone on your behalf</span>
+                        <a href="{{ route('register') }}" class="hero-cta-secondary">
+                            Track a delivery
                         </a>
                     </div>
-                    <div class="hero-trust-chips">
-                        <span class="hero-chip">
-                            <svg width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 8h6m-5 0a3 3 0 110 6H9l3 3m-3-6h6m6 1a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
-                            Upfront fare
-                        </span>
-                        <span class="hero-chip-dot"></span>
-                        <span class="hero-chip">
-                            <svg width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"/></svg>
-                            Verified riders
-                        </span>
-                        <span class="hero-chip-dot"></span>
-                        <span class="hero-chip">
-                            <svg width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 9V7a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2m2 4h10a2 2 0 002-2v-6a2 2 0 00-2-2H9a2 2 0 00-2 2v6a2 2 0 002 2zm7-5a2 2 0 11-4 0 2 2 0 014 0z"/></svg>
-                            Cash + digital
-                        </span>
+
+                    {{-- Service context chips — not buttons, just "Available for X" context --}}
+                    <div style="display:flex;align-items:center;gap:10px;flex-wrap:wrap;justify-content:center;">
+                        <span style="font-family:var(--font);font-size:12.5px;color:#8a9187;">Available for</span>
+                        @foreach(['Intercity Parcels','Local Delivery','Errands'] as $s)
+                            <span style="display:inline-flex;align-items:center;gap:5px;font-family:var(--font);font-size:12.5px;font-weight:500;color:var(--text-2);">
+                                <span style="width:5px;height:5px;border-radius:50%;background:var(--green);display:inline-block;"></span>
+                                {{ $s }}
+                            </span>
+                        @endforeach
                     </div>
+
                 </div>
             </div>
 
