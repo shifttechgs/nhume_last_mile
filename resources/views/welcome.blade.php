@@ -3082,11 +3082,8 @@ body { font-family: var(--font); color: var(--text); background: #fff; -webkit-f
 
             {{-- Brand --}}
             <div>
-                <div style="display:flex;align-items:center;gap:10px;margin-bottom:14px;">
-                    <div style="width:32px;height:32px;border-radius:8px;background:var(--green-mid);display:flex;align-items:center;justify-content:center;">
-                        <svg width="15" height="15" fill="none" stroke="white" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M20 7l-8-4-8 4m16 0v10l-8 4m0-14L4 17m8 4V11"/></svg>
-                    </div>
-                    <span style="font-family:'General Sans',var(--font),sans-serif;font-weight:800;color:#fff;font-size:20px;letter-spacing:-0.025em;line-height:1">Nh<span class="logo-u" style="color:var(--green)">u<svg class="logo-u-icon" width="9" height="12" viewBox="0 0 9 12" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M4.5 0C2 0 0 2 0 4.5C0 7.5 4.5 12 4.5 12C4.5 12 9 7.5 9 4.5C9 2 7 0 4.5 0Z" fill="var(--green)"/><circle cx="4.5" cy="4.5" r="1.8" fill="white"/></svg></span>me</span>
+                <div style="margin-bottom:14px;">
+                    <img src="/images/nhume_logo_v2.png" alt="Nhume" style="height:46px;width:auto;filter:brightness(0) invert(1);">
                 </div>
                 <p style="font-family:var(--font);font-size:13.5px;color:rgba(255,255,255,0.28);line-height:1.7;margin-bottom:22px;max-width:210px">Moving parcels with drivers already in motion.</p>
                 <div style="display:flex;gap:8px;">
