@@ -981,30 +981,6 @@ body { font-family: var(--font); color: var(--text); background: #fff; -webkit-f
     flex-shrink: 0;
 }
 
-/* ── Wordmark logo (Kose-style) ── */
-.logo-word {
-    font-family: 'General Sans', var(--font), sans-serif;
-    font-size: 22px;
-    font-weight: 800;
-    color: var(--forest);
-    letter-spacing: -0.025em;
-    line-height: 1;
-    display: inline-block;
-}
-.logo-u {
-    position: relative;
-    display: inline-block;
-    color: var(--green);
-}
-.logo-u::after { display: none; }
-.logo-u-icon {
-    position: absolute;
-    bottom: -11px;
-    left: 50%;
-    transform: translateX(-50%);
-    display: block;
-    pointer-events: none;
-}
 /* centered links group */
 .nav-center {
     position: absolute;
@@ -2051,9 +2027,9 @@ body { font-family: var(--font); color: var(--text); background: #fff; -webkit-f
      class="nav-outer">
     <div class="nav-bar">
 
-        {{-- Logo (left) — Kose-style wordmark with green dot under the "u" --}}
+        {{-- Logo (left) --}}
         <a href="/" class="nav-logo" aria-label="Nhume home">
-            <span class="logo-word">Nh<span class="logo-u">u<svg class="logo-u-icon" width="9" height="12" viewBox="0 0 9 12" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M4.5 0C2 0 0 2 0 4.5C0 7.5 4.5 12 4.5 12C4.5 12 9 7.5 9 4.5C9 2 7 0 4.5 0Z" fill="var(--green)"/><circle cx="4.5" cy="4.5" r="1.8" fill="white"/></svg></span>me</span>
+            <img src="/images/nhume_logo_v2.png" alt="Nhume" style="height:50px;width:auto;">
         </a>
 
         {{-- Centered links pill (desktop) --}}
@@ -2673,7 +2649,7 @@ body { font-family: var(--font); color: var(--text); background: #fff; -webkit-f
             <div class="why-card why-c1">
                 <div>
                     <div class="why-logo-wrap">
-                        <span style="font-family:var(--head);font-size:19px;font-weight:800;color:var(--forest);letter-spacing:-0.04em">N</span>
+                        <img src="/images/nhume_brand.png" alt="Nhume" style="width:28px;height:28px;object-fit:contain;">
                     </div>
                     <p class="why-name">Nhume.</p>
                     <p class="why-desc">Parcels travel in vehicles already heading your way. No depots, no fixed schedules, no anonymous drivers.</p>
