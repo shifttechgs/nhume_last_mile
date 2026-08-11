@@ -2046,8 +2046,8 @@ body { font-family: var(--font); color: var(--text); background: #fff; -webkit-f
                 <a href="{{ url('/dashboard') }}" class="btn-nav-fill">Dashboard</a>
             @else
                 <a href="{{ route('login') }}"    class="nav-link">Sign in</a>
-                <a href="{{ route('register') }}" class="btn-nav-outline">Track Parcel</a>
-                <a href="{{ route('register') }}" class="btn-nav-fill">Send Parcel
+                <a href="{{ route('register') }}" class="btn-nav-outline">Track</a>
+                <a href="{{ route('register') }}" class="btn-nav-fill">Get Started
                     <svg width="15" height="15" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"/></svg>
                 </a>
             @endauth
@@ -2100,23 +2100,36 @@ body { font-family: var(--font); color: var(--text); background: #fff; -webkit-f
             {{-- ── Centered copy ── --}}
             <div class="reveal" style="max-width:1000px;margin:0 auto;text-align:center;">
                 <h1 style="font-family:var(--head);font-size:clamp(38px,5.6vw,68px);font-weight:600;letter-spacing:-0.03em;line-height:1.06;color:var(--forest);margin:0 0 22px;">
-                    <span class="h1-nowrap">Move parcels with drivers</span><br><span style="color:var(--green-mid)">already in motion.</span>
+                    <span class="h1-nowrap">Parcels, deliveries &amp; errands—</span><br><span style="color:var(--green-mid)">moving with purpose.</span>
                 </h1>
 
-                <p style="font-family:var(--font);font-size:19px;color:#5f6560;line-height:1.6;margin:0 auto 34px;max-width:560px;">
-                    Someone is already driving to your city. Book their space, track it live, and have it there today.
+                <p style="font-family:var(--font);font-size:19px;color:#5f6560;line-height:1.6;margin:0 auto 34px;max-width:580px;">
+                    Send intercity parcels, get same-day local deliveries, or have someone run an errand for you. One platform, real people, fair prices.
                 </p>
 
-                {{-- Hero CTAs ── --}}
+                {{-- Hero service picker ── --}}
                 <div class="hero-cta-wrap">
-                    <div class="hero-cta-btns">
-                        <a href="{{ route('register') }}" class="hero-cta-primary">
-                            <svg width="17" height="17" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 7l-8-4-8 4m16 0v10l-8 4m0-14L4 17m8 4V11"/></svg>
-                            Send a parcel
+                    <div style="display:flex;gap:12px;flex-wrap:wrap;justify-content:center;margin-bottom:20px;">
+                        <a href="{{ route('register') }}" style="display:inline-flex;flex-direction:column;align-items:flex-start;gap:4px;background:#fff;border:1.5px solid var(--border);border-radius:14px;padding:16px 22px;text-decoration:none;transition:border-color 0.18s,box-shadow 0.18s;min-width:160px;" onmouseover="this.style.borderColor='var(--green)';this.style.boxShadow='0 0 0 3px rgba(107,198,48,0.12)'" onmouseout="this.style.borderColor='var(--border)';this.style.boxShadow='none'">
+                            <span style="width:32px;height:32px;border-radius:8px;background:var(--green-light);display:flex;align-items:center;justify-content:center;margin-bottom:6px;">
+                                <svg width="16" height="16" fill="none" stroke="var(--green-mid)" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 7l-8-4-8 4m16 0v10l-8 4m0-14L4 17m8 4V11"/></svg>
+                            </span>
+                            <span style="font-family:var(--head);font-size:13.5px;font-weight:700;color:var(--forest);">Intercity Parcel</span>
+                            <span style="font-family:var(--font);font-size:11.5px;color:var(--text-2);">Harare → Bulawayo &amp; beyond</span>
                         </a>
-                        <a href="{{ route('register') }}" class="hero-cta-secondary">
-                            <svg width="17" height="17" fill="none" stroke="currentColor" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8" stroke-width="2"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-4.35-4.35"/></svg>
-                            Track parcel
+                        <a href="{{ route('register') }}" style="display:inline-flex;flex-direction:column;align-items:flex-start;gap:4px;background:#fff;border:1.5px solid var(--border);border-radius:14px;padding:16px 22px;text-decoration:none;transition:border-color 0.18s,box-shadow 0.18s;min-width:160px;" onmouseover="this.style.borderColor='var(--green)';this.style.boxShadow='0 0 0 3px rgba(107,198,48,0.12)'" onmouseout="this.style.borderColor='var(--border)';this.style.boxShadow='none'">
+                            <span style="width:32px;height:32px;border-radius:8px;background:var(--green-light);display:flex;align-items:center;justify-content:center;margin-bottom:6px;">
+                                <svg width="16" height="16" fill="none" stroke="var(--green-mid)" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z"/></svg>
+                            </span>
+                            <span style="font-family:var(--head);font-size:13.5px;font-weight:700;color:var(--forest);">Local Delivery</span>
+                            <span style="font-family:var(--font);font-size:11.5px;color:var(--text-2);">Same-day, within your city</span>
+                        </a>
+                        <a href="{{ route('register') }}" style="display:inline-flex;flex-direction:column;align-items:flex-start;gap:4px;background:#fff;border:1.5px solid var(--border);border-radius:14px;padding:16px 22px;text-decoration:none;transition:border-color 0.18s,box-shadow 0.18s;min-width:160px;" onmouseover="this.style.borderColor='var(--green)';this.style.boxShadow='0 0 0 3px rgba(107,198,48,0.12)'" onmouseout="this.style.borderColor='var(--border)';this.style.boxShadow='none'">
+                            <span style="width:32px;height:32px;border-radius:8px;background:var(--green-light);display:flex;align-items:center;justify-content:center;margin-bottom:6px;">
+                                <svg width="16" height="16" fill="none" stroke="var(--green-mid)" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4"/></svg>
+                            </span>
+                            <span style="font-family:var(--head);font-size:13.5px;font-weight:700;color:var(--forest);">Run an Errand</span>
+                            <span style="font-family:var(--font);font-size:11.5px;color:var(--text-2);">We send someone on your behalf</span>
                         </a>
                     </div>
                     <div class="hero-trust-chips">
@@ -2127,7 +2140,7 @@ body { font-family: var(--font); color: var(--text); background: #fff; -webkit-f
                         <span class="hero-chip-dot"></span>
                         <span class="hero-chip">
                             <svg width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"/></svg>
-                            Driver details
+                            Verified riders
                         </span>
                         <span class="hero-chip-dot"></span>
                         <span class="hero-chip">
@@ -2714,27 +2727,46 @@ body { font-family: var(--font); color: var(--text); background: #fff; -webkit-f
 
     {{-- LEFT: text --}}
     <div class="reveal" style="padding:var(--section-y) clamp(28px,5vw,72px);display:flex;flex-direction:column;justify-content:center">
-        <p class="eyebrow" style="color:var(--green);margin-bottom:18px">For transport operators</p>
+        <p class="eyebrow" style="color:var(--green);margin-bottom:18px">Drive, ride &amp; earn</p>
         <h2 style="font-family:var(--head);font-size:clamp(32px,4vw,52px);font-weight:700;letter-spacing:-0.03em;line-height:1.1;color:#fff;margin:0 0 26px">
-            You are already making the trip. Get paid for the space you are not using.
+            Got a vehicle? Turn every trip into income.
         </h2>
-        <ul style="list-style:none;padding:0;margin:0 0 36px;display:flex;flex-direction:column;gap:16px">
-            @foreach ([
-                'Earn on trips you are already making. No extra driving.',
-                'Set your own price and when you are available. No fixed hours.',
-                'We find the parcels. You focus on driving.',
-            ] as $pt)
-            <li style="display:flex;align-items:flex-start;gap:13px;font-family:var(--font);font-size:15px;line-height:1.65;color:rgba(255,255,255,0.75)">
-                <span style="width:20px;height:20px;border-radius:50%;background:rgba(107,198,48,0.15);display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:2px">
-                    <svg width="11" height="11" fill="none" stroke="var(--green)" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7"/></svg>
-                </span>
-                {{ $pt }}
-            </li>
-            @endforeach
-        </ul>
+
+        {{-- Two pathway cards --}}
+        <div style="display:flex;flex-direction:column;gap:14px;margin-bottom:36px;">
+
+            {{-- Intercity transporter --}}
+            <div style="background:rgba(255,255,255,0.055);border:1px solid rgba(255,255,255,0.09);border-radius:14px;padding:18px 20px;">
+                <div style="display:flex;align-items:center;gap:10px;margin-bottom:10px;">
+                    <span style="width:32px;height:32px;border-radius:8px;background:rgba(107,198,48,0.15);display:flex;align-items:center;justify-content:center;flex-shrink:0;">
+                        <svg width="15" height="15" fill="none" stroke="var(--green)" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7h12m0 0l-4-4m4 4l-4 4m0 6H4m0 0l4 4m-4-4l4-4"/></svg>
+                    </span>
+                    <span style="font-family:var(--head);font-size:14px;font-weight:700;color:#fff;">Intercity transporter</span>
+                    <span style="font-family:var(--font);font-size:10.5px;font-weight:600;color:var(--green);background:rgba(107,198,48,0.14);border-radius:9999px;padding:3px 9px;margin-left:auto;">Car · Van · Truck</span>
+                </div>
+                <p style="font-family:var(--font);font-size:13.5px;color:rgba(255,255,255,0.6);line-height:1.6;margin:0;">Already driving Harare–Bulawayo? Earn on the parcel space you would have left empty.</p>
+            </div>
+
+            {{-- Bike rider --}}
+            <div style="background:rgba(255,255,255,0.055);border:1px solid rgba(255,255,255,0.09);border-radius:14px;padding:18px 20px;">
+                <div style="display:flex;align-items:center;gap:10px;margin-bottom:10px;">
+                    <span style="width:32px;height:32px;border-radius:8px;background:rgba(107,198,48,0.15);display:flex;align-items:center;justify-content:center;flex-shrink:0;">
+                        <svg width="15" height="15" fill="none" stroke="var(--green)" viewBox="0 0 24 24"><circle cx="5" cy="18" r="3" stroke-width="2"/><circle cx="19" cy="18" r="3" stroke-width="2"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4l-1 6h6l-3 5M5 18l4-5h2"/></svg>
+                    </span>
+                    <span style="font-family:var(--head);font-size:14px;font-weight:700;color:#fff;">Local bike rider</span>
+                    <span style="font-family:var(--font);font-size:10.5px;font-weight:600;color:var(--amber);background:rgba(201,169,110,0.14);border-radius:9999px;padding:3px 9px;margin-left:auto;">Bicycle · Moto</span>
+                </div>
+                <p style="font-family:var(--font);font-size:13.5px;color:rgba(255,255,255,0.6);line-height:1.6;margin:0 0 8px;">Do local deliveries and errands within your city on your own schedule. No car needed.</p>
+                <p style="font-family:var(--font);font-size:12px;color:var(--green);margin:0;">
+                    <svg width="12" height="12" fill="none" stroke="currentColor" viewBox="0 0 24 24" style="display:inline;vertical-align:-2px;margin-right:4px;"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
+                    No bike? Nhume fleet bikes available for approved riders.
+                </p>
+            </div>
+        </div>
+
         <div>
             <a href="{{ route('register') }}" class="btn-primary">
-                Register as a transporter
+                Join as a driver or rider
                 <svg width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"/></svg>
             </a>
             <p style="font-family:var(--font);font-size:12px;color:rgba(255,255,255,0.4);margin-top:14px">Free to join. Commission only when you earn.</p>
