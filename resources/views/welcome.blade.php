@@ -2047,7 +2047,7 @@ body { font-family: var(--font); color: var(--text); background: #fff; -webkit-f
             @else
                 <a href="{{ route('login') }}"    class="nav-link">Sign in</a>
                 <a href="{{ route('register') }}" class="btn-nav-outline">Track</a>
-                <a href="{{ route('register') }}" class="btn-nav-fill">Get Started
+                <a href="{{ route('register') }}" class="btn-nav-fill">Send Parcel
                     <svg width="15" height="15" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"/></svg>
                 </a>
             @endauth
@@ -2111,11 +2111,12 @@ body { font-family: var(--font); color: var(--text); background: #fff; -webkit-f
                 <div class="hero-cta-wrap">
                     <div class="hero-cta-btns">
                         <a href="{{ route('register') }}" class="hero-cta-primary">
-                            Get Started
+                            Send Parcel
                             <svg width="15" height="15" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"/></svg>
                         </a>
                         <a href="{{ route('register') }}" class="hero-cta-secondary">
-                            Track a delivery
+                            <svg width="15" height="15" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
+                            Track a parcel
                         </a>
                     </div>
 
@@ -2488,7 +2489,7 @@ body { font-family: var(--font); color: var(--text); background: #fff; -webkit-f
                     <div class="hv-float" style="position:absolute;top:6%;left:4%;width:56%;overflow:hidden;border-radius:16px">
                         {{-- header --}}
                         <div style="padding:14px 17px 12px;border-bottom:1px solid #f0ece6;display:flex;align-items:center;justify-content:space-between">
-                            <span style="font-family:var(--head);font-size:14px;font-weight:700;color:var(--forest)">Send a parcel</span>
+                            <span style="font-family:var(--head);font-size:14px;font-weight:700;color:var(--forest)">Get Started</span>
                             <span style="font-family:var(--font);font-size:10px;font-weight:700;color:var(--green-mid);background:var(--green-light);border-radius:9999px;padding:3px 9px">60 sec</span>
                         </div>
                         {{-- from field --}}
@@ -3108,7 +3109,7 @@ body { font-family: var(--font); color: var(--text); background: #fff; -webkit-f
             </div>
 
             @foreach ([
-                ['Platform', ['How it works' => '#how-it-works', 'Send a parcel' => route('register'), 'Browse drivers' => '/journeys', 'For transporters' => '#transporters', 'Pricing' => '#']],
+                ['Platform', ['How it works' => '#how-it-works', 'Get Started' => route('register'), 'Browse drivers' => '/journeys', 'For transporters' => '#transporters', 'Pricing' => '#']],
                 ['Support',  ['FAQ' => '#faq', 'Contact us' => '/contact', 'Track a parcel' => '#', 'Report an issue' => '#', 'Safety' => '#']],
                 ['Company',  ['About Nhume' => '#', 'Blog' => '#', 'Careers' => '#', 'Become a partner' => '#', 'Press' => '#']],
             ] as [$heading, $links])
