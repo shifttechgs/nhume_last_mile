@@ -11,6 +11,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,400;14..32,500;14..32,600;14..32,700&display=swap" rel="stylesheet">
     <link href="https://api.fontshare.com/v2/css?f[]=general-sans@700,800&display=swap" rel="stylesheet">
 
+    @livewireStyles
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 
 <style>
@@ -422,5 +423,6 @@ body { font-family: var(--font); color: var(--text); background: var(--shade); -
         @livewire('parcel.create-order-wizard')
     </main>
 
+    @livewireScripts
 </body>
 </html>

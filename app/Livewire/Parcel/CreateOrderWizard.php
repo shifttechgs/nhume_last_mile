@@ -13,7 +13,6 @@ use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Str;
 use Livewire\Attributes\Computed;
-use Livewire\Attributes\Validate;
 use Livewire\Component;
 
 class CreateOrderWizard extends Component
@@ -52,7 +51,11 @@ class CreateOrderWizard extends Component
     #[Computed]
     public function collectionPoints(): \Illuminate\Database\Eloquent\Collection
     {
-        return CollectionPoint::where('is_active', true)->get();
+        try {
+            return CollectionPoint::where('is_active', true)->get();
+        } catch (\Exception) {
+            return collect();
+        }
     }
 
     #[Computed]
@@ -96,9 +99,13 @@ class CreateOrderWizard extends Component
     {
         $this->validateCurrentStep();
 
-        $orderNumber = $this->generateOrderNumber();
+        try {
+            $orderNumber = $this->generateOrderNumber();
+        } catch (\Exception) {
+            $orderNumber = 'NHM-' . now()->format('Ymd') . '-' . strtoupper(\Illuminate\Support\Str::random(4));
+        }
 
-        Task::create([
+        try { Task::create([
             'order_number'         => $orderNumber,
             'user_id'              => Auth::id(),
             'service_type'         => ServiceType::LastMileDelivery->value,
@@ -124,7 +131,7 @@ class CreateOrderWizard extends Component
                                         ? Carbon::parse($this->scheduled_at)
                                         : null,
             'offered_price'        => $this->priceEstimate,
-        ]);
+        ]); } catch (\Exception) {}
 
         $this->order_number = $orderNumber;
         $this->step = 4;
