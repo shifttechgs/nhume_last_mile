@@ -50,26 +50,24 @@ body { font-family: var(--font); color: var(--text); background: var(--shade); -
     flex: 1;
     display: flex;
     justify-content: center;
-    padding: 0 32px 0 32px;
+    padding: 40px 40px 80px;
 }
 
 /* ── Two-column layout ── */
 .wiz-layout {
     display: grid;
     grid-template-columns: 7fr 5fr;
-    gap: 0;
+    gap: 40px;
     width: 100%;
-    max-width: 1100px;
+    max-width: 1060px;
     align-items: start;
 }
 
-/* ── LEFT — scrolls with the page ── */
+/* ── LEFT ── */
 .wiz-left {
     display: flex;
     flex-direction: column;
-    gap: 0;
-    padding: 36px 36px 80px 0;
-    border-right: 1px solid var(--border);
+    min-width: 0;
 }
 
 /* Progress */
@@ -219,19 +217,12 @@ input:checked + .toggle-track .toggle-thumb { left: 19.5px; }
     padding-top: 6px; border-top: 1px solid var(--border);
 }
 
-/* ── RIGHT — fixed viewport height, scrolls internally ── */
+/* ── RIGHT — sticky, no height constraints, never clips ── */
 .wiz-right {
     position: sticky;
-    top: 62px;
-    height: calc(100vh - 62px);
-    overflow-y: auto;
-    padding: 36px 0 36px 36px;
-    scrollbar-width: thin;
-    scrollbar-color: #d1d5db transparent;
+    top: 80px;
+    min-width: 0;
 }
-.wiz-right::-webkit-scrollbar { width: 4px; }
-.wiz-right::-webkit-scrollbar-track { background: transparent; }
-.wiz-right::-webkit-scrollbar-thumb { background: #d1d5db; border-radius: 9999px; }
 .summary-card {
     background: #fff; border: 1px solid var(--border);
     border-radius: 18px; overflow: hidden;
@@ -240,9 +231,9 @@ input:checked + .toggle-track .toggle-thumb { left: 19.5px; }
 .summary-title {
     font-family: var(--head); font-size: 12px; font-weight: 700;
     color: var(--text-2); letter-spacing: 0.08em; text-transform: uppercase;
-    padding: 0 0 16px; border-bottom: 1px solid var(--border);
+    padding: 20px 22px 16px; border-bottom: 1px solid var(--border);
 }
-.summary-rows { padding: 16px 0; display: flex; flex-direction: column; gap: 12px; }
+.summary-rows { padding: 16px 22px; display: flex; flex-direction: column; gap: 12px; }
 .srow { display: flex; gap: 12px; align-items: baseline; }
 .skey { font-size: 12px; font-weight: 600; color: var(--text-2); width: 78px; flex-shrink: 0; }
 .sval { font-size: 13.5px; color: var(--text); line-height: 1.4; flex: 1; }
@@ -250,6 +241,7 @@ input:checked + .toggle-track .toggle-thumb { left: 19.5px; }
 
 /* Price breakdown */
 .summary-price {
+    margin: 0 22px;
     border-top: 1px solid var(--border);
     padding: 14px 0 0;
     display: flex; flex-direction: column; gap: 7px;
@@ -266,10 +258,10 @@ input:checked + .toggle-track .toggle-thumb { left: 19.5px; }
 }
 
 /* Summary CTA */
-.summary-card .btn-wiz-primary { margin: 16px 0 0; }
+.summary-card .btn-wiz-primary { margin: 16px 22px 0; width: calc(100% - 44px); }
 .summary-note {
     font-size: 11.5px; color: var(--text-2); text-align: center;
-    padding: 10px 0 4px;
+    padding: 10px 22px 20px;
 }
 
 /* Buttons */
@@ -342,10 +334,9 @@ input:checked + .toggle-track .toggle-thumb { left: 19.5px; }
 
 /* ── Mobile ── */
 @media (max-width: 768px) {
-    .wiz-layout { grid-template-columns: 1fr; gap: 0; }
-    .wiz-left { border-right: none; padding: 24px 16px 60px; }
-    .wiz-right { position: static; height: auto; order: -1; padding: 24px 16px 0; border-bottom: 1px solid var(--border); }
-    .send-main { padding: 0 0; }
+    .wiz-layout { grid-template-columns: 1fr; gap: 20px; }
+    .wiz-right { position: static; }
+    .send-main { padding: 24px 16px 60px; }
     .wiz-card-head, .wiz-card-body, .wiz-card-foot { padding-left: 20px; padding-right: 20px; }
     .field-row { flex-direction: column; }
     .wiz-confirm { padding: 40px 24px; }
