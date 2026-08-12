@@ -62,7 +62,7 @@
         @error('pickup_type')<p class="field-error">Please select how you are sending.</p>@enderror
 
         <div class="wizard-actions">
-            <button type="button" wire:click="nextStep" class="btn-wizard-primary" {{ !$pickup_type ? 'disabled' : '' }}>
+            <button type="button" wire:click="nextStep" class="btn-wizard-primary" @disabled(!$pickup_type)>
                 Continue
                 <svg width="15" height="15" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"/></svg>
             </button>
