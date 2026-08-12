@@ -2047,7 +2047,7 @@ body { font-family: var(--font); color: var(--text); background: #fff; -webkit-f
             @else
                 <a href="{{ route('login') }}"    class="nav-link">Sign in</a>
                 <a href="{{ route('register') }}" class="btn-nav-outline">Track</a>
-                <a href="{{ route('register') }}" class="btn-nav-fill">Send Parcel
+                <a href="{{ route('send') }}" class="btn-nav-fill">Send Parcel
                     <svg width="15" height="15" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"/></svg>
                 </a>
             @endauth
@@ -2074,7 +2074,7 @@ body { font-family: var(--font); color: var(--text); background: #fff; -webkit-f
                 <a href="{{ url('/dashboard') }}" class="btn-nav-fill" style="justify-content:center;">Dashboard</a>
             @else
                 <a href="{{ route('login') }}"    class="btn-nav-outline" style="justify-content:center;">Sign in</a>
-                <a href="{{ route('register') }}" class="btn-nav-fill"    style="justify-content:center;">Send Parcel</a>
+                <a href="{{ route('register') }}" class="btn-nav-fill"    style="justify-content:center;"><a href="{{ route('send') }}">Send Parcel</a>
             @endauth
         </div>
     </div>
@@ -2110,7 +2110,7 @@ body { font-family: var(--font); color: var(--text); background: #fff; -webkit-f
                 {{-- Hero CTAs ── --}}
                 <div class="hero-cta-wrap">
                     <div class="hero-cta-btns">
-                        <a href="{{ route('register') }}" class="hero-cta-primary">
+                        <a href="{{ route('send') }}" class="hero-cta-primary">
                             Send Parcel
                             <svg width="15" height="15" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"/></svg>
                         </a>
