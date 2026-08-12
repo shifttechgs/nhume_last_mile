@@ -48,16 +48,16 @@ body { font-family: var(--font); color: var(--text); background: var(--shade); -
 
 .send-main {
     flex: 1; display: flex; justify-content: center;
-    padding: 40px 24px 80px;
+    padding: 32px 32px 80px;
 }
 
 /* ── Two-column layout ── */
 .wiz-layout {
     display: grid;
-    grid-template-columns: minmax(0, 1fr) 340px;
-    gap: 28px;
+    grid-template-columns: 7fr 5fr;
+    gap: 32px;
     width: 100%;
-    max-width: 960px;
+    max-width: 1080px;
     align-items: start;
 }
 
@@ -212,7 +212,14 @@ input:checked + .toggle-track .toggle-thumb { left: 19.5px; }
 }
 
 /* ── RIGHT: sticky summary ── */
-.wiz-right { position: sticky; top: 90px; }
+.wiz-right {
+    position: sticky;
+    top: 24px;
+    max-height: calc(100vh - 48px);
+    overflow-y: auto;
+    scrollbar-width: none;
+}
+.wiz-right::-webkit-scrollbar { display: none; }
 .summary-card {
     background: #fff; border: 1px solid var(--border);
     border-radius: 18px; overflow: hidden;
