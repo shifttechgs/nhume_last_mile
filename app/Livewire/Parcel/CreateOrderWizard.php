@@ -87,14 +87,6 @@ class CreateOrderWizard extends Component
         $this->step = max(1, $this->step - 1);
     }
 
-    public function selectPickupType(string $type): void
-    {
-        $this->pickup_type = $type;
-        if ($type === PickupType::WalkIn->value) {
-            $this->pickup_address = '';
-        }
-    }
-
     public function placeOrder(): void
     {
         $this->validateCurrentStep();

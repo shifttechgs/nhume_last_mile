@@ -26,43 +26,31 @@
         <p class="wizard-sub">Choose how your parcel gets to us.</p>
 
         <div class="pickup-cards">
-            <button type="button"
-                wire:click="selectPickupType('walk_in')"
-                class="pickup-card {{ $pickup_type === 'walk_in' ? 'selected' : '' }}">
+            @foreach([
+                ['value' => 'walk_in',          'title' => 'Drop at shop',   'desc' => 'Bring your parcel to the nearest Nhume shop.', 'badge' => 'Free drop-off', 'badge_class' => '', 'icon' => 'M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4'],
+                ['value' => 'biker_collection', 'title' => 'Biker picks up', 'desc' => 'We send a biker to collect from your address.', 'badge' => '+$2.00 collection fee', 'badge_class' => 'collection', 'icon' => 'M12 4l-1 6h6l-3 5M5 18l4-5h2'],
+            ] as $opt)
+            <label class="pickup-card {{ $pickup_type === $opt['value'] ? 'selected' : '' }}" style="cursor:pointer;">
+                <input type="radio" wire:model.live="pickup_type" value="{{ $opt['value'] }}" style="position:absolute;opacity:0;pointer-events:none;">
                 <div class="pickup-card-icon">
-                    <svg width="24" height="24" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"/></svg>
+                    <svg width="24" height="24" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="{{ $opt['icon'] }}"/></svg>
                 </div>
                 <div class="pickup-card-body">
-                    <span class="pickup-card-title">Drop at shop</span>
-                    <span class="pickup-card-desc">Bring your parcel to the nearest Nhume shop.</span>
-                    <span class="pickup-card-badge">Free drop-off</span>
+                    <span class="pickup-card-title">{{ $opt['title'] }}</span>
+                    <span class="pickup-card-desc">{{ $opt['desc'] }}</span>
+                    <span class="pickup-card-badge {{ $opt['badge_class'] }}">{{ $opt['badge'] }}</span>
                 </div>
-                <div class="pickup-card-check {{ $pickup_type === 'walk_in' ? 'visible' : '' }}">
+                <div class="pickup-card-check {{ $pickup_type === $opt['value'] ? 'visible' : '' }}">
                     <svg width="14" height="14" fill="none" stroke="white" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7"/></svg>
                 </div>
-            </button>
-
-            <button type="button"
-                wire:click="selectPickupType('biker_collection')"
-                class="pickup-card {{ $pickup_type === 'biker_collection' ? 'selected' : '' }}">
-                <div class="pickup-card-icon">
-                    <svg width="24" height="24" fill="none" stroke="currentColor" viewBox="0 0 24 24"><circle cx="5" cy="18" r="3" stroke-width="1.8"/><circle cx="19" cy="18" r="3" stroke-width="1.8"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M12 4l-1 6h6l-3 5M5 18l4-5h2"/></svg>
-                </div>
-                <div class="pickup-card-body">
-                    <span class="pickup-card-title">Biker picks up</span>
-                    <span class="pickup-card-desc">We send a biker to collect from your address.</span>
-                    <span class="pickup-card-badge collection">+$2.00 collection fee</span>
-                </div>
-                <div class="pickup-card-check {{ $pickup_type === 'biker_collection' ? 'visible' : '' }}">
-                    <svg width="14" height="14" fill="none" stroke="white" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7"/></svg>
-                </div>
-            </button>
+            </label>
+            @endforeach
         </div>
 
         @error('pickup_type')<p class="field-error">Please select how you are sending.</p>@enderror
 
         <div class="wizard-actions">
-            <button type="button" wire:click="nextStep" class="btn-wizard-primary" @disabled(!$pickup_type)>
+            <button type="button" wire:click="nextStep" class="btn-wizard-primary">
                 Continue
                 <svg width="15" height="15" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"/></svg>
             </button>
