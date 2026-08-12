@@ -1,338 +1,341 @@
-<div class="wizard-wrap" x-data>
+<div x-data>
 
-    {{-- Progress bar --}}
-    @if($step < 4)
-    <div class="wizard-progress">
-        @foreach(['How?', 'Details', 'Confirm'] as $i => $label)
-            <div class="wizard-step {{ $step > $i ? 'done' : ($step === $i + 1 ? 'active' : '') }}">
-                <div class="wizard-step-dot">
-                    @if($step > $i + 1)
-                        <svg width="12" height="12" fill="none" stroke="white" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7"/></svg>
-                    @else
-                        {{ $i + 1 }}
-                    @endif
-                </div>
-                <span class="wizard-step-label">{{ $label }}</span>
-            </div>
-            @if($i < 2)<div class="wizard-step-line {{ $step > $i + 1 ? 'done' : '' }}"></div>@endif
-        @endforeach
-    </div>
-    @endif
-
-    {{-- ══ STEP 1 — Pickup type ══ --}}
-    @if($step === 1)
-    <div class="wizard-body">
-        <h2 class="wizard-title">How are you sending?</h2>
-        <p class="wizard-sub">Choose how your parcel gets to us.</p>
-
-        <div class="pickup-cards">
-            @foreach([
-                ['value' => 'walk_in',          'title' => 'Drop at shop',   'desc' => 'Bring your parcel to the nearest Nhume shop.', 'badge' => 'Free drop-off', 'badge_class' => '', 'icon' => 'M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4'],
-                ['value' => 'biker_collection', 'title' => 'Biker picks up', 'desc' => 'We send a biker to collect from your address.', 'badge' => '+$2.00 collection fee', 'badge_class' => 'collection', 'icon' => 'M12 4l-1 6h6l-3 5M5 18l4-5h2'],
-            ] as $opt)
-            <label class="pickup-card {{ $pickup_type === $opt['value'] ? 'selected' : '' }}" style="cursor:pointer;">
-                <input type="radio" wire:model.live="pickup_type" value="{{ $opt['value'] }}" style="position:absolute;opacity:0;pointer-events:none;">
-                <div class="pickup-card-icon">
-                    <svg width="24" height="24" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="{{ $opt['icon'] }}"/></svg>
-                </div>
-                <div class="pickup-card-body">
-                    <span class="pickup-card-title">{{ $opt['title'] }}</span>
-                    <span class="pickup-card-desc">{{ $opt['desc'] }}</span>
-                    <span class="pickup-card-badge {{ $opt['badge_class'] }}">{{ $opt['badge'] }}</span>
-                </div>
-                <div class="pickup-card-check {{ $pickup_type === $opt['value'] ? 'visible' : '' }}">
-                    <svg width="14" height="14" fill="none" stroke="white" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7"/></svg>
-                </div>
-            </label>
-            @endforeach
-        </div>
-
-        @error('pickup_type')<p class="field-error">Please select how you are sending.</p>@enderror
-
-        <div class="wizard-actions">
-            <button type="button" wire:click="nextStep" class="btn-wizard-primary">
-                Continue
-                <svg width="15" height="15" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"/></svg>
-            </button>
-        </div>
-    </div>
-    @endif
-
-    {{-- ══ STEP 2 — Details ══ --}}
-    @if($step === 2)
-    <div class="wizard-body">
-        <h2 class="wizard-title">Parcel details</h2>
-        <p class="wizard-sub">Tell us what you are sending and where it is going.</p>
-
-        <div class="wizard-fields">
-
-            {{-- Walk-in: choose shop --}}
-            @if($pickup_type === 'walk_in')
-            <div class="field-group">
-                <label class="field-label">Drop-off shop</label>
-                @if($this->collectionPoints->isEmpty())
-                    <p class="field-hint" style="color:#e57373;">No collection points available yet. Check back soon.</p>
-                @else
-                <select wire:model="collection_point_id" class="field-input">
-                    <option value="">Select a Nhume shop</option>
-                    @foreach($this->collectionPoints as $cp)
-                        <option value="{{ $cp->id }}">{{ $cp->name }} — {{ $cp->address }}</option>
-                    @endforeach
-                </select>
-                @error('collection_point_id')<p class="field-error">{{ $message }}</p>@enderror
-                @endif
-            </div>
-            @endif
-
-            {{-- Biker: pickup address --}}
-            @if($pickup_type === 'biker_collection')
-            <div class="field-group">
-                <label class="field-label">Pickup address</label>
-                <input wire:model.live="pickup_address" type="text" class="field-input" placeholder="Where should the biker collect from?">
-                @error('pickup_address')<p class="field-error">{{ $message }}</p>@enderror
-            </div>
-            @endif
-
-            {{-- Delivery address --}}
-            <div class="field-group">
-                <label class="field-label">Delivery address</label>
-                <input wire:model.live="dropoff_address" type="text" class="field-input" placeholder="Where is it going?">
-                @error('dropoff_address')<p class="field-error">{{ $message }}</p>@enderror
-            </div>
-
-            {{-- Package category --}}
-            <div class="field-group">
-                <label class="field-label">What are you sending?</label>
-                <div class="category-chips">
-                    @foreach($this->categories as $cat)
-                    <button type="button"
-                        wire:click="$set('package_category', '{{ $cat->value }}')"
-                        class="category-chip {{ $package_category === $cat->value ? 'selected' : '' }}">
-                        <svg width="14" height="14" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="{{ $cat->icon() }}"/></svg>
-                        {{ $cat->label() }}
-                    </button>
-                    @endforeach
-                </div>
-                @error('package_category')<p class="field-error">{{ $message }}</p>@enderror
-            </div>
-
-            {{-- Weight + fragile --}}
-            <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;">
-                <div class="field-group" style="margin:0">
-                    <label class="field-label">Weight (kg) <span class="field-optional">optional</span></label>
-                    <input wire:model.live="weight_kg" type="number" step="0.1" min="0" class="field-input" placeholder="e.g. 1.5">
-                </div>
-                <div class="field-group" style="margin:0;display:flex;flex-direction:column;justify-content:flex-end;">
-                    <label class="field-label">&nbsp;</label>
-                    <label class="toggle-wrap">
-                        <input wire:model.live="is_fragile" type="checkbox" class="toggle-input">
-                        <span class="toggle-track">
-                            <span class="toggle-thumb"></span>
-                        </span>
-                        <span class="toggle-label">Fragile item</span>
-                    </label>
-                </div>
-            </div>
-
-            {{-- Notes --}}
-            <div class="field-group">
-                <label class="field-label">Instructions <span class="field-optional">optional</span></label>
-                <textarea wire:model="notes" class="field-input" rows="2" placeholder="Any special handling notes..."></textarea>
-            </div>
-
-            {{-- Schedule --}}
-            <div class="field-group">
-                <label class="field-label">When?</label>
-                <div style="display:flex;gap:10px;">
-                    <button type="button" wire:click="$set('schedule','now')"
-                        class="schedule-btn {{ $schedule === 'now' ? 'selected' : '' }}">
-                        <svg width="14" height="14" fill="none" stroke="currentColor" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10" stroke-width="2"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6l4 2"/></svg>
-                        Now
-                    </button>
-                    <button type="button" wire:click="$set('schedule','later')"
-                        class="schedule-btn {{ $schedule === 'later' ? 'selected' : '' }}">
-                        <svg width="14" height="14" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>
-                        Schedule
-                    </button>
-                </div>
-                @if($schedule === 'later')
-                <input wire:model="scheduled_at" type="datetime-local" class="field-input" style="margin-top:10px;"
-                    min="{{ now()->addMinutes(30)->format('Y-m-d\TH:i') }}">
-                @endif
-            </div>
-
-            {{-- Live price estimate --}}
-            <div class="price-estimate-bar">
-                <div>
-                    <span class="price-label">Estimated price</span>
-                    @if($is_fragile)
-                        <span class="price-hint">Includes $1.00 fragile handling</span>
-                    @endif
-                    @if($pickup_type === 'biker_collection')
-                        <span class="price-hint">Includes $2.00 collection fee</span>
-                    @endif
-                </div>
-                <span class="price-value">${{ number_format($this->priceEstimate, 2) }}</span>
-            </div>
-        </div>
-
-        <div class="wizard-actions">
-            <button type="button" wire:click="prevStep" class="btn-wizard-ghost">
-                <svg width="15" height="15" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 16l-4-4m0 0l4-4m-4 4h18"/></svg>
-                Back
-            </button>
-            <button type="button" wire:click="nextStep" class="btn-wizard-primary">
-                Review order
-                <svg width="15" height="15" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"/></svg>
-            </button>
-        </div>
-    </div>
-    @endif
-
-    {{-- ══ STEP 3 — Confirm ══ --}}
+    {{-- ══ CONFIRMATION (step 3) — full width ══ --}}
     @if($step === 3)
-    <div class="wizard-body">
-        <h2 class="wizard-title">Review your order</h2>
-        <p class="wizard-sub">Check everything before placing.</p>
-
-        <div class="review-card">
-            {{-- Pickup method --}}
-            <div class="review-row">
-                <span class="review-key">Pickup</span>
-                <span class="review-val">
-                    {{ $pickup_type === 'walk_in' ? 'Drop at shop' : 'Biker collection' }}
-                </span>
-                <button type="button" wire:click="$set('step', 1)" class="review-edit">Edit</button>
-            </div>
-
-            @if($pickup_type === 'walk_in' && $collection_point_id)
-            <div class="review-row">
-                <span class="review-key">Shop</span>
-                <span class="review-val">{{ $this->collectionPoints->find($collection_point_id)?->name }}</span>
-                <button type="button" wire:click="$set('step', 2)" class="review-edit">Edit</button>
-            </div>
-            @endif
-
-            @if($pickup_type === 'biker_collection')
-            <div class="review-row">
-                <span class="review-key">Pickup address</span>
-                <span class="review-val">{{ $pickup_address }}</span>
-                <button type="button" wire:click="$set('step', 2)" class="review-edit">Edit</button>
-            </div>
-            @endif
-
-            <div class="review-row">
-                <span class="review-key">Deliver to</span>
-                <span class="review-val">{{ $dropoff_address }}</span>
-                <button type="button" wire:click="$set('step', 2)" class="review-edit">Edit</button>
-            </div>
-
-            <div class="review-row">
-                <span class="review-key">Item</span>
-                <span class="review-val">{{ ucfirst($package_category) }}{{ $item_description ? ' — ' . $item_description : '' }}</span>
-                <button type="button" wire:click="$set('step', 2)" class="review-edit">Edit</button>
-            </div>
-
-            @if($weight_kg)
-            <div class="review-row">
-                <span class="review-key">Weight</span>
-                <span class="review-val">{{ $weight_kg }} kg</span>
-                <span></span>
-            </div>
-            @endif
-
-            @if($is_fragile)
-            <div class="review-row">
-                <span class="review-key">Handling</span>
-                <span class="review-val" style="color:#e57373;">Fragile</span>
-                <span></span>
-            </div>
-            @endif
-
-            <div class="review-row">
-                <span class="review-key">When</span>
-                <span class="review-val">
-                    {{ $schedule === 'now' ? 'As soon as possible' : \Carbon\Carbon::parse($scheduled_at)->format('D d M, H:i') }}
-                </span>
-                <button type="button" wire:click="$set('step', 2)" class="review-edit">Edit</button>
-            </div>
-
-            <div class="review-divider"></div>
-
-            <div class="review-row" style="font-weight:700;">
-                <span class="review-key" style="font-weight:700;color:#1C3829;">Estimated total</span>
-                <span class="review-val" style="font-size:20px;color:#1C3829;">${{ number_format($this->priceEstimate, 2) }}</span>
-                <span></span>
-            </div>
-        </div>
-
-        {{-- Recipient details --}}
-        <div class="wizard-fields" style="margin-top:24px;">
-            <h3 style="font-size:14px;font-weight:700;color:#1C3829;margin:0 0 16px;">Recipient details</h3>
-            <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;">
-                <div class="field-group" style="margin:0">
-                    <label class="field-label">Full name</label>
-                    <input wire:model="recipient_name" type="text" class="field-input" placeholder="Recipient's name">
-                    @error('recipient_name')<p class="field-error">{{ $message }}</p>@enderror
-                </div>
-                <div class="field-group" style="margin:0">
-                    <label class="field-label">Phone number</label>
-                    <input wire:model="recipient_phone" type="tel" class="field-input" placeholder="+263...">
-                    @error('recipient_phone')<p class="field-error">{{ $message }}</p>@enderror
-                </div>
-            </div>
-        </div>
-
-        <div class="wizard-actions">
-            <button type="button" wire:click="prevStep" class="btn-wizard-ghost">
-                <svg width="15" height="15" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 16l-4-4m0 0l4-4m-4 4h18"/></svg>
-                Back
-            </button>
-            <button type="button" wire:click="placeOrder" wire:loading.attr="disabled" class="btn-wizard-primary">
-                <span wire:loading.remove>
-                    Place order
-                    <svg width="15" height="15" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
-                </span>
-                <span wire:loading>Placing order...</span>
-            </button>
-        </div>
-    </div>
-    @endif
-
-    {{-- ══ STEP 4 — Confirmation ══ --}}
-    @if($step === 4)
-    <div class="wizard-body" style="text-align:center;padding:60px 40px;">
-        <div style="width:64px;height:64px;border-radius:50%;background:#edf8df;display:flex;align-items:center;justify-content:center;margin:0 auto 24px;">
+    <div class="wiz-confirm">
+        <div class="wiz-confirm-icon">
             <svg width="28" height="28" fill="none" stroke="#4a9a1f" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"/></svg>
         </div>
+        <h2 class="wiz-confirm-title">Order placed!</h2>
+        <p class="wiz-confirm-sub">Your parcel is registered. Use the order number below to track it.</p>
 
-        <h2 style="font-family:'General Sans',sans-serif;font-size:26px;font-weight:700;color:#1C3829;margin:0 0 10px;">Order placed!</h2>
-        <p style="font-size:15px;color:#5f6560;margin:0 0 32px;">Your parcel is registered. Use the order number below to track it.</p>
-
-        <div class="order-number-display">
-            <span class="order-number-label">Order number</span>
-            <span class="order-number-value">{{ $order_number }}</span>
+        <div class="wiz-order-box">
+            <span class="wiz-order-label">Order number</span>
+            <span class="wiz-order-num">{{ $order_number }}</span>
             <button type="button"
                 x-on:click="navigator.clipboard.writeText('{{ $order_number }}').then(() => { $el.textContent = 'Copied!'; setTimeout(() => $el.textContent = 'Copy', 1500) })"
-                class="order-number-copy">Copy</button>
+                class="wiz-order-copy">Copy</button>
         </div>
 
-        @if($pickup_type === 'walk_in')
-        <div class="order-next-step">
-            <svg width="18" height="18" fill="none" stroke="#4a9a1f" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
-            Drop your parcel at the shop and quote your order number. Our team will take it from there.
+        <div class="wiz-next-step">
+            <svg width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+            @if($pickup_type === 'walk_in')
+                Drop your parcel at the shop and quote your order number. Our team will take it from there.
+            @else
+                A biker will be dispatched to your pickup address. You will be notified when they are on their way.
+            @endif
         </div>
-        @else
-        <div class="order-next-step">
-            <svg width="18" height="18" fill="none" stroke="#4a9a1f" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
-            A biker will be dispatched to your pickup address. You'll be notified when they are on their way.
-        </div>
-        @endif
 
-        <div style="margin-top:32px;display:flex;gap:12px;justify-content:center;flex-wrap:wrap;">
-            <a href="/track/{{ $order_number }}" class="btn-wizard-primary">Track parcel</a>
-            <button type="button" wire:click="$set('step', 1), $set('pickup_type', ''), $set('order_number', null)" class="btn-wizard-ghost">Send another</button>
+        <div class="wiz-confirm-actions">
+            <a href="/track/{{ $order_number }}" class="btn-wiz-primary">Track parcel</a>
+            <button type="button" wire:click="$set('step', 1)" class="btn-wiz-ghost">Send another</button>
         </div>
+    </div>
+    @endif
+
+    {{-- ══ STEPS 1 + 2 — two-column layout ══ --}}
+    @if($step < 3)
+    <div class="wiz-layout">
+
+        {{-- ── LEFT: stepper form ── --}}
+        <div class="wiz-left">
+
+            {{-- Progress indicator --}}
+            <div class="wiz-progress">
+                @foreach(['How?' => 1, 'Details' => 2] as $label => $num)
+                <div class="wiz-prog-step {{ $step >= $num ? ($step > $num ? 'done' : 'active') : '' }}">
+                    <div class="wiz-prog-dot">
+                        @if($step > $num)
+                            <svg width="11" height="11" fill="none" stroke="white" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7"/></svg>
+                        @else
+                            {{ $num }}
+                        @endif
+                    </div>
+                    <span class="wiz-prog-label">{{ $label }}</span>
+                </div>
+                @if($num < 2)<div class="wiz-prog-line {{ $step > $num ? 'done' : '' }}"></div>@endif
+                @endforeach
+            </div>
+
+            {{-- ─ STEP 1: How? ─ --}}
+            @if($step === 1)
+            <div class="wiz-card">
+                <div class="wiz-card-head">
+                    <h2 class="wiz-title">How are you sending?</h2>
+                    <p class="wiz-sub">Choose how your parcel gets to us.</p>
+                </div>
+
+                <div class="wiz-card-body">
+                    <div class="pickup-cards">
+                        @foreach([
+                            ['value' => 'walk_in',          'title' => 'Drop at shop',   'desc' => 'Bring your parcel to the nearest Nhume shop.', 'badge' => 'Free drop-off',        'badge_cls' => '',          'icon' => 'M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4'],
+                            ['value' => 'biker_collection', 'title' => 'Biker picks up', 'desc' => 'We send a biker to collect from your address.',  'badge' => '+$2.00 collection fee', 'badge_cls' => 'collection', 'icon' => 'M12 4l-1 6h6l-3 5M5 18l4-5h2'],
+                        ] as $opt)
+                        <label class="pickup-card {{ $pickup_type === $opt['value'] ? 'selected' : '' }}">
+                            <input type="radio" wire:model.live="pickup_type" value="{{ $opt['value'] }}" style="position:absolute;opacity:0;pointer-events:none;">
+                            <div class="pickup-icon">
+                                <svg width="22" height="22" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="{{ $opt['icon'] }}"/></svg>
+                            </div>
+                            <div class="pickup-body">
+                                <span class="pickup-title">{{ $opt['title'] }}</span>
+                                <span class="pickup-desc">{{ $opt['desc'] }}</span>
+                                <span class="pickup-badge {{ $opt['badge_cls'] }}">{{ $opt['badge'] }}</span>
+                            </div>
+                            <div class="pickup-check {{ $pickup_type === $opt['value'] ? 'on' : '' }}">
+                                <svg width="12" height="12" fill="none" stroke="white" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7"/></svg>
+                            </div>
+                        </label>
+                        @endforeach
+                    </div>
+                    @error('pickup_type')<p class="field-err">Please select how you are sending.</p>@enderror
+                </div>
+
+                <div class="wiz-card-foot">
+                    <button type="button" wire:click="nextStep" class="btn-wiz-primary">
+                        Continue
+                        <svg width="14" height="14" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"/></svg>
+                    </button>
+                </div>
+            </div>
+            @endif
+
+            {{-- ─ STEP 2: Details ─ --}}
+            @if($step === 2)
+            <div class="wiz-card">
+                <div class="wiz-card-head">
+                    <button type="button" wire:click="prevStep" class="wiz-back">
+                        <svg width="14" height="14" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 16l-4-4m0 0l4-4m-4 4h18"/></svg>
+                        Back
+                    </button>
+                    <h2 class="wiz-title">Parcel details</h2>
+                    <p class="wiz-sub">Tell us what you are sending and where.</p>
+                </div>
+
+                <div class="wiz-card-body">
+                    <div class="fields">
+
+                        {{-- Shop selector (walk-in) --}}
+                        @if($pickup_type === 'walk_in')
+                        <div class="field">
+                            <label class="flabel">Drop-off shop</label>
+                            @if($this->collectionPoints->isEmpty())
+                                <p class="field-hint">No collection points available yet.</p>
+                            @else
+                            <select wire:model="collection_point_id" class="finput">
+                                <option value="">Select a Nhume shop</option>
+                                @foreach($this->collectionPoints as $cp)
+                                    <option value="{{ $cp->id }}">{{ $cp->name }} — {{ $cp->address }}</option>
+                                @endforeach
+                            </select>
+                            @error('collection_point_id')<p class="field-err">{{ $message }}</p>@enderror
+                            @endif
+                        </div>
+                        @endif
+
+                        {{-- Pickup address (biker) --}}
+                        @if($pickup_type === 'biker_collection')
+                        <div class="field">
+                            <label class="flabel">Pickup address</label>
+                            <input wire:model.live="pickup_address" type="text" class="finput" placeholder="Where should the biker collect from?">
+                            @error('pickup_address')<p class="field-err">{{ $message }}</p>@enderror
+                        </div>
+                        @endif
+
+                        {{-- Delivery address --}}
+                        <div class="field">
+                            <label class="flabel">Delivery address</label>
+                            <input wire:model.live="dropoff_address" type="text" class="finput" placeholder="Where is it going?">
+                            @error('dropoff_address')<p class="field-err">{{ $message }}</p>@enderror
+                        </div>
+
+                        {{-- Category --}}
+                        <div class="field">
+                            <label class="flabel">What are you sending?</label>
+                            <div class="chips">
+                                @foreach($this->categories as $cat)
+                                <button type="button" wire:click="$set('package_category','{{ $cat->value }}')"
+                                    class="chip {{ $package_category === $cat->value ? 'on' : '' }}">
+                                    <svg width="13" height="13" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="{{ $cat->icon() }}"/></svg>
+                                    {{ $cat->label() }}
+                                </button>
+                                @endforeach
+                            </div>
+                            @error('package_category')<p class="field-err">{{ $message }}</p>@enderror
+                        </div>
+
+                        {{-- Weight + fragile --}}
+                        <div class="field-row">
+                            <div class="field" style="flex:1">
+                                <label class="flabel">Weight (kg) <span class="fopt">optional</span></label>
+                                <input wire:model.live="weight_kg" type="number" step="0.1" min="0" class="finput" placeholder="e.g. 1.5">
+                            </div>
+                            <div class="field" style="flex:1;display:flex;flex-direction:column;justify-content:flex-end;">
+                                <label class="flabel">&nbsp;</label>
+                                <label class="toggle">
+                                    <input wire:model.live="is_fragile" type="checkbox" style="display:none;">
+                                    <span class="toggle-track"><span class="toggle-thumb"></span></span>
+                                    <span class="toggle-lbl">Fragile item</span>
+                                </label>
+                            </div>
+                        </div>
+
+                        {{-- Notes --}}
+                        <div class="field">
+                            <label class="flabel">Instructions <span class="fopt">optional</span></label>
+                            <textarea wire:model="notes" class="finput" rows="2" placeholder="Any special handling notes..."></textarea>
+                        </div>
+
+                        {{-- Schedule --}}
+                        <div class="field">
+                            <label class="flabel">When?</label>
+                            <div style="display:flex;gap:8px;">
+                                <button type="button" wire:click="$set('schedule','now')" class="sched-btn {{ $schedule==='now' ? 'on' : '' }}">
+                                    <svg width="13" height="13" fill="none" stroke="currentColor" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10" stroke-width="2"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6l4 2"/></svg>
+                                    Now
+                                </button>
+                                <button type="button" wire:click="$set('schedule','later')" class="sched-btn {{ $schedule==='later' ? 'on' : '' }}">
+                                    <svg width="13" height="13" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>
+                                    Schedule
+                                </button>
+                            </div>
+                            @if($schedule === 'later')
+                            <input wire:model="scheduled_at" type="datetime-local" class="finput" style="margin-top:10px;"
+                                min="{{ now()->addMinutes(30)->format('Y-m-d\TH:i') }}">
+                            @endif
+                        </div>
+
+                        {{-- Recipient --}}
+                        <div class="field-section-label">Recipient</div>
+                        <div class="field-row">
+                            <div class="field" style="flex:1">
+                                <label class="flabel">Full name</label>
+                                <input wire:model.live="recipient_name" type="text" class="finput" placeholder="Recipient's name">
+                                @error('recipient_name')<p class="field-err">{{ $message }}</p>@enderror
+                            </div>
+                            <div class="field" style="flex:1">
+                                <label class="flabel">Phone</label>
+                                <input wire:model.live="recipient_phone" type="tel" class="finput" placeholder="+263...">
+                                @error('recipient_phone')<p class="field-err">{{ $message }}</p>@enderror
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+
+                <div class="wiz-card-foot">
+                    <button type="button" wire:click="placeOrder" wire:loading.attr="disabled" class="btn-wiz-primary">
+                        <span wire:loading.remove>
+                            Place order
+                            <svg width="14" height="14" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
+                        </span>
+                        <span wire:loading>Placing order...</span>
+                    </button>
+                </div>
+            </div>
+            @endif
+
+        </div>{{-- /wiz-left --}}
+
+        {{-- ── RIGHT: live order summary ── --}}
+        <div class="wiz-right">
+            <div class="summary-card">
+                <h3 class="summary-title">Order summary</h3>
+
+                <div class="summary-rows">
+
+                    {{-- Pickup method --}}
+                    <div class="srow">
+                        <span class="skey">Pickup</span>
+                        <span class="sval {{ !$pickup_type ? 'empty' : '' }}">
+                            {{ $pickup_type ? ($pickup_type === 'walk_in' ? 'Drop at shop' : 'Biker picks up') : '—' }}
+                        </span>
+                    </div>
+
+                    {{-- From --}}
+                    @if($pickup_type === 'biker_collection')
+                    <div class="srow">
+                        <span class="skey">From</span>
+                        <span class="sval {{ !$pickup_address ? 'empty' : '' }}">{{ $pickup_address ?: '—' }}</span>
+                    </div>
+                    @endif
+
+                    {{-- To --}}
+                    <div class="srow">
+                        <span class="skey">To</span>
+                        <span class="sval {{ !$dropoff_address ? 'empty' : '' }}">{{ $dropoff_address ?: '—' }}</span>
+                    </div>
+
+                    {{-- Item --}}
+                    <div class="srow">
+                        <span class="skey">Item</span>
+                        <span class="sval {{ !$package_category ? 'empty' : '' }}">
+                            {{ $package_category ? ucfirst($package_category) : '—' }}
+                            @if($weight_kg) · {{ $weight_kg }} kg @endif
+                        </span>
+                    </div>
+
+                    {{-- When --}}
+                    <div class="srow">
+                        <span class="skey">When</span>
+                        <span class="sval">
+                            {{ $schedule === 'later' && $scheduled_at ? \Carbon\Carbon::parse($scheduled_at)->format('D d M, H:i') : 'As soon as possible' }}
+                        </span>
+                    </div>
+
+                    {{-- Recipient --}}
+                    @if($recipient_name || $recipient_phone)
+                    <div class="srow">
+                        <span class="skey">Recipient</span>
+                        <span class="sval">{{ $recipient_name }}{{ $recipient_phone ? ' · ' . $recipient_phone : '' }}</span>
+                    </div>
+                    @endif
+
+                </div>
+
+                {{-- Price breakdown --}}
+                <div class="summary-price">
+                    <div class="price-line">
+                        <span>Base delivery</span>
+                        <span>$2.50</span>
+                    </div>
+                    @if($pickup_type === 'biker_collection')
+                    <div class="price-line">
+                        <span>Collection fee</span>
+                        <span>$2.00</span>
+                    </div>
+                    @endif
+                    @if($is_fragile)
+                    <div class="price-line">
+                        <span>Fragile handling</span>
+                        <span>$1.00</span>
+                    </div>
+                    @endif
+                    <div class="price-total">
+                        <span>Estimated total</span>
+                        <span>${{ number_format($this->priceEstimate, 2) }}</span>
+                    </div>
+                </div>
+
+                {{-- Summary CTA --}}
+                @if($step === 1)
+                <button type="button" wire:click="nextStep" class="btn-wiz-primary" style="width:100%;">
+                    Continue
+                    <svg width="14" height="14" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"/></svg>
+                </button>
+                @else
+                <button type="button" wire:click="placeOrder" wire:loading.attr="disabled" class="btn-wiz-primary" style="width:100%;">
+                    <span wire:loading.remove>
+                        Place order
+                        <svg width="14" height="14" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
+                    </span>
+                    <span wire:loading>Placing order...</span>
+                </button>
+                @endif
+
+                <p class="summary-note">No payment now. You pay on delivery.</p>
+            </div>
+        </div>
+
     </div>
     @endif
 

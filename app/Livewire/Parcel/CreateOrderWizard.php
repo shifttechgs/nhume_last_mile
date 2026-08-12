@@ -97,7 +97,7 @@ class CreateOrderWizard extends Component
             $orderNumber = 'NHM-' . now()->format('Ymd') . '-' . strtoupper(\Illuminate\Support\Str::random(4));
         }
 
-        try { Task::create([
+        Task::create([
             'order_number'         => $orderNumber,
             'user_id'              => Auth::id(),
             'service_type'         => ServiceType::LastMileDelivery->value,
@@ -123,10 +123,10 @@ class CreateOrderWizard extends Component
                                         ? Carbon::parse($this->scheduled_at)
                                         : null,
             'offered_price'        => $this->priceEstimate,
-        ]); } catch (\Exception) {}
+        ]);
 
         $this->order_number = $orderNumber;
-        $this->step = 4;
+        $this->step = 3;
     }
 
     private function validateCurrentStep(): void
@@ -134,10 +134,6 @@ class CreateOrderWizard extends Component
         match ($this->step) {
             1 => $this->validate(['pickup_type' => 'required|in:walk_in,biker_collection']),
             2 => $this->validateStep2(),
-            3 => $this->validate([
-                'recipient_name'  => 'required|string|max:100',
-                'recipient_phone' => 'required|string|max:20',
-            ]),
             default => null,
         };
     }
@@ -147,6 +143,8 @@ class CreateOrderWizard extends Component
         $rules = [
             'dropoff_address'  => 'required|string|min:5',
             'package_category' => 'required|in:' . implode(',', array_column(PackageCategory::cases(), 'value')),
+            'recipient_name'   => 'required|string|max:100',
+            'recipient_phone'  => 'required|string|max:20',
         ];
 
         if ($this->pickup_type === PickupType::WalkIn->value) {
