@@ -47,22 +47,30 @@ body { font-family: var(--font); color: var(--text); background: var(--shade); -
 .send-nav-back:hover { color: var(--text); }
 
 .send-main {
-    flex: 1; display: flex; justify-content: center;
-    padding: 32px 32px 80px;
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    padding: 0 32px 0 32px;
 }
 
 /* ── Two-column layout ── */
 .wiz-layout {
     display: grid;
     grid-template-columns: 7fr 5fr;
-    gap: 32px;
+    gap: 0;
     width: 100%;
-    max-width: 1080px;
+    max-width: 1100px;
     align-items: start;
 }
 
-/* ── LEFT ── */
-.wiz-left { display: flex; flex-direction: column; gap: 0; }
+/* ── LEFT — scrolls with the page ── */
+.wiz-left {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+    padding: 36px 36px 80px 0;
+    border-right: 1px solid var(--border);
+}
 
 /* Progress */
 .wiz-progress {
@@ -211,34 +219,37 @@ input:checked + .toggle-track .toggle-thumb { left: 19.5px; }
     padding-top: 6px; border-top: 1px solid var(--border);
 }
 
-/* ── RIGHT: sticky summary ── */
+/* ── RIGHT — fixed viewport height, scrolls internally ── */
 .wiz-right {
     position: sticky;
-    top: 24px;
-    max-height: calc(100vh - 48px);
+    top: 62px;
+    height: calc(100vh - 62px);
     overflow-y: auto;
-    scrollbar-width: none;
+    padding: 36px 0 36px 36px;
+    scrollbar-width: thin;
+    scrollbar-color: #d1d5db transparent;
 }
-.wiz-right::-webkit-scrollbar { display: none; }
+.wiz-right::-webkit-scrollbar { width: 4px; }
+.wiz-right::-webkit-scrollbar-track { background: transparent; }
+.wiz-right::-webkit-scrollbar-thumb { background: #d1d5db; border-radius: 9999px; }
 .summary-card {
     background: #fff; border: 1px solid var(--border);
     border-radius: 18px; overflow: hidden;
     display: flex; flex-direction: column;
 }
 .summary-title {
-    font-family: var(--head); font-size: 14px; font-weight: 700;
-    color: var(--text-2); letter-spacing: 0.04em; text-transform: uppercase;
-    padding: 20px 22px 16px; border-bottom: 1px solid var(--border);
+    font-family: var(--head); font-size: 12px; font-weight: 700;
+    color: var(--text-2); letter-spacing: 0.08em; text-transform: uppercase;
+    padding: 0 0 16px; border-bottom: 1px solid var(--border);
 }
-.summary-rows { padding: 16px 22px; display: flex; flex-direction: column; gap: 10px; }
+.summary-rows { padding: 16px 0; display: flex; flex-direction: column; gap: 12px; }
 .srow { display: flex; gap: 12px; align-items: baseline; }
-.skey { font-size: 12px; font-weight: 600; color: var(--text-2); width: 72px; flex-shrink: 0; }
+.skey { font-size: 12px; font-weight: 600; color: var(--text-2); width: 78px; flex-shrink: 0; }
 .sval { font-size: 13.5px; color: var(--text); line-height: 1.4; flex: 1; }
 .sval.empty { color: #c4cdc0; }
 
 /* Price breakdown */
 .summary-price {
-    margin: 0 22px 0;
     border-top: 1px solid var(--border);
     padding: 14px 0 0;
     display: flex; flex-direction: column; gap: 7px;
@@ -255,10 +266,10 @@ input:checked + .toggle-track .toggle-thumb { left: 19.5px; }
 }
 
 /* Summary CTA */
-.summary-card .btn-wiz-primary { margin: 16px 22px 0; }
+.summary-card .btn-wiz-primary { margin: 16px 0 0; }
 .summary-note {
     font-size: 11.5px; color: var(--text-2); text-align: center;
-    padding: 10px 22px 18px;
+    padding: 10px 0 4px;
 }
 
 /* Buttons */
@@ -331,9 +342,10 @@ input:checked + .toggle-track .toggle-thumb { left: 19.5px; }
 
 /* ── Mobile ── */
 @media (max-width: 768px) {
-    .wiz-layout { grid-template-columns: 1fr; }
-    .wiz-right { position: static; order: 2; }
-    .send-main { padding: 24px 16px 60px; }
+    .wiz-layout { grid-template-columns: 1fr; gap: 0; }
+    .wiz-left { border-right: none; padding: 24px 16px 60px; }
+    .wiz-right { position: static; height: auto; order: -1; padding: 24px 16px 0; border-bottom: 1px solid var(--border); }
+    .send-main { padding: 0 0; }
     .wiz-card-head, .wiz-card-body, .wiz-card-foot { padding-left: 20px; padding-right: 20px; }
     .field-row { flex-direction: column; }
     .wiz-confirm { padding: 40px 24px; }
