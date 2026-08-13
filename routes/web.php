@@ -11,6 +11,16 @@ Route::get('/send', function () {
     return view('pages.send');
 })->name('send');
 
+Route::get('/track/{orderNumber?}', function (?string $orderNumber = null) {
+    $task = $orderNumber
+        ? \App\Models\Task::where('order_number', strtoupper(trim($orderNumber)))->first()
+        : null;
+    return view('pages.track', [
+        'task'        => $task,
+        'orderNumber' => $orderNumber ? strtoupper(trim($orderNumber)) : null,
+    ]);
+})->name('track');
+
 Route::get('/dashboard', function () {
     return view('dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');

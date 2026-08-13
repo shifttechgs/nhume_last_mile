@@ -57,9 +57,9 @@ body { font-family: var(--font); color: var(--text); background: var(--shade); -
 .wiz-layout {
     display: grid;
     grid-template-columns: 7fr 5fr;
-    gap: 40px;
+    gap: 0;
     width: 100%;
-    max-width: 1060px;
+    max-width: 1080px;
     align-items: start;
 }
 
@@ -68,6 +68,7 @@ body { font-family: var(--font); color: var(--text); background: var(--shade); -
     display: flex;
     flex-direction: column;
     min-width: 0;
+    padding-right: 48px;
 }
 
 /* Progress */
@@ -217,51 +218,75 @@ input:checked + .toggle-track .toggle-thumb { left: 19.5px; }
     padding-top: 6px; border-top: 1px solid var(--border);
 }
 
-/* ── RIGHT — sticky, no height constraints, never clips ── */
+/* ── RIGHT — sticky with vertical divider ── */
 .wiz-right {
     position: sticky;
     top: 80px;
     min-width: 0;
+    padding-left: 48px;
+    border-left: 1px solid var(--border);
 }
+
+/* ── Order Summary card ── */
 .summary-card {
-    background: #fff; border: 1px solid var(--border);
-    border-radius: 18px; overflow: hidden;
-    display: flex; flex-direction: column;
+    background: #fff;
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    overflow: hidden;
 }
+
+/* Header */
 .summary-title {
-    font-family: var(--head); font-size: 12px; font-weight: 700;
-    color: var(--text-2); letter-spacing: 0.08em; text-transform: uppercase;
-    padding: 20px 22px 16px; border-bottom: 1px solid var(--border);
+    font-size: 11px; font-weight: 700;
+    color: var(--text-2); letter-spacing: 0.1em; text-transform: uppercase;
+    padding: 20px 24px 18px;
+    border-bottom: 1px solid var(--border);
 }
-.summary-rows { padding: 16px 22px; display: flex; flex-direction: column; gap: 12px; }
-.srow { display: flex; gap: 12px; align-items: baseline; }
-.skey { font-size: 12px; font-weight: 600; color: var(--text-2); width: 78px; flex-shrink: 0; }
-.sval { font-size: 13.5px; color: var(--text); line-height: 1.4; flex: 1; }
-.sval.empty { color: #c4cdc0; }
+
+/* Detail rows */
+.summary-rows {
+    padding: 20px 24px;
+    display: flex; flex-direction: column; gap: 14px;
+}
+.srow { display: flex; align-items: flex-start; gap: 0; }
+.skey {
+    font-size: 12px; font-weight: 500; color: var(--text-2);
+    width: 80px; flex-shrink: 0; padding-top: 1px;
+}
+.sval {
+    font-size: 13.5px; font-weight: 500; color: var(--text);
+    line-height: 1.45; flex: 1;
+}
+.sval.empty { color: #d1d5db; font-weight: 400; }
 
 /* Price breakdown */
 .summary-price {
-    margin: 0 22px;
     border-top: 1px solid var(--border);
-    padding: 14px 0 0;
-    display: flex; flex-direction: column; gap: 7px;
+    background: var(--shade);
+    padding: 16px 24px 0;
+    display: flex; flex-direction: column; gap: 9px;
 }
 .price-line {
-    display: flex; justify-content: space-between;
+    display: flex; justify-content: space-between; align-items: center;
     font-size: 13px; color: var(--text-2);
 }
 .price-total {
-    display: flex; justify-content: space-between;
+    display: flex; justify-content: space-between; align-items: center;
     font-size: 15px; font-weight: 700; color: var(--forest);
-    margin-top: 4px; padding-top: 10px;
+    padding: 14px 0 16px;
     border-top: 1px solid var(--border);
+    margin-top: 4px;
 }
 
-/* Summary CTA */
-.summary-card .btn-wiz-primary { margin: 16px 22px 0; width: calc(100% - 44px); }
+/* CTA section */
+.summary-cta {
+    padding: 0 24px 20px;
+    background: var(--shade);
+    display: flex; flex-direction: column; gap: 0;
+}
 .summary-note {
     font-size: 11.5px; color: var(--text-2); text-align: center;
-    padding: 10px 22px 20px;
+    padding: 10px 0 0;
 }
 
 /* Buttons */
@@ -332,12 +357,18 @@ input:checked + .toggle-track .toggle-thumb { left: 19.5px; }
 }
 .wiz-confirm-actions { display: flex; gap: 10px; justify-content: center; flex-wrap: wrap; }
 
+/* Spinner for loading states */
+@keyframes spin { to { transform: rotate(360deg); } }
+.btn-label { display: inline-flex; align-items: center; gap: 8px; }
+
 /* ── Mobile ── */
 @media (max-width: 768px) {
-    .wiz-layout { grid-template-columns: 1fr; gap: 20px; }
-    .wiz-right { position: static; }
+    .wiz-layout { grid-template-columns: 1fr; gap: 0; }
+    .wiz-left { padding-right: 0; padding-bottom: 32px; border-right: none; }
+    .wiz-right { position: static; padding-left: 0; border-left: none; border-top: 1px solid var(--border); padding-top: 32px; }
     .send-main { padding: 24px 16px 60px; }
     .wiz-card-head, .wiz-card-body, .wiz-card-foot { padding-left: 20px; padding-right: 20px; }
+    .summary-title, .summary-rows, .summary-price, .summary-cta { padding-left: 20px; padding-right: 20px; }
     .field-row { flex-direction: column; }
     .wiz-confirm { padding: 40px 24px; }
 }

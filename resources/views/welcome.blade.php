@@ -55,6 +55,7 @@
 * { box-sizing: border-box; }
 body { font-family: var(--font); color: var(--text); background: #fff; -webkit-font-smoothing: antialiased; }
 [x-cloak] { display: none !important; }
+@keyframes spin { to { transform: rotate(360deg); } }
 
 /* ── Nav link ── */
 .nav-link {
@@ -2016,7 +2017,7 @@ body { font-family: var(--font); color: var(--text); background: #fff; -webkit-f
 </style>
 </head>
 
-<body style="background:#fff">
+<body style="background:#fff" x-data="{ trackOpen: false, trackNum: '' }" @keydown.escape.window="trackOpen = false">
 
 {{-- ══════════════════════════════════════════════════
      NAV — floating pill (Bobgo pattern)
@@ -2046,7 +2047,7 @@ body { font-family: var(--font); color: var(--text); background: #fff; -webkit-f
                 <a href="{{ url('/dashboard') }}" class="btn-nav-fill">Dashboard</a>
             @else
                 <a href="{{ route('login') }}"    class="nav-link">Sign in</a>
-                <a href="{{ route('register') }}" class="btn-nav-outline">Track</a>
+                <button type="button" @click="trackOpen = true; $nextTick(() => $refs.trackInput?.focus())" class="btn-nav-outline">Track</button>
                 <a href="{{ route('send') }}" class="btn-nav-fill">Send Parcel
                     <svg width="15" height="15" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"/></svg>
                 </a>
@@ -2114,10 +2115,10 @@ body { font-family: var(--font); color: var(--text); background: #fff; -webkit-f
                             Send Parcel
                             <svg width="15" height="15" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"/></svg>
                         </a>
-                        <a href="{{ route('register') }}" class="hero-cta-secondary">
+                        <button type="button" @click="trackOpen = true; $nextTick(() => $refs.trackInput?.focus())" class="hero-cta-secondary">
                             <svg width="15" height="15" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
                             Track a parcel
-                        </a>
+                        </button>
                     </div>
 
                     {{-- Service context chips — not buttons, just "Available for X" context --}}
@@ -3154,6 +3155,86 @@ body { font-family: var(--font); color: var(--text); background: #fff; -webkit-f
     document.querySelectorAll('.reveal, .reveal-group').forEach(el => io.observe(el));
 })();
 </script>
+
+
+{{-- ── Track order modal ── --}}
+<style>
+.track-backdrop {
+    position: fixed; inset: 0; z-index: 1000;
+    background: rgba(11,19,10,0.55);
+    backdrop-filter: blur(4px); -webkit-backdrop-filter: blur(4px);
+    display: flex; align-items: center; justify-content: center;
+    padding: 24px;
+}
+</style>
+<div x-show="trackOpen"
+     x-cloak
+     x-transition:enter="transition ease-out duration-200"
+     x-transition:enter-start="opacity-0"
+     x-transition:enter-end="opacity-100"
+     x-transition:leave="transition ease-in duration-150"
+     x-transition:leave-start="opacity-100"
+     x-transition:leave-end="opacity-0"
+     @click.self="trackOpen = false"
+     class="track-backdrop">
+
+    <div x-show="trackOpen"
+         x-transition:enter="transition ease-out duration-200"
+         x-transition:enter-start="opacity-0 scale-95 translate-y-2"
+         x-transition:enter-end="opacity-100 scale-100 translate-y-0"
+         x-transition:leave="transition ease-in duration-150"
+         x-transition:leave-start="opacity-100 scale-100"
+         x-transition:leave-end="opacity-0 scale-95"
+         style="background:#fff;border-radius:22px;width:100%;max-width:460px;box-shadow:0 32px 80px rgba(11,19,10,0.25),0 8px 24px rgba(11,19,10,0.12);overflow:hidden;">
+
+        {{-- Header --}}
+        <div style="padding:28px 28px 0;display:flex;align-items:flex-start;justify-content:space-between;gap:12px;">
+            <div>
+                <div style="width:44px;height:44px;border-radius:12px;background:#edf8df;display:flex;align-items:center;justify-content:center;margin-bottom:16px;">
+                    <svg width="20" height="20" fill="none" stroke="#4a9a1f" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
+                </div>
+                <h2 style="font-family:'Inter','DM Sans',sans-serif;font-size:20px;font-weight:700;color:#1C3829;letter-spacing:-0.02em;margin:0 0 6px;">Track your parcel</h2>
+                <p style="font-size:14px;color:#6b7280;margin:0;">Enter your order number to see live delivery updates.</p>
+            </div>
+            <button type="button" @click="trackOpen = false"
+                    style="flex-shrink:0;width:32px;height:32px;border-radius:50%;border:none;background:#f3f4f6;color:#6b7280;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:background 0.15s;"
+                    onmouseover="this.style.background='#e5e7eb'" onmouseout="this.style.background='#f3f4f6'">
+                <svg width="14" height="14" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M6 18L18 6M6 6l12 12"/></svg>
+            </button>
+        </div>
+
+        {{-- Form --}}
+        <form style="padding:20px 28px 28px;"
+              x-data="{ loading: false }"
+              @submit.prevent="if(trackNum.trim()){ loading = true; window.location='/track/'+trackNum.trim().toUpperCase() }">
+            <input x-model="trackNum"
+                   x-ref="trackInput"
+                   type="text"
+                   placeholder="e.g. NHM-20260812-XXXX"
+                   autocomplete="off"
+                   spellcheck="false"
+                   :disabled="loading"
+                   style="width:100%;font-family:'DM Sans',sans-serif;font-size:15px;font-weight:500;color:#0b130a;background:#f9fafb;border:1.5px solid #e5e7eb;border-radius:12px;padding:14px 16px;outline:none;letter-spacing:0.02em;transition:border-color 0.15s,box-shadow 0.15s,background 0.15s;"
+                   @focus="$el.style.borderColor='#1C3829';$el.style.background='#fff';$el.style.boxShadow='0 0 0 3px rgba(28,56,41,0.08)'"
+                   @blur="$el.style.borderColor='#e5e7eb';$el.style.background='#f9fafb';$el.style.boxShadow='none'">
+            <p style="font-size:12px;color:#9ca3af;margin:8px 0 20px;">Order numbers look like <strong style="color:#6b7280;font-weight:600;">NHM-20260812-XXXX</strong></p>
+            <button type="submit"
+                    :disabled="loading"
+                    :style="loading ? 'opacity:0.8;cursor:not-allowed;' : ''"
+                    style="width:100%;background:#1C3829;color:#fff;font-family:'DM Sans',sans-serif;font-size:14.5px;font-weight:700;padding:14px;border:none;border-radius:12px;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:8px;transition:background 0.18s,opacity 0.18s;">
+                <span x-show="!loading" style="display:inline-flex;align-items:center;gap:8px;">
+                    <svg width="15" height="15" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M21 21l-4.35-4.35M17 11A6 6 0 115 11a6 6 0 0112 0z"/></svg>
+                    Track parcel
+                </span>
+                <span x-show="loading" style="display:inline-flex;align-items:center;gap:9px;">
+                    <svg width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24" style="animation:spin .8s linear infinite"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"/></svg>
+                    Looking up order…
+                </span>
+            </button>
+        </form>
+
+    </div>
+</div>
 
 </body>
 </html>

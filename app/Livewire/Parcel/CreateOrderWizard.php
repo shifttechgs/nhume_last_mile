@@ -48,13 +48,13 @@ class CreateOrderWizard extends Component
         $this->scheduled_at = now()->addHour()->format('Y-m-d\TH:i');
     }
 
-    #[Computed]
+    #[Computed(persist: true)]
     public function collectionPoints(): \Illuminate\Database\Eloquent\Collection
     {
         try {
             return CollectionPoint::where('is_active', true)->get();
         } catch (\Exception) {
-            return collect();
+            return CollectionPoint::query()->whereRaw('0=1')->get();
         }
     }
 
