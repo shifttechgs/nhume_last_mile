@@ -109,8 +109,9 @@
                             Next
                             <svg width="14" height="14" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"/></svg>
                         </span>
-                        <span wire:loading wire:target="nextStep">
-                            <svg width="14" height="14" fill="none" stroke="currentColor" viewBox="0 0 24 24" style="animation:spin 0.8s linear infinite"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"/></svg>
+                        <span wire:loading wire:target="nextStep" style="display:inline-flex;align-items:center;gap:6px;">
+                            <svg width="14" height="14" fill="none" stroke="currentColor" viewBox="0 0 24 24" style="animation:spin 0.8s linear infinite;flex-shrink:0;"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"/></svg>
+                            Loading...
                         </span>
                     </button>
                 </div>
@@ -154,7 +155,7 @@
                         @if($pickup_type === 'biker_collection')
                         <div class="field">
                             <label class="flabel">Pickup address</label>
-                            <input wire:model.blur="pickup_address" type="text" class="finput" placeholder="Where should the biker collect from?">
+                            <input wire:model.live.debounce.400ms="pickup_address" type="text" class="finput" placeholder="Where should the biker collect from?">
                             @error('pickup_address')<p class="field-err">{{ $message }}</p>@enderror
                         </div>
                         @endif
@@ -162,7 +163,7 @@
                         {{-- Delivery address --}}
                         <div class="field">
                             <label class="flabel">Delivery address</label>
-                            <input wire:model.blur="dropoff_address" type="text" class="finput" placeholder="Where is it going?">
+                            <input wire:model.live.debounce.400ms="dropoff_address" type="text" class="finput" placeholder="Where is it going?">
                             @error('dropoff_address')<p class="field-err">{{ $message }}</p>@enderror
                         </div>
 
@@ -187,7 +188,7 @@
                         <div class="field-row">
                             <div class="field" style="flex:1">
                                 <label class="flabel">Weight (kg) <span class="fopt">optional</span></label>
-                                <input wire:model.blur="weight_kg" type="number" step="0.1" min="0" class="finput" placeholder="e.g. 1.5">
+                                <input wire:model.live.debounce.400ms="weight_kg" type="number" step="0.1" min="0" class="finput" placeholder="e.g. 1.5">
                             </div>
                             <div class="field" style="flex:1;display:flex;flex-direction:column;justify-content:flex-end;">
                                 <label class="flabel">&nbsp;</label>
@@ -238,12 +239,12 @@
                         <div class="field-row">
                             <div class="field" style="flex:1">
                                 <label class="flabel">Full name</label>
-                                <input wire:model.blur="recipient_name" type="text" class="finput" placeholder="Recipient's name">
+                                <input wire:model.live.debounce.400ms="recipient_name" type="text" class="finput" placeholder="Recipient's name">
                                 @error('recipient_name')<p class="field-err">{{ $message }}</p>@enderror
                             </div>
                             <div class="field" style="flex:1">
                                 <label class="flabel">Phone</label>
-                                <input wire:model.blur="recipient_phone" type="tel" class="finput" placeholder="+263...">
+                                <input wire:model.live.debounce.400ms="recipient_phone" type="tel" class="finput" placeholder="+263...">
                                 @error('recipient_phone')<p class="field-err">{{ $message }}</p>@enderror
                             </div>
                         </div>
@@ -354,8 +355,8 @@
                             Place order
                             <svg width="14" height="14" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
                         </span>
-                        <span wire:loading wire:target="placeOrder" class="btn-label">
-                            <svg width="14" height="14" fill="none" stroke="currentColor" viewBox="0 0 24 24" style="animation:spin 0.8s linear infinite"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"/></svg>
+                        <span wire:loading wire:target="placeOrder" class="btn-label" style="display:inline-flex;align-items:center;gap:6px;">
+                            <svg width="14" height="14" fill="none" stroke="currentColor" viewBox="0 0 24 24" style="animation:spin 0.8s linear infinite;flex-shrink:0;"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"/></svg>
                             Placing order...
                         </span>
                     </button>

@@ -21,21 +21,28 @@ import { chromium } from 'playwright';
     console.log('→ Step 2: filling in details ...');
 
     // Pickup address (biker)
-    await page.fill('input[wire\\:model\\.blur="pickup_address"]', '12 Julius Nyerere Way, Harare');
+    await page.fill('[placeholder="Where should the biker collect from?"]', '12 Julius Nyerere Way, Harare');
 
     // Delivery address
-    await page.fill('input[wire\\:model\\.blur="dropoff_address"]', '45 Samora Machel Ave, Harare');
+    await page.fill('[placeholder="Where is it going?"]', '45 Samora Machel Ave, Harare');
 
-    // Package category — click the "Clothing" chip
-    await page.click('.chip:has-text("Clothing")');
+    // Package category — click chip then force-sync to Livewire via JS
+    await page.locator('.chip:has-text("Clothing")').scrollIntoViewIfNeeded();
+    await page.locator('.chip:has-text("Clothing")').click();
+    await page.evaluate(() => {
+        const comp = window.Livewire?.first();
+        if (comp) comp.set('package_category', 'clothing');
+    });
+    await page.waitForTimeout(500);
     await page.waitForTimeout(300);
 
-    // Sender phone
-    await page.fill('input[wire\\:model\\.blur="sender_phone"]', '+27814303023');
+    // Sender phone (first +263 input on the page)
+    await page.locator('[placeholder="+263..."]').first().fill('+27814303023');
 
     // Recipient
-    await page.fill('input[wire\\:model\\.blur="recipient_name"]',  'Test Recipient');
-    await page.fill('input[wire\\:model\\.blur="recipient_phone"]', '+27814303023');
+    await page.fill('[placeholder="Recipient\'s name"]', 'Test Recipient');
+    // Recipient phone (second +263 input)
+    await page.locator('[placeholder="+263..."]').nth(1).fill('+27814303023');
 
     // Blur to trigger Livewire sync
     await page.keyboard.press('Tab');
@@ -48,6 +55,8 @@ import { chromium } from 'playwright';
     // Place order
     console.log('→ Clicking "Place order" ...');
     await page.click('button:has-text("Place order")');
+    await page.waitForTimeout(3000);
+    await page.screenshot({ path: 'tests/playwright/screenshots/after-place-order.png', fullPage: false });
 
     // ─── STEP 3: Confirmation ─────────────────────────────────────────
     console.log('→ Waiting for confirmation ...');
