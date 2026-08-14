@@ -15,7 +15,9 @@ final class TaskRepository
 
     public function findByOrderNumber(string $orderNumber): ?Task
     {
-        return Task::where('order_number', $orderNumber)->first();
+        return Task::where('order_number', $orderNumber)
+            ->with(['user:id,name,phone', 'assignedDriver.user:id,name,phone', 'collectionPoint'])
+            ->first();
     }
 
     public function orderNumberExists(string $orderNumber): bool

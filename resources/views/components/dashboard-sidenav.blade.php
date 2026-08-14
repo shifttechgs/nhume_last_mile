@@ -42,11 +42,11 @@
 @endphp
 
 {{-- ── Logo ──────────────────────────────────────────────── --}}
-<div class="flex items-center h-[60px] flex-shrink-0"
-     style="padding: 0 14px; border-bottom: 1px solid rgba(255,255,255,0.055);">
+<div class="flex items-center flex-shrink-0"
+     style="height:64px;padding:0 16px;border-bottom:1px solid rgba(255,255,255,0.07);">
     <a href="{{ route('dashboard') }}" class="flex items-center overflow-hidden">
         <img src="/images/nhume_logo_v3.png" alt="Nhume"
-             style="height:48px;width:auto;flex-shrink:0;mix-blend-mode:multiply;">
+             style="height:56px;width:auto;flex-shrink:0;mix-blend-mode:screen;filter:brightness(1.2);">
     </a>
 </div>
 

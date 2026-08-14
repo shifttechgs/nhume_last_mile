@@ -211,8 +211,8 @@
                 @php
                     $tiers = [
                         ['label' => 'Verified',  'color' => '#6bc630', 'count' => $verifiedDrivers],
-                        ['label' => 'Reviewed',  'color' => '#3b82f6', 'count' => \App\Models\TransporterProfile::where('trust_tier','manually_reviewed')->count()],
-                        ['label' => 'ID Sent',   'color' => '#f59e0b', 'count' => \App\Models\TransporterProfile::where('trust_tier','id_submitted')->count()],
+                        ['label' => 'Reviewed',  'color' => '#3b82f6', 'count' => $reviewedDrivers],
+                        ['label' => 'ID Sent',   'color' => '#f59e0b', 'count' => $idSubmittedDrivers],
                         ['label' => 'New',       'color' => '#e5e7eb', 'count' => $pendingReview],
                     ];
                     $total = max($totalDrivers, 1);

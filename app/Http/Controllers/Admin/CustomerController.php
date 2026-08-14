@@ -30,7 +30,7 @@ class CustomerController extends Controller
 
         $customers = $query->paginate(25)->withQueryString();
 
-        $total = User::where('role', UserRole::Sender)->count();
+        $total = $customers->total(); // paginator already has this count, no extra query needed
 
         return view('admin.customers.index', compact('customers', 'total'));
     }
@@ -67,7 +67,6 @@ class CustomerController extends Controller
     {
         abort_unless($customer->role === UserRole::Sender, 404);
 
-        $customer->load('tasks');
         $orders = $customer->tasks()->latest()->paginate(15);
 
         return view('admin.customers.show', compact('customer', 'orders'));

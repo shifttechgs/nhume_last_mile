@@ -16,6 +16,7 @@ use App\Models\User;
 use App\Services\ParcelOrderService;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Cache;
 use Illuminate\View\View;
 
 class OrderController extends Controller
@@ -43,10 +44,17 @@ class OrderController extends Controller
 
         $orders = $query->paginate(25)->withQueryString();
 
-        $counts = collect(TaskStatus::cases())->mapWithKeys(
-            fn ($s) => [$s->value => Task::where('status', $s->value)->count()]
-        )->toArray();
-        $counts['total'] = Task::count();
+        $counts = Cache::remember('admin.order_status_counts', 120, function () {
+            $rawCounts = Task::selectRaw('status, COUNT(*) as cnt')
+                ->groupBy('status')
+                ->pluck('cnt', 'status')
+                ->toArray();
+
+            $counts = array_fill_keys(array_column(TaskStatus::cases(), 'value'), 0);
+            $counts = array_merge($counts, $rawCounts);
+            $counts['total'] = array_sum($rawCounts);
+            return $counts;
+        });
 
         return view('admin.orders.index', compact('orders', 'counts'));
     }
@@ -139,6 +147,9 @@ class OrderController extends Controller
             ]);
         }
 
+        Cache::forget('admin.order_status_counts');
+        Cache::forget('dashboard.total_orders');
+
         return redirect()
             ->route('admin.orders.show', $task)
             ->with('success', "Order {$task->order_number} created successfully.");
@@ -162,6 +173,9 @@ class OrderController extends Controller
         ]);
 
         $order->update(['status' => $request->status]);
+
+        Cache::forget('admin.order_status_counts');
+        Cache::forget('dashboard.total_orders');
 
         return back()->with('success', 'Order status updated.');
     }

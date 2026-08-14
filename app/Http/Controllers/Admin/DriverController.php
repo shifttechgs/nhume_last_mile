@@ -12,6 +12,7 @@ use App\Models\TransporterProfile;
 use App\Models\User;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\View\View;
@@ -87,13 +88,15 @@ class DriverController extends Controller
 
         $drivers = $query->paginate(20)->withQueryString();
 
-        $counts = [
-            'total'    => TransporterProfile::count(),
-            'verified' => TransporterProfile::where('trust_tier', TrustTier::Verified->value)->count(),
-            'reviewed' => TransporterProfile::where('trust_tier', TrustTier::ManuallyReviewed->value)->count(),
-            'pending'  => TransporterProfile::where('trust_tier', TrustTier::Unverified->value)->count(),
-            'active'   => TransporterProfile::where('is_active', true)->count(),
-        ];
+        $counts = Cache::remember('admin.driver_counts', 300, fn () =>
+            TransporterProfile::selectRaw("
+                COUNT(*) as total,
+                COUNT(CASE WHEN trust_tier = 'verified' THEN 1 END) as verified,
+                COUNT(CASE WHEN trust_tier = 'manually_reviewed' THEN 1 END) as reviewed,
+                COUNT(CASE WHEN trust_tier = 'unverified' THEN 1 END) as pending,
+                COUNT(CASE WHEN is_active THEN 1 END) as active
+            ")->first()->toArray()
+        );
 
         return view('admin.drivers.index', compact('drivers', 'counts'));
     }
@@ -108,9 +111,13 @@ class DriverController extends Controller
             ->limit(10)
             ->get();
 
+        $taskCountRow = Task::where('assigned_driver_id', $driver->id)
+            ->selectRaw("COUNT(*) as total, COUNT(CASE WHEN status = 'delivered' THEN 1 END) as delivered")
+            ->first();
+
         $taskCounts = [
-            'total'     => Task::where('assigned_driver_id', $driver->id)->count(),
-            'delivered' => Task::where('assigned_driver_id', $driver->id)->where('status', 'delivered')->count(),
+            'total'     => (int) ($taskCountRow->total ?? 0),
+            'delivered' => (int) ($taskCountRow->delivered ?? 0),
         ];
 
         return view('admin.drivers.show', compact('driver', 'recentTasks', 'taskCounts'));
@@ -130,12 +137,18 @@ class DriverController extends Controller
             'reviewed_at' => now(),
         ]);
 
+        Cache::forget('admin.driver_counts');
+        Cache::forget('dashboard.driver_stats');
+
         return back()->with('success', "Trust tier updated to {$request->trust_tier}.");
     }
 
     public function toggleActive(TransporterProfile $driver): RedirectResponse
     {
         $driver->update(['is_active' => !$driver->is_active]);
+
+        Cache::forget('admin.driver_counts');
+        Cache::forget('dashboard.driver_stats');
 
         return back()->with('success', $driver->is_active ? 'Driver activated.' : 'Driver deactivated.');
     }

@@ -8,6 +8,7 @@ use App\Models\Task;
 use App\Models\TransporterProfile;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Cache;
 use Illuminate\View\View;
 
 class DashboardController extends Controller
@@ -17,9 +18,9 @@ class DashboardController extends Controller
         $user = Auth::user();
 
         $data = match($user->role) {
-            UserRole::Admin           => $this->adminData(),
+            UserRole::Admin            => $this->adminData(),
             UserRole::TransportPartner => $this->driverData($user),
-            default                   => $this->senderData($user),
+            default                    => $this->senderData($user),
         };
 
         return view('dashboard', $data);
@@ -27,33 +28,63 @@ class DashboardController extends Controller
 
     private function adminData(): array
     {
-        $totalOrders    = Task::count();
-        $totalDrivers   = TransporterProfile::count();
-        $activeDrivers  = TransporterProfile::where('is_active', true)->count();
-        $pendingReview  = TransporterProfile::where('trust_tier', TrustTier::Unverified->value)->count();
-        $verifiedDrivers= TransporterProfile::where('trust_tier', TrustTier::Verified->value)->count();
+        // Aggregate cached for 5 min — replaces 7 separate live queries per page load.
+        // The cache is busted automatically when a driver's trust_tier or is_active changes
+        // via an Eloquent observer (see TransporterProfile model) — for now TTL is sufficient.
+        // Cache as array — never serialize Eloquent model objects into cache.
+        $driverStats = Cache::remember('dashboard.driver_stats', 300, fn () =>
+            TransporterProfile::selectRaw("
+                COUNT(*) as total_drivers,
+                COUNT(CASE WHEN is_active THEN 1 END) as active_drivers,
+                COUNT(CASE WHEN trust_tier = ? THEN 1 END) as pending_review,
+                COUNT(CASE WHEN trust_tier = ? THEN 1 END) as verified_drivers,
+                COUNT(CASE WHEN trust_tier = ? THEN 1 END) as reviewed_drivers,
+                COUNT(CASE WHEN trust_tier = ? THEN 1 END) as id_submitted_drivers
+            ", [
+                TrustTier::Unverified->value,
+                TrustTier::Verified->value,
+                TrustTier::ManuallyReviewed->value,
+                TrustTier::IdSubmitted->value,
+            ])->first()->toArray()
+        );
 
-        $recentOrders = Task::with('user')
+        $totalOrders     = Cache::remember('dashboard.total_orders', 120, fn () => Task::count());
+        $totalDrivers    = (int) $driverStats['total_drivers'];
+        $activeDrivers   = (int) $driverStats['active_drivers'];
+        $pendingReview   = (int) $driverStats['pending_review'];
+        $verifiedDrivers = (int) $driverStats['verified_drivers'];
+        $reviewedDrivers = (int) $driverStats['reviewed_drivers'];
+        $idSubmittedDrivers = (int) $driverStats['id_submitted_drivers'];
+
+        $recentOrders = Task::select(['id','order_number','status','pickup_address','dropoff_address','user_id','created_at'])
+            ->with('user:id,name')
             ->latest()
             ->limit(10)
             ->get();
 
         return compact(
             'totalOrders', 'totalDrivers', 'activeDrivers',
-            'pendingReview', 'verifiedDrivers', 'recentOrders'
+            'pendingReview', 'verifiedDrivers', 'reviewedDrivers',
+            'idSubmittedDrivers', 'recentOrders'
         );
     }
 
     private function driverData(User $user): array
     {
-        $profile        = $user->transporterProfile;
-        $assignedTasks  = Task::where('assigned_driver_id', $profile?->id)->count();
-        $completedTasks = Task::where('assigned_driver_id', $profile?->id)
-            ->where('status', 'delivered')
-            ->count();
+        $profile = $user->transporterProfile;
+        $driverId = $profile?->id;
 
+        $taskStats = Cache::remember("dashboard.driver_stats.{$driverId}", 120, fn () =>
+            Task::where('assigned_driver_id', $driverId)
+                ->selectRaw("COUNT(*) as total, COUNT(CASE WHEN status = 'delivered' THEN 1 END) as completed")
+                ->first()
+                ->toArray()
+        );
 
-        $recentOrders = Task::where('assigned_driver_id', $profile?->id)
+        $assignedTasks  = (int) $taskStats['total'];
+        $completedTasks = (int) $taskStats['completed'];
+
+        $recentOrders = Task::where('assigned_driver_id', $driverId)
             ->latest()
             ->limit(8)
             ->get();
@@ -63,16 +94,21 @@ class DashboardController extends Controller
 
     private function senderData(User $user): array
     {
-        $totalOrders     = Task::where('user_id', $user->id)->count();
-        $pendingOrders   = Task::where('user_id', $user->id)
-            ->whereIn('status', ['posted', 'assigned', 'in_progress'])
-            ->count();
-        $deliveredOrders = Task::where('user_id', $user->id)
-            ->where('status', 'delivered')
-            ->count();
-        $cancelledOrders = Task::where('user_id', $user->id)
-            ->where('status', 'cancelled')
-            ->count();
+        $orderStats = Cache::remember("dashboard.sender_stats.{$user->id}", 120, fn () =>
+            Task::where('user_id', $user->id)
+                ->selectRaw("
+                    COUNT(*) as total,
+                    COUNT(CASE WHEN status IN ('posted','assigned','in_progress') THEN 1 END) as pending,
+                    COUNT(CASE WHEN status = 'delivered' THEN 1 END) as delivered,
+                    COUNT(CASE WHEN status = 'cancelled' THEN 1 END) as cancelled
+                ")->first()
+                ->toArray()
+        );
+
+        $totalOrders     = (int) $orderStats['total'];
+        $pendingOrders   = (int) $orderStats['pending'];
+        $deliveredOrders = (int) $orderStats['delivered'];
+        $cancelledOrders = (int) $orderStats['cancelled'];
 
         $activeOrders = Task::where('user_id', $user->id)
             ->whereIn('status', ['posted', 'assigned', 'in_progress'])
