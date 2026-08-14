@@ -43,7 +43,7 @@
             {{-- Brand --}}
             <div>
                 <div style="margin-bottom:14px;">
-                    <img src="/images/nhume_logo_v2.png" alt="Nhume" style="height:46px;width:auto;filter:brightness(0) invert(1);">
+                    <img src="/images/nhume_logo_v3.png" alt="Nhume" style="height:46px;width:auto;">
                 </div>
                 <p style="font-family:'DM Sans',system-ui,sans-serif;font-size:13.5px;color:rgba(255,255,255,0.28);line-height:1.7;margin-bottom:22px;max-width:210px">Moving parcels with drivers already in motion.</p>
                 <div style="display:flex;gap:8px;">

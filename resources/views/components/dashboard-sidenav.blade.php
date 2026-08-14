@@ -45,8 +45,8 @@
 <div class="flex items-center h-[60px] flex-shrink-0"
      style="padding: 0 14px; border-bottom: 1px solid rgba(255,255,255,0.055);">
     <a href="{{ route('dashboard') }}" class="flex items-center overflow-hidden">
-        <img src="/images/nhume_logo_v2.png" alt="Nhume"
-             style="height:34px;width:auto;flex-shrink:0;filter:brightness(0) invert(1);">
+        <img src="/images/nhume_logo_v3.png" alt="Nhume"
+             style="height:34px;width:auto;flex-shrink:0;">
     </a>
 </div>
 
