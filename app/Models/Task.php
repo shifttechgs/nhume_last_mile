@@ -19,6 +19,7 @@ class Task extends Model
         'pickup_address', 'pickup_lat', 'pickup_lng',
         'dropoff_address', 'dropoff_lat', 'dropoff_lng',
         'item_description', 'weight_kg', 'errand_instructions',
+        'assigned_driver_id',
         'sender_phone', 'recipient_name', 'recipient_phone',
         'offered_price', 'price_estimate', 'is_fragile',
         'notes', 'scheduled_at',
@@ -55,5 +56,10 @@ class Task extends Model
     public function collectionPoint(): BelongsTo
     {
         return $this->belongsTo(CollectionPoint::class);
+    }
+
+    public function assignedDriver(): BelongsTo
+    {
+        return $this->belongsTo(TransporterProfile::class, 'assigned_driver_id');
     }
 }

@@ -103,7 +103,12 @@
       "Bash(Start-Sleep 3)",
       "Bash(Invoke-WebRequest -Uri \"http://127.0.0.1:8000\" -UseBasicParsing -TimeoutSec 5)",
       "Bash(Select-Object -ExpandProperty StatusCode)",
-      "Bash(git checkout *)"
+      "Bash(git checkout *)",
+      "Bash(composer require *)",
+      "Bash(where npx *)",
+      "Bash(curl *)",
+      "Bash(powershell -Command \"\\(Get-Content .env\\) -replace '^QUEUE_CONNECTION=database', 'QUEUE_CONNECTION=sync' | Set-Content .env\")",
+      "Bash(powershell -Command \"\\(Get-Content .env\\) -replace 'TWILIO_FROM=.*', 'TWILIO_FROM=+12512612871' | Set-Content .env\")"
     ]
   }
 }

@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\ParcelController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\TrackController;
@@ -10,7 +11,7 @@ Route::get('/', fn () => view('welcome'))->name('home');
 Route::get('/send',              [ParcelController::class, 'create'])->name('send');
 Route::get('/track/{orderNumber?}', [TrackController::class, 'show'])->name('track');
 
-Route::get('/dashboard', fn () => view('dashboard'))
+Route::get('/dashboard', [DashboardController::class, 'index'])
     ->middleware(['auth', 'verified'])
     ->name('dashboard');
 

@@ -31,6 +31,14 @@ export default {
                     600: '#d97706',
                     700: '#b45309',
                 },
+                brand: {
+                    green:   '#6bc630',
+                    light:   '#d4f09e',
+                    muted:   '#a3d96a',
+                    dark:    '#0D1511',
+                    forest:  '#1C3829',
+                    surface: '#F5F7F5',
+                },
             },
             animation: {
                 'marquee': 'marquee 35s linear infinite',
