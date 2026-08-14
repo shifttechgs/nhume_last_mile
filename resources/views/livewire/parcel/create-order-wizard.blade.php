@@ -105,14 +105,10 @@
                     <button type="button" wire:click="nextStep"
                             wire:loading.attr="disabled" wire:target="nextStep"
                             class="btn-wiz-primary">
-                        <span wire:loading.remove wire:target="nextStep" class="btn-label">
-                            Next
-                            <svg width="14" height="14" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"/></svg>
-                        </span>
-                        <span wire:loading wire:target="nextStep" style="display:inline-flex;align-items:center;gap:6px;">
-                            <svg width="14" height="14" fill="none" stroke="currentColor" viewBox="0 0 24 24" style="animation:spin 0.8s linear infinite;flex-shrink:0;"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"/></svg>
-                            Loading...
-                        </span>
+                        <svg wire:loading wire:target="nextStep" width="14" height="14" fill="none" stroke="currentColor" viewBox="0 0 24 24" style="animation:spin 0.8s linear infinite;flex-shrink:0;"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"/></svg>
+                        <span wire:loading wire:target="nextStep">Loading...</span>
+                        <span wire:loading.remove wire:target="nextStep">Next</span>
+                        <svg wire:loading.remove wire:target="nextStep" width="14" height="14" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"/></svg>
                     </button>
                 </div>
             </div>
@@ -351,14 +347,10 @@
                             wire:loading.attr="disabled" wire:target="placeOrder"
                             @disabled($step < 2)
                             class="btn-wiz-primary" style="width:100%;">
-                        <span wire:loading.remove wire:target="placeOrder" class="btn-label">
-                            Place order
-                            <svg width="14" height="14" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
-                        </span>
-                        <span wire:loading wire:target="placeOrder" class="btn-label" style="display:inline-flex;align-items:center;gap:6px;">
-                            <svg width="14" height="14" fill="none" stroke="currentColor" viewBox="0 0 24 24" style="animation:spin 0.8s linear infinite;flex-shrink:0;"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"/></svg>
-                            Placing order...
-                        </span>
+                        <svg wire:loading wire:target="placeOrder" width="14" height="14" fill="none" stroke="currentColor" viewBox="0 0 24 24" style="animation:spin 0.8s linear infinite;flex-shrink:0;"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"/></svg>
+                        <span wire:loading wire:target="placeOrder">Placing order...</span>
+                        <span wire:loading.remove wire:target="placeOrder">Place order</span>
+                        <svg wire:loading.remove wire:target="placeOrder" width="14" height="14" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
                     </button>
                     <p class="summary-note">No payment now. You pay on delivery.</p>
                 </div>
