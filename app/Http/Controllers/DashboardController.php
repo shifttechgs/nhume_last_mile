@@ -68,19 +68,33 @@ class DashboardController extends Controller
 
     private function senderData(User $user): array
     {
-        $totalOrders    = Task::where('user_id', $user->id)->count();
-        $pendingOrders  = Task::where('user_id', $user->id)
+        $totalOrders     = Task::where('user_id', $user->id)->count();
+        $pendingOrders   = Task::where('user_id', $user->id)
             ->whereIn('status', ['posted', 'assigned', 'in_progress'])
             ->count();
         $deliveredOrders = Task::where('user_id', $user->id)
             ->where('status', 'delivered')
             ->count();
+        $cancelledOrders = Task::where('user_id', $user->id)
+            ->where('status', 'cancelled')
+            ->count();
 
-        $recentOrders = Task::where('user_id', $user->id)
+        $activeOrders = Task::where('user_id', $user->id)
+            ->whereIn('status', ['posted', 'assigned', 'in_progress'])
+            ->with('assignedDriver.user')
             ->latest()
-            ->limit(8)
             ->get();
 
-        return compact('totalOrders', 'pendingOrders', 'deliveredOrders', 'recentOrders');
+        $pastOrders = Task::where('user_id', $user->id)
+            ->whereIn('status', ['delivered', 'cancelled'])
+            ->with('assignedDriver.user')
+            ->latest()
+            ->limit(10)
+            ->get();
+
+        return compact(
+            'totalOrders', 'pendingOrders', 'deliveredOrders',
+            'cancelledOrders', 'activeOrders', 'pastOrders'
+        );
     }
 }

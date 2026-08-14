@@ -284,67 +284,225 @@
     @endif
 
     @elseif($isSender)
+    @php
+        $sc = [
+            'draft'       => ['bg'=>'#f3f4f6','text'=>'#6b7280','dot'=>'#9ca3af','label'=>'Draft'],
+            'posted'      => ['bg'=>'#fef3c7','text'=>'#b45309','dot'=>'#f59e0b','label'=>'Order received'],
+            'assigned'    => ['bg'=>'#dbeafe','text'=>'#1d4ed8','dot'=>'#3b82f6','label'=>'Driver assigned'],
+            'in_progress' => ['bg'=>'#ede9fe','text'=>'#6d28d9','dot'=>'#8b5cf6','label'=>'On the way'],
+            'delivered'   => ['bg'=>'#dcfce7','text'=>'#15803d','dot'=>'#22c55e','label'=>'Delivered'],
+            'cancelled'   => ['bg'=>'#fee2e2','text'=>'#dc2626','dot'=>'#ef4444','label'=>'Cancelled'],
+        ];
+        $timeline = \App\Enums\TaskStatus::timeline();
+    @endphp
 
-    {{-- ── SENDER STATS ─────────────────────────────────── --}}
-    <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
-        <div class="stat-card">
-            <div class="flex items-center justify-between mb-3">
-                <span class="text-xs font-semibold text-gray-400 uppercase tracking-wide">Total Orders</span>
-                <div class="w-8 h-8 rounded-lg flex items-center justify-center" style="background:#F0FDE4;">
-                    <svg width="15" height="15" fill="none" stroke="#6bc630" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24">
-                        <line x1="16.5" y1="9.4" x2="7.5" y2="4.21"/>
-                        <path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/>
-                    </svg>
-                </div>
-            </div>
-            <div class="text-3xl font-bold text-gray-900 tabular-nums">{{ $totalOrders }}</div>
-            <div class="text-xs text-gray-400 mt-1">Parcels sent</div>
+    {{-- ── Stats ───────────────────────────────────────────── --}}
+    <div class="grid grid-cols-2 sm:grid-cols-4 gap-3">
+        @foreach([
+            ['label'=>'Total',      'value'=>$totalOrders,    'color'=>'#6b7280', 'bg'=>'#f9fafb'],
+            ['label'=>'In transit', 'value'=>$pendingOrders,  'color'=>'#d97706', 'bg'=>'#FFFBEB'],
+            ['label'=>'Delivered',  'value'=>$deliveredOrders,'color'=>'#15803d', 'bg'=>'#F0FDE4'],
+            ['label'=>'Cancelled',  'value'=>$cancelledOrders,'color'=>'#dc2626', 'bg'=>'#FFF1F1'],
+        ] as $s)
+        <div class="stat-card" style="border-left:3px solid {{ $s['color'] }};">
+            <div class="text-2xl font-bold tabular-nums" style="color:{{ $s['color'] }}">{{ $s['value'] }}</div>
+            <div class="text-xs font-medium text-gray-400 mt-0.5">{{ $s['label'] }}</div>
         </div>
-
-        <div class="stat-card">
-            <div class="flex items-center justify-between mb-3">
-                <span class="text-xs font-semibold text-gray-400 uppercase tracking-wide">In Transit</span>
-                <div class="w-8 h-8 rounded-lg flex items-center justify-center" style="background:#FEF3C7;">
-                    <svg width="15" height="15" fill="none" stroke="#d97706" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24">
-                        <circle cx="12" cy="12" r="10"/><polyline points="12,6 12,12 16,14"/>
-                    </svg>
-                </div>
-            </div>
-            <div class="text-3xl font-bold text-gray-900 tabular-nums">{{ $pendingOrders }}</div>
-            <div class="text-xs text-gray-400 mt-1">Active shipments</div>
-        </div>
-
-        <div class="stat-card">
-            <div class="flex items-center justify-between mb-3">
-                <span class="text-xs font-semibold text-gray-400 uppercase tracking-wide">Delivered</span>
-                <div class="w-8 h-8 rounded-lg flex items-center justify-center" style="background:#DCFCE7;">
-                    <svg width="15" height="15" fill="none" stroke="#15803d" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24">
-                        <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22,4 12,14.01 9,11.01"/>
-                    </svg>
-                </div>
-            </div>
-            <div class="text-3xl font-bold text-gray-900 tabular-nums">{{ $deliveredOrders }}</div>
-            <div class="text-xs text-gray-400 mt-1">Successfully delivered</div>
-        </div>
+        @endforeach
     </div>
 
-    {{-- Sender empty or recent orders --}}
-    @if($recentOrders->count() === 0)
-    <div style="background:#fff;border:1px solid #E9EAEC;border-radius:16px;padding:48px 24px;text-align:center;">
-        <div style="width:56px;height:56px;border-radius:16px;background:#F0FDE4;display:flex;align-items:center;justify-content:center;margin:0 auto 16px;">
-            <svg width="26" height="26" fill="none" stroke="#6bc630" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24">
+    {{-- ── Active Orders ────────────────────────────────────── --}}
+    @if($activeOrders->count() > 0)
+    <div class="space-y-4">
+        <div class="flex items-center justify-between">
+            <h2 class="text-sm font-semibold text-gray-800">Active shipments</h2>
+            <span class="text-xs font-semibold px-2 py-0.5 rounded-full" style="background:#fef3c7;color:#b45309;">
+                {{ $activeOrders->count() }} in progress
+            </span>
+        </div>
+
+        @foreach($activeOrders as $order)
+        @php
+            $sv   = $order->status instanceof \App\Enums\TaskStatus ? $order->status->value : $order->status;
+            $badge = $sc[$sv] ?? $sc['draft'];
+            $timelineIdx = collect($timeline)->search(fn($s) => $s->value === $sv) ?? -1;
+            $orderNum = $order->order_number ?? '#'.str_pad($order->id, 5, '0', STR_PAD_LEFT);
+        @endphp
+        <div style="background:#fff;border:1px solid #E9EAEC;border-radius:16px;overflow:hidden;">
+
+            {{-- Card header --}}
+            <div class="flex items-center justify-between px-5 py-4" style="border-bottom:1px solid #F5F6F5;">
+                <div class="flex items-center gap-3">
+                    <div class="font-mono text-xs font-bold text-gray-600">{{ $orderNum }}</div>
+                    <span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-[11px] font-semibold"
+                          style="background:{{ $badge['bg'] }};color:{{ $badge['text'] }};">
+                        <span class="w-1.5 h-1.5 rounded-full animate-pulse" style="background:{{ $badge['dot'] }};"></span>
+                        {{ $badge['label'] }}
+                    </span>
+                </div>
+                <div class="text-xs text-gray-400">{{ $order->created_at->diffForHumans() }}</div>
+            </div>
+
+            <div class="px-5 py-4 space-y-4">
+
+                {{-- Route --}}
+                <div class="flex items-center gap-3">
+                    <div class="flex items-center gap-2 flex-1 min-w-0">
+                        <div class="w-2 h-2 rounded-full flex-shrink-0" style="background:#6bc630;"></div>
+                        <span class="text-sm text-gray-700 truncate">{{ $order->pickup_address }}</span>
+                    </div>
+                    <svg width="20" height="20" fill="none" stroke="#d1d5db" stroke-width="2" viewBox="0 0 24 24" class="flex-shrink-0">
+                        <path d="M5 12h14m-7-7 7 7-7 7"/>
+                    </svg>
+                    <div class="flex items-center gap-2 flex-1 min-w-0 justify-end">
+                        <span class="text-sm text-gray-700 truncate text-right">{{ $order->dropoff_address }}</span>
+                        <div class="w-2 h-2 rounded-full flex-shrink-0" style="background:#3b82f6;"></div>
+                    </div>
+                </div>
+
+                {{-- Timeline progress --}}
+                <div class="flex items-center gap-0">
+                    @foreach($timeline as $i => $step)
+                    @php $done = $timelineIdx >= $i; @endphp
+                    <div class="flex items-center {{ $i < count($timeline)-1 ? 'flex-1' : '' }}">
+                        <div class="flex flex-col items-center gap-1">
+                            <div class="w-6 h-6 rounded-full flex items-center justify-center flex-shrink-0"
+                                 style="background:{{ $done ? '#6bc630' : '#F3F4F6' }};">
+                                @if($done)
+                                <svg width="11" height="11" fill="none" stroke="white" stroke-width="2.5" viewBox="0 0 24 24"><polyline points="20,6 9,17 4,12"/></svg>
+                                @else
+                                <div class="w-1.5 h-1.5 rounded-full" style="background:#D1D5DB;"></div>
+                                @endif
+                            </div>
+                            <div class="text-[9px] font-semibold whitespace-nowrap"
+                                 style="color:{{ $done ? '#6bc630' : '#9ca3af' }};">
+                                {{ $step->label() }}
+                            </div>
+                        </div>
+                        @if($i < count($timeline)-1)
+                        <div class="h-px flex-1 mx-1 mb-3.5" style="background:{{ $timelineIdx > $i ? '#6bc630' : '#E5E7EB' }};"></div>
+                        @endif
+                    </div>
+                    @endforeach
+                </div>
+
+                {{-- Driver + package row --}}
+                <div class="flex items-center justify-between gap-4 flex-wrap">
+                    @if($order->assignedDriver)
+                    <div class="flex items-center gap-2.5">
+                        <div class="w-7 h-7 rounded-full flex items-center justify-center text-xs font-bold text-white flex-shrink-0"
+                             style="background:linear-gradient(135deg,#6bc630,#3a7d1a);">
+                            {{ strtoupper(substr($order->assignedDriver->user->name ?? '?', 0, 1)) }}
+                        </div>
+                        <div>
+                            <div class="text-xs font-semibold text-gray-700">{{ $order->assignedDriver->user->name ?? 'Driver' }}</div>
+                            <div class="text-[10px] text-gray-400">{{ $order->assignedDriver->trust_badge }}</div>
+                        </div>
+                    </div>
+                    @else
+                    <div class="flex items-center gap-2 text-xs text-gray-400">
+                        <svg width="13" height="13" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                            <circle cx="12" cy="12" r="10"/><polyline points="12,6 12,12 16,14"/>
+                        </svg>
+                        Awaiting driver assignment
+                    </div>
+                    @endif
+
+                    <div class="flex items-center gap-4">
+                        @if($order->item_description)
+                        <div class="text-xs text-gray-500">{{ Str::limit($order->item_description, 30) }}</div>
+                        @endif
+                        @if($order->offered_price)
+                        <div class="text-sm font-semibold text-gray-800">${{ number_format($order->offered_price, 2) }}</div>
+                        @endif
+                        <a href="{{ route('track', ['orderNumber' => $order->order_number]) }}"
+                           class="inline-flex items-center gap-1.5 text-xs font-semibold px-3 py-1.5 rounded-lg transition-colors"
+                           style="background:#f0fde4;color:#15803d;">
+                            Track
+                            <svg width="11" height="11" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="m9 18 6-6-6-6"/></svg>
+                        </a>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+        @endforeach
+    </div>
+    @endif
+
+    {{-- ── Empty state (no orders at all) ─────────────────── --}}
+    @if($totalOrders === 0)
+    <div style="background:#fff;border:1px solid #E9EAEC;border-radius:20px;padding:56px 32px;text-align:center;">
+        <div style="width:64px;height:64px;border-radius:20px;background:linear-gradient(135deg,#f0fde4,#dcfce7);display:flex;align-items:center;justify-content:center;margin:0 auto 20px;">
+            <svg width="30" height="30" fill="none" stroke="#6bc630" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24">
                 <line x1="16.5" y1="9.4" x2="7.5" y2="4.21"/>
                 <path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/>
             </svg>
         </div>
-        <h3 class="text-base font-semibold text-gray-800 mb-1">No parcels yet</h3>
-        <p class="text-sm text-gray-400 mb-5">Send your first parcel and it will appear here.</p>
+        <h3 class="text-lg font-bold text-gray-900 mb-2">Send your first parcel</h3>
+        <p class="text-sm text-gray-400 max-w-xs mx-auto mb-6">
+            Moving a parcel between cities? We match it to a driver already travelling that route.
+        </p>
         <a href="{{ route('send') }}"
-           class="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl text-sm font-semibold text-white transition-all"
-           style="background:#6bc630;box-shadow:0 4px 16px rgba(107,198,48,0.3);">
-            <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
-            Send your first parcel
+           class="inline-flex items-center gap-2 px-6 py-3 rounded-xl text-sm font-semibold text-white"
+           style="background:#6bc630;box-shadow:0 4px 20px rgba(107,198,48,0.35);"
+           onmouseover="this.style.background='#5aad28'"
+           onmouseout="this.style.background='#6bc630'">
+            <svg width="15" height="15" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+            Send a parcel
         </a>
+    </div>
+    @endif
+
+    {{-- ── Order history ────────────────────────────────────── --}}
+    @if($pastOrders->count() > 0)
+    <div style="background:#fff;border:1px solid #E9EAEC;border-radius:16px;overflow:hidden;">
+        <div class="flex items-center justify-between px-6 py-4" style="border-bottom:1px solid #F0F1F0;">
+            <h2 class="text-sm font-semibold text-gray-800">Order history</h2>
+            <a href="{{ route('send') }}"
+               class="inline-flex items-center gap-1.5 text-xs font-semibold px-3 py-1.5 rounded-lg"
+               style="background:#6bc630;color:#fff;">
+                + New order
+            </a>
+        </div>
+        <div class="divide-y divide-gray-50">
+            @foreach($pastOrders as $order)
+            @php
+                $sv    = $order->status instanceof \App\Enums\TaskStatus ? $order->status->value : $order->status;
+                $badge = $sc[$sv] ?? $sc['draft'];
+                $orderNum = $order->order_number ?? '#'.str_pad($order->id, 5, '0', STR_PAD_LEFT);
+            @endphp
+            <div class="flex items-center gap-3 px-6 py-3.5 hover:bg-gray-50/50 transition-colors">
+                <div class="flex-1 min-w-0">
+                    <div class="flex items-center gap-2 mb-1 flex-wrap">
+                        <span class="font-mono text-xs font-bold text-gray-600">{{ $orderNum }}</span>
+                        <span class="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[10px] font-semibold"
+                              style="background:{{ $badge['bg'] }};color:{{ $badge['text'] }};">
+                            <span class="w-1 h-1 rounded-full" style="background:{{ $badge['dot'] }};"></span>
+                            {{ $badge['label'] }}
+                        </span>
+                    </div>
+                    <div class="text-xs text-gray-500 truncate">
+                        {{ Str::limit($order->pickup_address, 25) }}
+                        <span class="text-gray-300 mx-1">→</span>
+                        {{ Str::limit($order->dropoff_address, 25) }}
+                    </div>
+                </div>
+                <div class="hidden sm:block text-right flex-shrink-0">
+                    @if($order->offered_price)
+                    <div class="text-sm font-semibold text-gray-700">${{ number_format($order->offered_price, 2) }}</div>
+                    @endif
+                    <div class="text-xs text-gray-400">{{ $order->created_at->format('d M Y') }}</div>
+                </div>
+                @if($sv === 'delivered')
+                <a href="{{ route('track', ['orderNumber' => $order->order_number]) }}"
+                   class="text-gray-300 hover:text-gray-600 transition-colors flex-shrink-0">
+                    <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="m9 18 6-6-6-6"/></svg>
+                </a>
+                @endif
+            </div>
+            @endforeach
+        </div>
     </div>
     @endif
 
