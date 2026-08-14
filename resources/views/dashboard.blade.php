@@ -101,51 +101,66 @@
     {{-- ── Admin: Two columns ────────────────────────────── --}}
     <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
 
-        {{-- Recent Drivers --}}
+        {{-- Recent Orders --}}
         <div class="lg:col-span-2"
              style="background:#fff;border:1px solid #E9EAEC;border-radius:16px;overflow:hidden;">
             <div class="flex items-center justify-between px-6 py-4"
                  style="border-bottom:1px solid #F0F1F0;">
-                <h2 class="text-sm font-semibold text-gray-800">Drivers</h2>
-                <a href="#" class="text-xs font-medium" style="color:#6bc630;">View all</a>
+                <h2 class="text-sm font-semibold text-gray-800">Recent orders</h2>
+                <a href="{{ route('admin.orders.index') }}" class="text-xs font-medium" style="color:#6bc630;">View all</a>
             </div>
-            <div class="divide-y divide-gray-50">
-                @forelse($recentDrivers as $driver)
-                @php
-                    $tier = $driver->trust_tier->value;
-                    $badge = match($tier) {
-                        'verified'        => ['label' => 'Verified',  'class' => 'trust-verified'],
-                        'manually_reviewed'=> ['label' => 'Reviewed', 'class' => 'trust-manually'],
-                        'id_submitted'    => ['label' => 'ID Sent',   'class' => 'trust-id-submitted'],
-                        default           => ['label' => 'New',       'class' => 'trust-unverified'],
-                    };
-                @endphp
-                <div class="flex items-center gap-3 px-6 py-3.5">
-                    <div class="w-8 h-8 rounded-full flex items-center justify-center text-xs font-bold text-white flex-shrink-0"
-                         style="background:linear-gradient(135deg,#6bc630,#3a7d1a);">
-                        {{ strtoupper(substr($driver->user->name ?? '?', 0, 1)) }}
-                    </div>
-                    <div class="flex-1 min-w-0">
-                        <div class="text-sm font-medium text-gray-800 truncate">{{ $driver->user->name ?? 'Unknown' }}</div>
-                        <div class="text-xs text-gray-400 truncate">{{ $driver->phone ?? 'No phone' }}</div>
-                    </div>
-                    <div class="flex items-center gap-2 flex-shrink-0">
-                        <span class="inline-flex items-center px-2 py-0.5 rounded-full text-[11px] font-semibold {{ $badge['class'] }}">
-                            {{ $badge['label'] }}
-                        </span>
-                        <span class="text-[11px] text-gray-400">
-                            {{ $driver->is_active ? 'Active' : 'Inactive' }}
+            @forelse($recentOrders as $order)
+            @php
+                $adminSc = [
+                    'draft'       => ['bg'=>'#F3F4F6','text'=>'#6B7280'],
+                    'posted'      => ['bg'=>'#FEF3C7','text'=>'#B45309'],
+                    'assigned'    => ['bg'=>'#DBEAFE','text'=>'#1D4ED8'],
+                    'in_progress' => ['bg'=>'#EDE9FE','text'=>'#6D28D9'],
+                    'delivered'   => ['bg'=>'#DCFCE7','text'=>'#15803D'],
+                    'cancelled'   => ['bg'=>'#FEE2E2','text'=>'#DC2626'],
+                ];
+                $sv = $order->status instanceof \App\Enums\TaskStatus ? $order->status->value : $order->status;
+                $osc = $adminSc[$sv] ?? $adminSc['draft'];
+                $orderNum = $order->order_number ?? '#'.str_pad($order->id, 5, '0', STR_PAD_LEFT);
+            @endphp
+            <div class="flex items-center gap-3 px-6 py-3.5 border-b border-gray-50 last:border-0 hover:bg-gray-50/50 transition-colors group">
+                <div class="flex-1 min-w-0">
+                    <div class="flex items-center gap-2 mb-0.5 flex-wrap">
+                        <span class="font-mono text-xs font-bold text-gray-600">{{ $orderNum }}</span>
+                        <span class="inline-flex px-2 py-0.5 rounded-full text-[11px] font-semibold"
+                              style="background:{{ $osc['bg'] }};color:{{ $osc['text'] }};">
+                            {{ $order->status instanceof \App\Enums\TaskStatus ? $order->status->label() : ucfirst(str_replace('_',' ',$sv)) }}
                         </span>
                     </div>
+                    <div class="text-xs text-gray-500 truncate">
+                        {{ Str::limit($order->pickup_address, 24) }}
+                        <span class="text-gray-300 mx-1">→</span>
+                        {{ Str::limit($order->dropoff_address, 24) }}
+                    </div>
                 </div>
-                @empty
-                <div class="px-6 py-12 text-center">
-                    <div class="text-3xl mb-2">🚗</div>
-                    <div class="text-sm font-medium text-gray-500">No drivers yet</div>
-                    <div class="text-xs text-gray-400 mt-1">Seed transporters to get started</div>
+                <div class="text-right flex-shrink-0 hidden sm:block">
+                    @if($order->user)
+                    <div class="text-xs font-medium text-gray-700">{{ Str::limit($order->user->name, 18) }}</div>
+                    @endif
+                    <div class="text-[11px] text-gray-400">{{ $order->created_at->diffForHumans() }}</div>
                 </div>
-                @endforelse
+                <a href="{{ route('admin.orders.show', $order) }}"
+                   class="opacity-0 group-hover:opacity-100 text-gray-300 hover:text-gray-600 transition-all flex-shrink-0">
+                    <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="m9 18 6-6-6-6"/></svg>
+                </a>
             </div>
+            @empty
+            <div class="px-6 py-14 text-center">
+                <div class="text-2xl mb-2">📦</div>
+                <div class="text-sm font-medium text-gray-500">No orders yet</div>
+                <div class="text-xs text-gray-400 mt-1 mb-4">Orders will appear here as they come in</div>
+                <a href="{{ route('admin.orders.create') }}"
+                   class="inline-flex items-center gap-1.5 text-xs font-semibold px-3 py-1.5 rounded-lg"
+                   style="background:#6bc630;color:#fff;">
+                    + Create first order
+                </a>
+            </div>
+            @endforelse
         </div>
 
         {{-- Quick actions + trust breakdown --}}
@@ -155,24 +170,24 @@
             <div style="background:#fff;border:1px solid #E9EAEC;border-radius:16px;padding:20px;">
                 <h2 class="text-sm font-semibold text-gray-800 mb-3">Quick actions</h2>
                 <div class="space-y-2">
-                    <a href="#"
+                    <a href="{{ route('admin.orders.create') }}"
                        class="flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm font-medium text-gray-700 hover:bg-gray-50 transition-colors">
                         <div class="w-8 h-8 rounded-lg flex items-center justify-center" style="background:#F0FDE4;">
                             <svg width="14" height="14" fill="none" stroke="#6bc630" stroke-width="2.5" viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
                         </div>
-                        Add Driver
+                        New Order
                     </a>
-                    <a href="#"
+                    <a href="{{ route('admin.drivers.create') }}"
                        class="flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm font-medium text-gray-700 hover:bg-gray-50 transition-colors">
                         <div class="w-8 h-8 rounded-lg flex items-center justify-center" style="background:#EFF6FF;">
-                            <svg width="14" height="14" fill="none" stroke="#3b82f6" stroke-width="2" viewBox="0 0 24 24">
-                                <line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/>
-                                <line x1="6" y1="20" x2="6" y2="14"/><line x1="2" y1="20" x2="22" y2="20"/>
+                            <svg width="14" height="14" fill="none" stroke="#3b82f6" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24">
+                                <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/>
+                                <path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/>
                             </svg>
                         </div>
-                        View Analytics
+                        Add Driver
                     </a>
-                    <a href="#"
+                    <a href="{{ route('admin.drivers.index') }}"
                        class="flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm font-medium text-gray-700 hover:bg-gray-50 transition-colors">
                         <div class="w-8 h-8 rounded-lg flex items-center justify-center" style="background:#FEF3C7;">
                             <svg width="14" height="14" fill="none" stroke="#d97706" stroke-width="2" viewBox="0 0 24 24">
@@ -198,7 +213,7 @@
                         ['label' => 'Verified',  'color' => '#6bc630', 'count' => $verifiedDrivers],
                         ['label' => 'Reviewed',  'color' => '#3b82f6', 'count' => \App\Models\TransporterProfile::where('trust_tier','manually_reviewed')->count()],
                         ['label' => 'ID Sent',   'color' => '#f59e0b', 'count' => \App\Models\TransporterProfile::where('trust_tier','id_submitted')->count()],
-                        ['label' => 'New',        'color' => '#e5e7eb', 'count' => $pendingReview],
+                        ['label' => 'New',       'color' => '#e5e7eb', 'count' => $pendingReview],
                     ];
                     $total = max($totalDrivers, 1);
                 @endphp
@@ -220,68 +235,6 @@
 
         </div>
     </div>
-
-    {{-- ── Recent Orders (admin) ───────────────────────────── --}}
-    @if($recentOrders->count() > 0)
-    <div style="background:#fff;border:1px solid #E9EAEC;border-radius:16px;overflow:hidden;">
-        <div class="flex items-center justify-between px-6 py-4"
-             style="border-bottom:1px solid #F0F1F0;">
-            <h2 class="text-sm font-semibold text-gray-800">Recent orders</h2>
-            <a href="#" class="text-xs font-medium" style="color:#6bc630;">View all</a>
-        </div>
-        <div class="overflow-x-auto">
-            <table class="w-full text-sm">
-                <thead>
-                    <tr style="border-bottom:1px solid #F0F1F0;">
-                        <th class="text-left px-6 py-3 text-xs font-semibold text-gray-400 uppercase tracking-wide">Order</th>
-                        <th class="text-left px-6 py-3 text-xs font-semibold text-gray-400 uppercase tracking-wide">Route</th>
-                        <th class="text-left px-6 py-3 text-xs font-semibold text-gray-400 uppercase tracking-wide">Status</th>
-                        <th class="text-left px-6 py-3 text-xs font-semibold text-gray-400 uppercase tracking-wide">Date</th>
-                    </tr>
-                </thead>
-                <tbody class="divide-y divide-gray-50">
-                    @foreach($recentOrders as $order)
-                    @php
-                        $statusColors = [
-                            'draft'       => ['bg' => '#F3F4F6', 'text' => '#6B7280'],
-                            'posted'      => ['bg' => '#FEF3C7', 'text' => '#B45309'],
-                            'assigned'    => ['bg' => '#DBEAFE', 'text' => '#1D4ED8'],
-                            'in_progress' => ['bg' => '#EDE9FE', 'text' => '#6D28D9'],
-                            'delivered'   => ['bg' => '#DCFCE7', 'text' => '#15803D'],
-                            'cancelled'   => ['bg' => '#FEE2E2', 'text' => '#DC2626'],
-                        ];
-                        $statusVal = $order->status instanceof \App\Enums\TaskStatus ? $order->status->value : $order->status;
-                        $sc = $statusColors[$statusVal] ?? $statusColors['draft'];
-                    @endphp
-                    <tr class="hover:bg-gray-50 transition-colors">
-                        <td class="px-6 py-3.5">
-                            <div class="font-mono text-xs font-semibold text-gray-700">#{{ str_pad($order->id, 5, '0', STR_PAD_LEFT) }}</div>
-                            <div class="text-xs text-gray-400 mt-0.5 truncate max-w-[160px]">{{ $order->item_description ?? 'No description' }}</div>
-                        </td>
-                        <td class="px-6 py-3.5">
-                            <div class="text-xs text-gray-600 truncate max-w-[180px]">
-                                <span class="text-gray-400">From</span> {{ Str::limit($order->pickup_address, 20) }}
-                            </div>
-                            <div class="text-xs text-gray-600 mt-0.5 truncate max-w-[180px]">
-                                <span class="text-gray-400">To</span> {{ Str::limit($order->dropoff_address, 20) }}
-                            </div>
-                        </td>
-                        <td class="px-6 py-3.5">
-                            <span class="inline-flex items-center px-2 py-0.5 rounded-full text-[11px] font-semibold"
-                                  style="background:{{ $sc['bg'] }};color:{{ $sc['text'] }};">
-                                {{ $order->status instanceof \App\Enums\TaskStatus ? $order->status->label() : ucfirst(str_replace('_', ' ', $order->status)) }}
-                            </span>
-                        </td>
-                        <td class="px-6 py-3.5 text-xs text-gray-400 whitespace-nowrap">
-                            {{ $order->created_at->diffForHumans() }}
-                        </td>
-                    </tr>
-                    @endforeach
-                </tbody>
-            </table>
-        </div>
-    </div>
-    @endif
 
     @elseif($isSender)
     @php

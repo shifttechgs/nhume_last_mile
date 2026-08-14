@@ -35,17 +35,12 @@ class DashboardController extends Controller
 
         $recentOrders = Task::with('user')
             ->latest()
-            ->limit(8)
-            ->get();
-
-        $recentDrivers = TransporterProfile::with('user')
-            ->latest()
-            ->limit(6)
+            ->limit(10)
             ->get();
 
         return compact(
             'totalOrders', 'totalDrivers', 'activeDrivers',
-            'pendingReview', 'verifiedDrivers', 'recentOrders', 'recentDrivers'
+            'pendingReview', 'verifiedDrivers', 'recentOrders'
         );
     }
 
