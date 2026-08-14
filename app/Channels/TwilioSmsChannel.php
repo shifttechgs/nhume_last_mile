@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Channels;
 
+use App\Support\PhoneNormalizer;
 use Illuminate\Notifications\Notification;
 use Illuminate\Support\Facades\Log;
 use Twilio\Rest\Client;
@@ -17,9 +18,16 @@ final class TwilioSmsChannel
 
     public function send(mixed $notifiable, Notification $notification): void
     {
-        $to = $notifiable->routeNotificationFor('twilio_sms', $notification);
+        $raw = $notifiable->routeNotificationFor('twilio_sms', $notification);
 
-        if (empty($to)) {
+        if (empty($raw)) {
+            return;
+        }
+
+        $to = PhoneNormalizer::toE164($raw);
+
+        if ($to === null) {
+            Log::warning('Twilio SMS skipped — could not normalise number', ['raw' => $raw]);
             return;
         }
 
@@ -30,6 +38,8 @@ final class TwilioSmsChannel
                 'from' => $this->from,
                 'body' => $message,
             ]);
+
+            Log::info('Twilio SMS sent', ['to' => $to]);
         } catch (\Throwable $e) {
             Log::error('Twilio SMS failed', [
                 'to'    => $to,
