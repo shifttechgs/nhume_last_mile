@@ -1,0 +1,174 @@
+@props(['frosted' => false])
+<style>
+.nav-outer {
+    position: fixed;
+    top: clamp(24px,3vw,36px);
+    left: clamp(16px,2vw,24px);
+    right: clamp(16px,2vw,24px);
+    z-index: 100;
+    background: transparent;
+    border-radius: 16px;
+    border: 1px solid transparent;
+    transition: top 0.35s ease, left 0.35s ease, right 0.35s ease,
+                border-radius 0.35s ease, background 0.35s ease,
+                box-shadow 0.35s ease, border-color 0.35s ease;
+    pointer-events: all;
+}
+.nav-outer.is-scrolled {
+    top: 0; left: 0; right: 0;
+    border-radius: 0;
+    background: rgba(255,255,255,0.95);
+    backdrop-filter: blur(20px) saturate(180%);
+    -webkit-backdrop-filter: blur(20px) saturate(180%);
+    border-color: rgba(12,26,15,0.07);
+    box-shadow: 0 2px 16px rgba(28,56,41,0.07);
+}
+.nav-bar {
+    max-width: 1360px;
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    position: relative;
+    padding: clamp(16px,2vh,24px) clamp(20px,3vw,40px);
+}
+.nav-logo { display: flex; align-items: center; text-decoration: none; flex-shrink: 0; }
+.nav-center {
+    position: absolute;
+    left: 50%; transform: translateX(-50%);
+    display: flex; align-items: center; gap: 2px;
+    pointer-events: all;
+    background: rgba(255,255,255,0.88);
+    border: 1px solid rgba(0,0,0,0.07);
+    border-radius: 14px;
+    padding: 6px;
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+}
+.nav-right { display: flex; align-items: center; gap: 8px; pointer-events: all; }
+.nav-link {
+    display: inline-flex; align-items: center;
+    font-size: 14px; font-weight: 500;
+    color: #6b7280;
+    padding: 13px 16px;
+    border-radius: 10px;
+    transition: color 0.15s, background 0.15s;
+    text-decoration: none; white-space: nowrap;
+}
+.nav-link:hover { color: #0b130a; background: rgba(0,0,0,0.05); }
+.btn-nav-outline {
+    display: inline-flex; align-items: center; gap: 6px;
+    font-family: 'DM Sans', system-ui, sans-serif;
+    font-size: 14px; font-weight: 600;
+    color: #1C3829;
+    padding: 11px 20px;
+    border-radius: 14px;
+    border: 1px solid rgba(12,26,15,0.08);
+    background: rgba(255,255,255,0.75);
+    box-shadow: none; text-decoration: none;
+    transition: background 0.15s, transform 0.15s;
+    white-space: nowrap; cursor: pointer;
+}
+.btn-nav-outline:hover { background: #fff; transform: translateY(-1px); }
+.nav-outer.is-scrolled .btn-nav-outline { background: rgba(255,255,255,0.9); }
+.btn-nav-fill {
+    display: inline-flex; align-items: center; gap: 7px;
+    font-family: 'DM Sans', system-ui, sans-serif;
+    font-size: 14px; font-weight: 600;
+    color: #062e14;
+    padding: 11px 22px;
+    border-radius: 14px; border: none;
+    background: #6bc630;
+    box-shadow: 0 4px 16px rgba(107,198,48,0.28);
+    text-decoration: none;
+    transition: background 0.15s, transform 0.15s;
+    white-space: nowrap;
+}
+.btn-nav-fill:hover { background: #5aad28; transform: translateY(-1px); }
+.nav-mobile-dropdown {
+    position: fixed;
+    top: 84px; left: 20px; right: 20px; z-index: 99;
+    background: #fff;
+    border-radius: 20px;
+    border: 1px solid rgba(12,26,15,0.08);
+    box-shadow: 0 12px 36px rgba(28,56,41,0.12);
+    padding: 16px;
+}
+.nav-mobile-btn {
+    display: flex; align-items: center; justify-content: center;
+    width: 44px; height: 44px;
+    border-radius: 9999px;
+    background: #fff;
+    border: 1px solid rgba(12,26,15,0.08);
+    box-shadow: 0 4px 16px rgba(28,56,41,0.06);
+    color: #0b130a;
+    pointer-events: all; cursor: pointer;
+}
+.nav-desktop { display: none; }
+@media (min-width: 1024px) {
+    .nav-desktop    { display: flex; }
+    .nav-mobile-btn { display: none; }
+}
+@media (max-width: 767px) {
+    .nav-outer { top: 10px !important; left: 8px !important; right: 8px !important; }
+}
+</style>
+
+<div x-data="{ open: false, scrolled: {{ $frosted ? 'true' : 'false' }} }"
+     @scroll.window="scrolled = (window.pageYOffset || document.documentElement.scrollTop) > 24"
+     :class="scrolled ? 'is-scrolled' : ''"
+     class="nav-outer">
+    <div class="nav-bar">
+
+        {{-- Logo --}}
+        <a href="/" class="nav-logo" aria-label="Nhume home">
+            <img src="/images/nhume_logo_v2.png" alt="Nhume" style="height:50px;width:auto;">
+        </a>
+
+        {{-- Centered links (desktop) --}}
+        <nav class="nav-center nav-desktop">
+            <a href="/#how-it-works" class="nav-link">How it works</a>
+            <a href="/#journeys"     class="nav-link">Journeys</a>
+            <a href="/#transporters" class="nav-link">For transporters</a>
+            <a href="/#faq"          class="nav-link">FAQ</a>
+        </nav>
+
+        {{-- Right CTAs (desktop) --}}
+        <div class="nav-right nav-desktop">
+            @auth
+                <a href="{{ url('/dashboard') }}" class="btn-nav-fill">Dashboard</a>
+            @else
+                <a href="{{ route('login') }}" class="nav-link">Sign in</a>
+                <button type="button" @click="trackOpen = true; $nextTick(() => $refs.trackInput?.focus())" class="btn-nav-outline">Track</button>
+                <a href="{{ route('send') }}" class="btn-nav-fill">Send Parcel
+                    <svg width="15" height="15" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"/></svg>
+                </a>
+            @endauth
+        </div>
+
+        {{-- Mobile hamburger --}}
+        <button @click="open = !open" class="nav-mobile-btn" aria-label="Menu">
+            <svg x-show="!open" width="22" height="22" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/></svg>
+            <svg x-show="open" x-cloak width="22" height="22" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
+        </button>
+    </div>
+
+    {{-- Mobile dropdown --}}
+    <div x-show="open" x-cloak class="nav-mobile-dropdown">
+        <nav style="display:flex;flex-direction:column;gap:2px;margin-bottom:12px;">
+            @foreach(['/#how-it-works' => 'How it works', '/#journeys' => 'Journeys', '/#transporters' => 'For transporters', '/#faq' => 'FAQ'] as $href => $label)
+            <a href="{{ $href }}" @click="open=false"
+               style="display:block;padding:10px 12px;font-size:14px;font-weight:500;color:#374151;border-radius:10px;text-decoration:none;transition:background 0.15s;"
+               onmouseover="this.style.background='#f3f4f6'" onmouseout="this.style.background='transparent'">{{ $label }}</a>
+            @endforeach
+        </nav>
+        <div style="border-top:1px solid #f3f4f6;padding-top:12px;display:flex;flex-direction:column;gap:8px;">
+            @auth
+                <a href="{{ url('/dashboard') }}" class="btn-nav-fill" style="justify-content:center;">Dashboard</a>
+            @else
+                <a href="{{ route('login') }}"    class="btn-nav-outline" style="justify-content:center;">Sign in</a>
+                <a href="{{ route('send') }}"     class="btn-nav-fill"    style="justify-content:center;">Send Parcel</a>
+            @endauth
+        </div>
+    </div>
+</div>

@@ -1,21 +1,22 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Livewire\Parcel;
 
+use App\DTOs\CreateTaskDTO;
 use App\Enums\OrderSource;
 use App\Enums\PackageCategory;
 use App\Enums\PickupType;
 use App\Enums\ServiceType;
-use App\Enums\TaskStatus;
-use App\Models\CollectionPoint;
-use App\Models\Task;
+use App\Services\ParcelOrderService;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Str;
+use Illuminate\View\View;
 use Livewire\Attributes\Computed;
 use Livewire\Component;
 
-class CreateOrderWizard extends Component
+final class CreateOrderWizard extends Component
 {
     public int $step = 1;
 
@@ -37,11 +38,18 @@ class CreateOrderWizard extends Component
     public string $collection_point_id = '';
 
     // Step 2 — schedule
-    public string $schedule = 'now';
+    public string $schedule    = 'now';
     public string $scheduled_at = '';
 
     // Confirmed order
     public ?string $order_number = null;
+
+    private ParcelOrderService $orderService;
+
+    public function boot(ParcelOrderService $orderService): void
+    {
+        $this->orderService = $orderService;
+    }
 
     public function mount(): void
     {
@@ -52,9 +60,9 @@ class CreateOrderWizard extends Component
     public function collectionPoints(): \Illuminate\Database\Eloquent\Collection
     {
         try {
-            return CollectionPoint::where('is_active', true)->get();
+            return \App\Models\CollectionPoint::where('is_active', true)->get();
         } catch (\Exception) {
-            return CollectionPoint::query()->whereRaw('0=1')->get();
+            return \App\Models\CollectionPoint::query()->whereRaw('0=1')->get();
         }
     }
 
@@ -64,16 +72,29 @@ class CreateOrderWizard extends Component
         return PackageCategory::cases();
     }
 
+    /**
+     * Live price preview — mirrors CalculateTaskPriceAction constants.
+     * The actual persisted price is calculated by the action on placeOrder.
+     */
     #[Computed]
     public function priceEstimate(): float
     {
-        $base       = 2.50;
-        $collection = ($this->pickup_type === PickupType::BikerCollection->value) ? 2.00 : 0.00;
-        $weight     = (float) ($this->weight_kg ?: 1);
-        $weightFee  = $weight > 5 ? ($weight - 5) * 0.50 : 0.00;
-        $fragile    = $this->is_fragile ? 1.00 : 0.00;
+        $price = 2.50;
 
-        return round($base + $collection + $weightFee + $fragile, 2);
+        if ($this->pickup_type === PickupType::BikerCollection->value) {
+            $price += 2.00;
+        }
+
+        $weight = (float) ($this->weight_kg ?: 0);
+        if ($weight > 5) {
+            $price += ($weight - 5) * 0.50;
+        }
+
+        if ($this->is_fragile) {
+            $price += 1.00;
+        }
+
+        return round($price, 2);
     }
 
     public function nextStep(): void
@@ -91,41 +112,35 @@ class CreateOrderWizard extends Component
     {
         $this->validateCurrentStep();
 
-        try {
-            $orderNumber = $this->generateOrderNumber();
-        } catch (\Exception) {
-            $orderNumber = 'NHM-' . now()->format('Ymd') . '-' . strtoupper(\Illuminate\Support\Str::random(4));
-        }
+        $pickupType = PickupType::from($this->pickup_type);
 
-        Task::create([
-            'order_number'         => $orderNumber,
-            'user_id'              => Auth::id(),
-            'service_type'         => ServiceType::LastMileDelivery->value,
-            'status'               => TaskStatus::Posted->value,
-            'pickup_type'          => $this->pickup_type,
-            'order_source'         => OrderSource::Online->value,
-            'package_category'     => $this->package_category,
-            'item_description'     => $this->item_description,
-            'pickup_address'       => $this->pickup_type === PickupType::WalkIn->value
-                                        ? ($this->collectionPoints->find($this->collection_point_id)?->address ?? '')
-                                        : $this->pickup_address,
-            'dropoff_address'      => $this->dropoff_address,
-            'recipient_name'       => $this->recipient_name,
-            'recipient_phone'      => $this->recipient_phone,
-            'weight_kg'            => $this->weight_kg ?: null,
-            'is_fragile'           => $this->is_fragile,
-            'notes'                => $this->notes,
-            'collection_point_id'  => $this->pickup_type === PickupType::WalkIn->value
-                                        ? ($this->collection_point_id ?: null)
-                                        : null,
-            'price_estimate'       => $this->priceEstimate,
-            'scheduled_at'         => $this->schedule === 'later'
-                                        ? Carbon::parse($this->scheduled_at)
-                                        : null,
-            'offered_price'        => $this->priceEstimate,
-        ]);
+        $dto = new CreateTaskDTO(
+            pickupType:        $pickupType,
+            serviceType:       ServiceType::LastMileDelivery,
+            orderSource:       OrderSource::Online,
+            dropoffAddress:    $this->dropoff_address,
+            recipientName:     $this->recipient_name,
+            recipientPhone:    $this->recipient_phone,
+            packageCategory:   PackageCategory::from($this->package_category),
+            collectionPointId: $pickupType === PickupType::WalkIn
+                                   ? (int) $this->collection_point_id ?: null
+                                   : null,
+            pickupAddress:     $pickupType === PickupType::WalkIn
+                                   ? ($this->collectionPoints->find($this->collection_point_id)?->address ?? '')
+                                   : $this->pickup_address,
+            itemDescription:   $this->item_description ?: null,
+            weightKg:          $this->weight_kg !== '' ? (float) $this->weight_kg : null,
+            isFragile:         $this->is_fragile,
+            notes:             $this->notes ?: null,
+            scheduledAt:       $this->schedule === 'later'
+                                   ? Carbon::parse($this->scheduled_at)
+                                   : null,
+            userId:            Auth::id(),
+        );
 
-        $this->order_number = $orderNumber;
+        $task = $this->orderService->placeOrder($dto);
+
+        $this->order_number = $task->order_number;
         $this->step = 3;
     }
 
@@ -156,16 +171,7 @@ class CreateOrderWizard extends Component
         $this->validate($rules);
     }
 
-    private function generateOrderNumber(): string
-    {
-        do {
-            $number = 'NHM-' . now()->format('Ymd') . '-' . strtoupper(Str::random(4));
-        } while (Task::where('order_number', $number)->exists());
-
-        return $number;
-    }
-
-    public function render(): \Illuminate\View\View
+    public function render(): View
     {
         return view('livewire.parcel.create-order-wizard');
     }

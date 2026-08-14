@@ -1,33 +1,22 @@
 <?php
 
+use App\Http\Controllers\ParcelController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\TrackController;
 use Illuminate\Support\Facades\Route;
 
-Route::get('/', function () {
-    return view('welcome');
-});
+Route::get('/', fn () => view('welcome'))->name('home');
 
-Route::get('/send', function () {
-    return view('pages.send');
-})->name('send');
+Route::get('/send',              [ParcelController::class, 'create'])->name('send');
+Route::get('/track/{orderNumber?}', [TrackController::class, 'show'])->name('track');
 
-Route::get('/track/{orderNumber?}', function (?string $orderNumber = null) {
-    $task = $orderNumber
-        ? \App\Models\Task::where('order_number', strtoupper(trim($orderNumber)))->first()
-        : null;
-    return view('pages.track', [
-        'task'        => $task,
-        'orderNumber' => $orderNumber ? strtoupper(trim($orderNumber)) : null,
-    ]);
-})->name('track');
-
-Route::get('/dashboard', function () {
-    return view('dashboard');
-})->middleware(['auth', 'verified'])->name('dashboard');
+Route::get('/dashboard', fn () => view('dashboard'))
+    ->middleware(['auth', 'verified'])
+    ->name('dashboard');
 
 Route::middleware('auth')->group(function () {
-    Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
-    Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
+    Route::get('/profile',    [ProfileController::class, 'edit'])->name('profile.edit');
+    Route::patch('/profile',  [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 

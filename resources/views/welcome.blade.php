@@ -2022,64 +2022,7 @@ body { font-family: var(--font); color: var(--text); background: #fff; -webkit-f
 {{-- ══════════════════════════════════════════════════
      NAV — floating pill (Bobgo pattern)
 ══════════════════════════════════════════════════ --}}
-<div x-data="{ open: false, scrolled: false }"
-     @scroll.window="scrolled = (window.pageYOffset || document.documentElement.scrollTop) > 24"
-     :class="scrolled ? 'is-scrolled' : ''"
-     class="nav-outer">
-    <div class="nav-bar">
-
-        {{-- Logo (left) --}}
-        <a href="/" class="nav-logo" aria-label="Nhume home">
-            <img src="/images/nhume_logo_v2.png" alt="Nhume" style="height:50px;width:auto;">
-        </a>
-
-        {{-- Centered links pill (desktop) --}}
-        <nav class="nav-center nav-desktop">
-            <a href="#how-it-works" class="nav-link">How it works</a>
-            <a href="#journeys"     class="nav-link">Journeys</a>
-            <a href="#transporters" class="nav-link">For transporters</a>
-            <a href="#faq"          class="nav-link">FAQ</a>
-        </nav>
-
-        {{-- Right CTAs (desktop) --}}
-        <div class="nav-right nav-desktop">
-            @auth
-                <a href="{{ url('/dashboard') }}" class="btn-nav-fill">Dashboard</a>
-            @else
-                <a href="{{ route('login') }}"    class="nav-link">Sign in</a>
-                <button type="button" @click="trackOpen = true; $nextTick(() => $refs.trackInput?.focus())" class="btn-nav-outline">Track</button>
-                <a href="{{ route('send') }}" class="btn-nav-fill">Send Parcel
-                    <svg width="15" height="15" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"/></svg>
-                </a>
-            @endauth
-        </div>
-
-        {{-- Mobile hamburger (right) --}}
-        <button @click="open = !open" class="nav-mobile-btn" aria-label="Menu">
-            <svg x-show="!open" width="22" height="22" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/></svg>
-            <svg x-show="open" x-cloak width="22" height="22" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
-        </button>
-    </div>
-
-    {{-- Mobile dropdown card --}}
-    <div x-show="open" x-cloak class="nav-mobile-dropdown">
-        <nav style="display:flex;flex-direction:column;gap:2px;margin-bottom:12px;">
-            @foreach(['#how-it-works' => 'How it works', '#journeys' => 'Journeys', '#transporters' => 'For transporters', '#faq' => 'FAQ'] as $href => $label)
-            <a href="{{ $href }}" @click="open=false"
-               style="display:block;padding:10px 12px;font-size:14px;font-weight:500;color:#374151;border-radius:10px;text-decoration:none;transition:background 0.15s;"
-               onmouseover="this.style.background='#f3f4f6'" onmouseout="this.style.background='transparent'">{{ $label }}</a>
-            @endforeach
-        </nav>
-        <div style="border-top:1px solid #f3f4f6;padding-top:12px;display:flex;flex-direction:column;gap:8px;">
-            @auth
-                <a href="{{ url('/dashboard') }}" class="btn-nav-fill" style="justify-content:center;">Dashboard</a>
-            @else
-                <a href="{{ route('login') }}"    class="btn-nav-outline" style="justify-content:center;">Sign in</a>
-                <a href="{{ route('register') }}" class="btn-nav-fill"    style="justify-content:center;"><a href="{{ route('send') }}">Send Parcel</a>
-            @endauth
-        </div>
-    </div>
-</div>
+<x-landing.nav />
 
 
 {{-- ══════════════════════════════════════════════════
@@ -3090,58 +3033,7 @@ body { font-family: var(--font); color: var(--text); background: #fff; -webkit-f
 {{-- ══════════════════════════════════════════════════
      FOOTER
 ══════════════════════════════════════════════════ --}}
-<footer class="site-footer" style="background:#081510;overflow:hidden;position:relative;">
-
-    {{-- Main grid --}}
-    <div style="max-width:1200px;margin:0 auto;padding:60px 24px 44px;position:relative;z-index:1;">
-        <div class="footer-grid" style="padding-bottom:44px;border-bottom:1px solid rgba(255,255,255,0.055);margin-bottom:32px;">
-
-            {{-- Brand --}}
-            <div>
-                <div style="margin-bottom:14px;">
-                    <img src="/images/nhume_logo_v2.png" alt="Nhume" style="height:46px;width:auto;filter:brightness(0) invert(1);">
-                </div>
-                <p style="font-family:var(--font);font-size:13.5px;color:rgba(255,255,255,0.28);line-height:1.7;margin-bottom:22px;max-width:210px">Moving parcels with drivers already in motion.</p>
-                <div style="display:flex;gap:8px;">
-                    @foreach (['M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z', 'M23.953 4.57a10 10 0 01-2.825.775 4.958 4.958 0 002.163-2.723c-.951.555-2.005.959-3.127 1.184a4.92 4.92 0 00-8.384 4.482C7.69 8.095 4.067 6.13 1.64 3.162a4.822 4.822 0 00-.666 2.475c0 1.71.87 3.213 2.188 4.096a4.904 4.904 0 01-2.228-.616v.06a4.923 4.923 0 003.946 4.827 4.996 4.996 0 01-2.212.085 4.936 4.936 0 004.604 3.417 9.867 9.867 0 01-6.102 2.105c-.39 0-.779-.023-1.17-.067a13.995 13.995 0 007.557 2.209c9.053 0 13.998-7.496 13.998-13.985 0-.21 0-.42-.015-.63A9.935 9.935 0 0024 4.59z'] as $p)
-                    <a href="#" class="footer-social"><svg width="15" height="15" viewBox="0 0 24 24"><path d="{{ $p }}"/></svg></a>
-                    @endforeach
-                </div>
-            </div>
-
-            @foreach ([
-                ['Platform', ['How it works' => '#how-it-works', 'Get Started' => route('register'), 'Browse drivers' => '/journeys', 'For transporters' => '#transporters', 'Pricing' => '#']],
-                ['Support',  ['FAQ' => '#faq', 'Contact us' => '/contact', 'Track a parcel' => '#', 'Report an issue' => '#', 'Safety' => '#']],
-                ['Company',  ['About Nhume' => '#', 'Blog' => '#', 'Careers' => '#', 'Become a partner' => '#', 'Press' => '#']],
-            ] as [$heading, $links])
-            <div>
-                <p style="font-family:var(--font);font-size:10.5px;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:rgba(255,255,255,0.22);margin-bottom:18px;">{{ $heading }}</p>
-                <ul style="list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:11px;">
-                    @foreach ($links as $label => $href)
-                    <li><a href="{{ $href }}" style="font-family:var(--font);font-size:13.5px;color:rgba(255,255,255,0.35);text-decoration:none;transition:color 0.15s" onmouseover="this.style.color='rgba(255,255,255,0.72)'" onmouseout="this.style.color='rgba(255,255,255,0.35)'">{{ $label }}</a></li>
-                    @endforeach
-                </ul>
-            </div>
-            @endforeach
-        </div>
-
-        {{-- Bottom bar --}}
-        <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px;">
-            <p style="font-family:var(--font);font-size:12px;color:rgba(255,255,255,0.18);margin:0">© {{ date('Y') }} Nhume Technologies. All rights reserved. &nbsp;·&nbsp; <span style="color:rgba(255,255,255,0.28)">A <a href="#" style="color:rgba(255,255,255,0.35);text-decoration:none;transition:color 0.15s" onmouseover="this.style.color='rgba(255,255,255,0.6)'" onmouseout="this.style.color='rgba(255,255,255,0.35)'">ShiftTech</a> product</span></p>
-            <div style="display:flex;gap:24px;">
-                @foreach (['Terms of Service', 'Privacy Policy', 'Cookie Policy'] as $l)
-                <a href="#" style="font-family:var(--font);font-size:12px;color:rgba(255,255,255,0.16);text-decoration:none;transition:color 0.15s" onmouseover="this.style.color='rgba(255,255,255,0.45)'" onmouseout="this.style.color='rgba(255,255,255,0.16)'">{{ $l }}</a>
-                @endforeach
-            </div>
-        </div>
-    </div>
-
-    {{-- Giant gradient watermark --}}
-    <div style="overflow:hidden;line-height:0.78;pointer-events:none;user-select:none">
-        <p style="font-family:var(--head);font-size:clamp(100px,17vw,220px);font-weight:800;letter-spacing:-0.03em;margin:0;padding:0 16px;white-space:nowrap;text-align:center;background:linear-gradient(180deg,rgba(255,255,255,0.05) 0%,rgba(255,255,255,0.01) 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text">NHUME</p>
-    </div>
-
-</footer>
+<x-landing.footer />
 
 
 <script>
@@ -3157,84 +3049,8 @@ body { font-family: var(--font); color: var(--text); background: #fff; -webkit-f
 </script>
 
 
-{{-- ── Track order modal ── --}}
-<style>
-.track-backdrop {
-    position: fixed; inset: 0; z-index: 1000;
-    background: rgba(11,19,10,0.55);
-    backdrop-filter: blur(4px); -webkit-backdrop-filter: blur(4px);
-    display: flex; align-items: center; justify-content: center;
-    padding: 24px;
-}
-</style>
-<div x-show="trackOpen"
-     x-cloak
-     x-transition:enter="transition ease-out duration-200"
-     x-transition:enter-start="opacity-0"
-     x-transition:enter-end="opacity-100"
-     x-transition:leave="transition ease-in duration-150"
-     x-transition:leave-start="opacity-100"
-     x-transition:leave-end="opacity-0"
-     @click.self="trackOpen = false"
-     class="track-backdrop">
+<x-landing.track-modal />
 
-    <div x-show="trackOpen"
-         x-transition:enter="transition ease-out duration-200"
-         x-transition:enter-start="opacity-0 scale-95 translate-y-2"
-         x-transition:enter-end="opacity-100 scale-100 translate-y-0"
-         x-transition:leave="transition ease-in duration-150"
-         x-transition:leave-start="opacity-100 scale-100"
-         x-transition:leave-end="opacity-0 scale-95"
-         style="background:#fff;border-radius:22px;width:100%;max-width:460px;box-shadow:0 32px 80px rgba(11,19,10,0.25),0 8px 24px rgba(11,19,10,0.12);overflow:hidden;">
-
-        {{-- Header --}}
-        <div style="padding:28px 28px 0;display:flex;align-items:flex-start;justify-content:space-between;gap:12px;">
-            <div>
-                <div style="width:44px;height:44px;border-radius:12px;background:#edf8df;display:flex;align-items:center;justify-content:center;margin-bottom:16px;">
-                    <svg width="20" height="20" fill="none" stroke="#4a9a1f" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
-                </div>
-                <h2 style="font-family:'Inter','DM Sans',sans-serif;font-size:20px;font-weight:700;color:#1C3829;letter-spacing:-0.02em;margin:0 0 6px;">Track your parcel</h2>
-                <p style="font-size:14px;color:#6b7280;margin:0;">Enter your order number to see live delivery updates.</p>
-            </div>
-            <button type="button" @click="trackOpen = false"
-                    style="flex-shrink:0;width:32px;height:32px;border-radius:50%;border:none;background:#f3f4f6;color:#6b7280;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:background 0.15s;"
-                    onmouseover="this.style.background='#e5e7eb'" onmouseout="this.style.background='#f3f4f6'">
-                <svg width="14" height="14" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M6 18L18 6M6 6l12 12"/></svg>
-            </button>
-        </div>
-
-        {{-- Form --}}
-        <form style="padding:20px 28px 28px;"
-              x-data="{ loading: false }"
-              @submit.prevent="if(trackNum.trim()){ loading = true; window.location='/track/'+trackNum.trim().toUpperCase() }">
-            <input x-model="trackNum"
-                   x-ref="trackInput"
-                   type="text"
-                   placeholder="e.g. NHM-20260812-XXXX"
-                   autocomplete="off"
-                   spellcheck="false"
-                   :disabled="loading"
-                   style="width:100%;font-family:'DM Sans',sans-serif;font-size:15px;font-weight:500;color:#0b130a;background:#f9fafb;border:1.5px solid #e5e7eb;border-radius:12px;padding:14px 16px;outline:none;letter-spacing:0.02em;transition:border-color 0.15s,box-shadow 0.15s,background 0.15s;"
-                   @focus="$el.style.borderColor='#1C3829';$el.style.background='#fff';$el.style.boxShadow='0 0 0 3px rgba(28,56,41,0.08)'"
-                   @blur="$el.style.borderColor='#e5e7eb';$el.style.background='#f9fafb';$el.style.boxShadow='none'">
-            <p style="font-size:12px;color:#9ca3af;margin:8px 0 20px;">Order numbers look like <strong style="color:#6b7280;font-weight:600;">NHM-20260812-XXXX</strong></p>
-            <button type="submit"
-                    :disabled="loading"
-                    :style="loading ? 'opacity:0.8;cursor:not-allowed;' : ''"
-                    style="width:100%;background:#1C3829;color:#fff;font-family:'DM Sans',sans-serif;font-size:14.5px;font-weight:700;padding:14px;border:none;border-radius:12px;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:8px;transition:background 0.18s,opacity 0.18s;">
-                <span x-show="!loading" style="display:inline-flex;align-items:center;gap:8px;">
-                    <svg width="15" height="15" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M21 21l-4.35-4.35M17 11A6 6 0 115 11a6 6 0 0112 0z"/></svg>
-                    Track parcel
-                </span>
-                <span x-show="loading" style="display:inline-flex;align-items:center;gap:9px;">
-                    <svg width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24" style="animation:spin .8s linear infinite"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"/></svg>
-                    Looking up order…
-                </span>
-            </button>
-        </form>
-
-    </div>
-</div>
 
 </body>
 </html>

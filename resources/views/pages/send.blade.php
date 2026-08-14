@@ -16,41 +16,30 @@
 
 <style>
 :root {
-    --font:        'DM Sans', system-ui, sans-serif;
-    --head:        'Inter', 'DM Sans', system-ui, sans-serif;
-    --green:       #6bc630;
-    --green-dark:  #5aad28;
-    --green-light: #edf8df;
-    --green-mid:   #4a9a1f;
-    --forest:      #1C3829;
-    --border:      #e5e7eb;
-    --text:        #0b130a;
-    --text-2:      #6b7280;
-    --shade:       #f9fafb;
+    --font:         'DM Sans', system-ui, sans-serif;
+    --head:         'Inter', 'DM Sans', system-ui, sans-serif;
+    --green:        #6bc630;
+    --green-dark:   #5aad28;
+    --green-light:  #edf8df;
+    --green-mid:    #4a9a1f;
+    --forest:       #1C3829;
+    --forest-deep:  #062e14;
+    --border:       #e5e7eb;
+    --text:         #0b130a;
+    --text-2:       #6b7280;
+    --shade:        #f9fafb;
 }
 * { box-sizing: border-box; margin: 0; padding: 0; }
 body { font-family: var(--font); color: var(--text); background: var(--shade); -webkit-font-smoothing: antialiased; }
 
 /* ── Page shell ── */
 .send-page { min-height: 100vh; display: flex; flex-direction: column; }
-.send-nav {
-    background: #fff; border-bottom: 1px solid var(--border);
-    padding: 0 32px; height: 62px;
-    display: flex; align-items: center; justify-content: space-between;
-    position: sticky; top: 0; z-index: 50;
-}
-.send-nav-back {
-    display: inline-flex; align-items: center; gap: 6px;
-    font-size: 14px; font-weight: 500; color: var(--text-2);
-    text-decoration: none; transition: color 0.15s;
-}
-.send-nav-back:hover { color: var(--text); }
 
 .send-main {
     flex: 1;
     display: flex;
     justify-content: center;
-    padding: 40px 40px 80px;
+    padding: 160px 40px 80px;
 }
 
 /* ── Two-column layout ── */
@@ -366,7 +355,7 @@ input:checked + .toggle-track .toggle-thumb { left: 19.5px; }
     .wiz-layout { grid-template-columns: 1fr; gap: 0; }
     .wiz-left { padding-right: 0; padding-bottom: 32px; border-right: none; }
     .wiz-right { position: static; padding-left: 0; border-left: none; border-top: 1px solid var(--border); padding-top: 32px; }
-    .send-main { padding: 24px 16px 60px; }
+    .send-main { padding: 130px 16px 60px; }
     .wiz-card-head, .wiz-card-body, .wiz-card-foot { padding-left: 20px; padding-right: 20px; }
     .summary-title, .summary-rows, .summary-price, .summary-cta { padding-left: 20px; padding-right: 20px; }
     .field-row { flex-direction: column; }
@@ -374,22 +363,16 @@ input:checked + .toggle-track .toggle-thumb { left: 19.5px; }
 }
 </style>
 </head>
-<body class="send-page">
+<body class="send-page" x-data="{ trackOpen: false, trackNum: '' }" @keydown.escape.window="trackOpen = false">
 
-    {{-- Nav --}}
-    <header class="send-nav">
-        <a href="/" class="send-nav-logo">
-            <img src="/images/nhume_logo_v2.png" alt="Nhume" style="height:36px;width:auto;">
-        </a>
-        <a href="/" class="send-nav-back">
-            <svg width="15" height="15" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 16l-4-4m0 0l4-4m-4 4h18"/></svg>
-            Back to home
-        </a>
-    </header>
+    <x-landing.nav :frosted="true" />
 
     <main class="send-main">
         @livewire('parcel.create-order-wizard')
     </main>
+
+    <x-landing.footer />
+    <x-landing.track-modal />
 
     @livewireScripts
 </body>
