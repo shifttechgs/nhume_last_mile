@@ -2,16 +2,69 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Enums\DriverSource;
+use App\Enums\ServiceType;
 use App\Enums\TrustTier;
+use App\Enums\UserRole;
 use App\Http\Controllers\Controller;
 use App\Models\Task;
 use App\Models\TransporterProfile;
+use App\Models\User;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\View\View;
 
 class DriverController extends Controller
 {
+    public function create(): View
+    {
+        return view('admin.drivers.create');
+    }
+
+    public function store(Request $request): RedirectResponse
+    {
+        $data = $request->validate([
+            'name'          => ['required', 'string', 'max:100'],
+            'email'         => ['required', 'email', 'unique:users,email'],
+            'phone'         => ['required', 'string', 'max:20'],
+            'whatsapp'      => ['nullable', 'string', 'max:20'],
+            'bio'           => ['nullable', 'string', 'max:500'],
+            'trust_tier'    => ['required', 'in:' . implode(',', array_column(TrustTier::cases(), 'value'))],
+            'driver_source' => ['required', 'in:' . implode(',', array_column(DriverSource::cases(), 'value'))],
+            'service_types' => ['required', 'array', 'min:1'],
+            'service_types.*' => ['in:' . implode(',', array_column(ServiceType::cases(), 'value'))],
+        ]);
+
+        DB::transaction(function () use ($data, $request) {
+            $user = User::create([
+                'name'     => $data['name'],
+                'email'    => $data['email'],
+                'phone'    => $data['phone'],
+                'password' => Hash::make(str()->random(16)),
+                'role'     => UserRole::TransportPartner,
+            ]);
+
+            TransporterProfile::create([
+                'user_id'       => $user->id,
+                'phone'         => $data['phone'],
+                'whatsapp'      => $data['whatsapp'] ?? $data['phone'],
+                'bio'           => $data['bio'] ?? null,
+                'trust_tier'    => $data['trust_tier'],
+                'driver_source' => $data['driver_source'],
+                'service_types' => $data['service_types'],
+                'reviewed_by'   => $data['trust_tier'] !== TrustTier::Unverified->value ? auth()->id() : null,
+                'reviewed_at'   => $data['trust_tier'] !== TrustTier::Unverified->value ? now() : null,
+                'is_active'     => true,
+            ]);
+        });
+
+        return redirect()
+            ->route('admin.drivers.index')
+            ->with('success', "Driver {$data['name']} added successfully.");
+    }
+
     public function index(Request $request): View
     {
         $query = TransporterProfile::with('user')

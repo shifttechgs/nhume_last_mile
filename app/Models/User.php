@@ -14,7 +14,7 @@ class User extends Authenticatable
     /** @use HasFactory<UserFactory> */
     use HasFactory, Notifiable;
 
-    protected $fillable = ['name', 'email', 'password', 'role'];
+    protected $fillable = ['name', 'email', 'phone', 'password', 'role'];
 
     protected $hidden = ['password', 'remember_token'];
 
@@ -35,5 +35,10 @@ class User extends Authenticatable
     public function transporterProfile(): HasOne
     {
         return $this->hasOne(TransporterProfile::class);
+    }
+
+    public function tasks(): \Illuminate\Database\Eloquent\Relations\HasMany
+    {
+        return $this->hasMany(\App\Models\Task::class);
     }
 }

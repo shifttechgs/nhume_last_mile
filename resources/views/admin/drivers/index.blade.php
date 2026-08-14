@@ -16,7 +16,7 @@
             <h1 class="text-[22px] font-bold text-gray-900 tracking-tight">Drivers</h1>
             <p class="text-sm text-gray-400 mt-0.5">Manage transporter accounts and trust verification</p>
         </div>
-        <a href="#"
+        <a href="{{ route('admin.drivers.create') }}"
            class="hidden sm:inline-flex items-center gap-2 px-4 py-2.5 rounded-xl text-sm font-semibold text-white"
            style="background:#6bc630;box-shadow:0 4px 16px rgba(107,198,48,0.28);">
             <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
