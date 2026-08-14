@@ -13,7 +13,7 @@
     <style>
         /* ── Sidebar shell ─────────────────────────────────────── */
         .dash-sidebar {
-            background: #0D1511;
+            background: #062e14;
             border-right: 1px solid rgba(255,255,255,0.055);
             transition: width 0.24s cubic-bezier(0.4,0,0.2,1);
             overflow: hidden;
@@ -213,7 +213,7 @@
          x-transition:leave-start="translate-x-0"
          x-transition:leave-end="-translate-x-full"
          class="mobile-sidebar lg:hidden"
-         style="background:#0D1511;border-right:1px solid rgba(255,255,255,0.055);"
+         style="background:#062e14;border-right:1px solid rgba(255,255,255,0.055);"
          x-cloak>
         @include('components.dashboard-sidenav', ['collapsed' => false, 'mobile' => true])
     </div>
