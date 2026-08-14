@@ -13,10 +13,10 @@
 
     $navMain = match(true) {
         $isAdmin  => [
-            ['href' => route('dashboard'), 'label' => 'Overview',   'icon' => 'home',     'route' => 'dashboard'],
-            ['href' => '#',               'label' => 'Orders',      'icon' => 'package',  'route' => null],
-            ['href' => '#',               'label' => 'Drivers',     'icon' => 'users',    'route' => null],
-            ['href' => '#',               'label' => 'Journeys',    'icon' => 'map',      'route' => null],
+            ['href' => route('dashboard'),           'label' => 'Overview', 'icon' => 'home',    'route' => 'dashboard'],
+            ['href' => route('admin.orders.index'),  'label' => 'Orders',   'icon' => 'package', 'route' => 'admin.orders.*'],
+            ['href' => route('admin.drivers.index'), 'label' => 'Drivers',  'icon' => 'users',   'route' => 'admin.drivers.*'],
+            ['href' => '#',                          'label' => 'Journeys', 'icon' => 'map',     'route' => null],
         ],
         $isDriver => [
             ['href' => route('dashboard'), 'label' => 'Overview',   'icon' => 'home',     'route' => 'dashboard'],
