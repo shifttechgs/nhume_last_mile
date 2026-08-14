@@ -224,6 +224,15 @@
                             @endif
                         </div>
 
+                        {{-- SMS updates --}}
+                        <div class="field-section-label">Your contact</div>
+                        <div class="field">
+                            <label class="flabel">Your mobile number <span class="fopt">(for SMS updates)</span></label>
+                            <input wire:model.blur="sender_phone" type="tel" class="finput" placeholder="+263...">
+                            <p class="field-hint" style="margin-top:5px;">We'll send you an SMS when your order is confirmed and when a driver is assigned.</p>
+                            @error('sender_phone')<p class="field-err">{{ $message }}</p>@enderror
+                        </div>
+
                         {{-- Recipient --}}
                         <div class="field-section-label">Recipient</div>
                         <div class="field-row">

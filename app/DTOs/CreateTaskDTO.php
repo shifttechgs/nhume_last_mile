@@ -28,5 +28,6 @@ final readonly class CreateTaskDTO
         public ?string          $notes,
         public ?Carbon          $scheduledAt,
         public ?int             $userId,
+        public ?string          $senderPhone,
     ) {}
 }

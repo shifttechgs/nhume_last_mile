@@ -26,6 +26,7 @@ final class CreateOrderWizard extends Component
     // Step 2 — addresses
     public string $pickup_address  = '';
     public string $dropoff_address = '';
+    public string $sender_phone    = '';
     public string $recipient_name  = '';
     public string $recipient_phone = '';
 
@@ -136,6 +137,7 @@ final class CreateOrderWizard extends Component
                                    ? Carbon::parse($this->scheduled_at)
                                    : null,
             userId:            Auth::id(),
+            senderPhone:       $this->sender_phone ?: null,
         );
 
         $task = $this->orderService->placeOrder($dto);

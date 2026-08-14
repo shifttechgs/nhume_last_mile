@@ -19,7 +19,7 @@ class Task extends Model
         'pickup_address', 'pickup_lat', 'pickup_lng',
         'dropoff_address', 'dropoff_lat', 'dropoff_lng',
         'item_description', 'weight_kg', 'errand_instructions',
-        'recipient_name', 'recipient_phone',
+        'sender_phone', 'recipient_name', 'recipient_phone',
         'offered_price', 'price_estimate', 'is_fragile',
         'notes', 'scheduled_at',
     ];
