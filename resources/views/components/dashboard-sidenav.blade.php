@@ -43,10 +43,10 @@
 
 {{-- ── Logo ──────────────────────────────────────────────── --}}
 <div class="flex items-center flex-shrink-0"
-     style="height:72px;padding:0 18px;border-bottom:1px solid rgba(255,255,255,0.07);">
+     style="height:88px;padding:0 20px;border-bottom:1px solid rgba(255,255,255,0.07);">
     <a href="{{ route('dashboard') }}" class="flex items-center overflow-hidden">
         <img src="/images/nhume_logo_dark_bg.png" alt="Nhume"
-             style="height:52px;width:auto;flex-shrink:0;">
+             style="height:68px;width:auto;flex-shrink:0;">
     </a>
 </div>
 

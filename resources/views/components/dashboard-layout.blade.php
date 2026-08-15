@@ -228,7 +228,7 @@
     <div class="flex flex-col flex-1 min-w-0 overflow-hidden">
 
         {{-- Top bar --}}
-        <header class="flex items-center gap-4 px-5 h-[72px] flex-shrink-0"
+        <header class="flex items-center gap-4 px-5 h-[88px] flex-shrink-0"
                 style="background:#fff;border-bottom:1px solid #E9EAEC;">
 
             {{-- Mobile hamburger --}}
