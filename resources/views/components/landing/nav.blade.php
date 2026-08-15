@@ -34,7 +34,7 @@
 }
 .nav-logo { display: flex; align-items: center; text-decoration: none; flex-shrink: 0; }
 .nav-logo img { transition: width 0.35s ease; }
-.nav-outer.is-scrolled .nav-logo img { width: 130px; }
+.nav-outer.is-scrolled .nav-logo img { width: 110px; }
 .nav-center {
     position: absolute;
     left: 50%; transform: translateX(-50%);
@@ -73,7 +73,7 @@
 }
 .btn-nav-outline:hover { background: #fff; transform: translateY(-1px); }
 .nav-outer.is-scrolled .btn-nav-outline { background: rgba(255,255,255,0.9); }
-.nav-outer.is-scrolled .nav-bar { padding-top: 10px; padding-bottom: 10px; }
+.nav-outer.is-scrolled .nav-bar { padding-top: 8px; padding-bottom: 8px; }
 .btn-nav-fill {
     display: inline-flex; align-items: center; gap: 7px;
     font-family: 'DM Sans', system-ui, sans-serif;
