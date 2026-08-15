@@ -131,7 +131,7 @@
         {{-- Centered links (desktop) --}}
         <nav class="nav-center nav-desktop">
             <a href="/#how-it-works" class="nav-link">How it works</a>
-            <a href="/#journeys"     class="nav-link">Journeys</a>
+            <a href="/#journeys"     class="nav-link">Routes</a>
             <a href="/#transporters" class="nav-link">For transporters</a>
             <a href="/#faq"          class="nav-link">FAQ</a>
         </nav>
@@ -159,7 +159,7 @@
     {{-- Mobile dropdown --}}
     <div x-show="open" x-cloak class="nav-mobile-dropdown">
         <nav style="display:flex;flex-direction:column;gap:2px;margin-bottom:12px;">
-            @foreach(['/#how-it-works' => 'How it works', '/#journeys' => 'Journeys', '/#transporters' => 'For transporters', '/#faq' => 'FAQ'] as $href => $label)
+            @foreach(['/#how-it-works' => 'How it works', '/#journeys' => 'Routes', '/#transporters' => 'For transporters', '/#faq' => 'FAQ'] as $href => $label)
             <a href="{{ $href }}" @click="open=false"
                style="display:block;padding:10px 12px;font-size:14px;font-weight:500;color:#374151;border-radius:10px;text-decoration:none;transition:background 0.15s;"
                onmouseover="this.style.background='#f3f4f6'" onmouseout="this.style.background='transparent'">{{ $label }}</a>
