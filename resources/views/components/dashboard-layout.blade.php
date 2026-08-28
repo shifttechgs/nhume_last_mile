@@ -13,17 +13,20 @@
     <style>
         /* ── Sidebar shell ─────────────────────────────────────── */
         .dash-sidebar {
-            background: #062e14;
-            border-right: 1px solid rgba(255,255,255,0.055);
+            background: #fff;
+            border-right: 1px solid #E9EAEC;
             transition: width 0.24s cubic-bezier(0.4,0,0.2,1);
             overflow: hidden;
             flex-shrink: 0;
-            display: flex;
+            display: none;            /* hidden on mobile; shown at lg via the query below */
             flex-direction: column;
             height: 100%;
             position: relative;
             z-index: 40;
         }
+        /* Authoritative responsive toggle — the inline block loads after Tailwind,
+           so `.dash-sidebar` would otherwise override the `hidden` utility. */
+        @media (min-width: 1024px) { .dash-sidebar { display: flex; } }
         /* ── Nav items ─────────────────────────────────────────── */
         .nav-item {
             display: flex;
@@ -33,19 +36,19 @@
             border-radius: 8px;
             font-size: 13.5px;
             font-weight: 500;
-            color: rgba(255,255,255,0.48);
+            color: #475467;
             text-decoration: none;
             transition: background 0.14s, color 0.14s;
             white-space: nowrap;
             position: relative;
         }
         .nav-item:hover {
-            background: rgba(255,255,255,0.055);
-            color: rgba(255,255,255,0.82);
+            background: #F6F7F9;
+            color: #101828;
         }
         .nav-item.active {
-            background: rgba(107,198,48,0.1);
-            color: #d4f09e;
+            background: #EAF6DE;
+            color: #357a12;
         }
         .nav-item.active::before {
             content: '';
@@ -69,7 +72,7 @@
             font-weight: 600;
             letter-spacing: 0.08em;
             text-transform: uppercase;
-            color: rgba(255,255,255,0.22);
+            color: #98A2B3;
             padding: 0 12px;
             margin-bottom: 3px;
             white-space: nowrap;
@@ -94,17 +97,112 @@
             z-index: 99;
         }
         .nav-item:hover .nav-tooltip { opacity: 1; }
+        /* ── Top header bar ────────────────────────────────────── */
+        .dash-header {
+            height: 72px;
+            padding: 0 24px;
+            background: #fff;
+            border-bottom: 1px solid #E9EAEC;
+        }
+        @media (max-width: 640px) {
+            .dash-header { height: 64px; padding: 0 16px; }
+        }
+        /* ═══════════════════════════════════════════════════════
+           Admin overview — "Stripe" design system
+           Neutral ink scale + single green accent. No rainbow.
+        ═══════════════════════════════════════════════════════ */
+        .ov { --ink:#101828; --body:#475467; --muted:#8A9099; --line:#E9EAEC;
+              --acc:#5aad28; --acc-2:#6bc630; --canvas:#F6F7F9; }
+        .ov-title { font-size:20px; font-weight:600; letter-spacing:-0.02em; color:var(--ink); }
+        .ov-sub   { font-size:13px; color:var(--muted); margin-top:2px; }
+        .ov-chip  { display:inline-flex; align-items:center; gap:7px; font-size:12px; font-weight:500;
+                    color:var(--body); background:#fff; border:1px solid var(--line);
+                    border-radius:8px; padding:7px 12px; }
+        .ov-chip .dot { width:6px; height:6px; border-radius:50%; background:var(--acc-2); }
+
+        /* card shell */
+        .d-card { background:#fff; border:1px solid var(--line); border-radius:8px; }
+        .d-card-head { display:flex; align-items:center; justify-content:space-between;
+                       padding:16px 18px; border-bottom:1px solid #F2F4F7; }
+        .d-h { font-size:13.5px; font-weight:600; color:var(--ink); letter-spacing:-0.01em; }
+        .d-link { font-size:12.5px; font-weight:500; color:var(--acc); text-decoration:none; }
+        .d-link:hover { color:var(--acc-2); }
+
+        /* KPI card */
+        .kpi { background:#fff; border:1px solid var(--line); border-radius:8px; padding:16px 18px;
+               display:flex; flex-direction:column; gap:10px; }
+        .kpi-label { font-size:11px; font-weight:600; letter-spacing:0.06em; text-transform:uppercase; color:var(--muted); }
+        .kpi-num { font-size:30px; font-weight:600; letter-spacing:-0.02em; color:var(--ink);
+                   line-height:1; font-variant-numeric:tabular-nums; }
+        .kpi-foot { display:flex; align-items:center; justify-content:space-between; gap:8px; min-height:16px; }
+        .kpi-sub { font-size:12px; color:var(--muted); }
+        .kpi-delta { display:inline-flex; align-items:center; gap:3px; font-size:12px; font-weight:600; font-variant-numeric:tabular-nums; }
+        .kpi-delta.up   { color:var(--acc); }
+        .kpi-delta.down { color:#98A2B3; }
+        .kpi-delta.flat { color:#98A2B3; }
+
+        /* honest proportion mini-bar */
+        .mini-bar { height:5px; border-radius:3px; background:#EEF0F3; overflow:hidden; }
+        .mini-bar > span { display:block; height:100%; border-radius:3px; background:var(--acc); }
+
+        /* structured table */
+        .d-table { width:100%; border-collapse:collapse; }
+        .d-table th { text-align:left; font-size:10.5px; font-weight:600; letter-spacing:0.05em;
+                      text-transform:uppercase; color:var(--muted); padding:10px 18px; border-bottom:1px solid #F2F4F7; }
+        .d-table td { padding:13px 18px; border-bottom:1px solid #F5F6F8; font-size:13px; color:var(--body); vertical-align:middle; }
+        .d-table tr:last-child td { border-bottom:none; }
+        .d-table tbody tr { transition:background 0.12s; }
+        .d-table tbody tr:hover { background:#FAFBFC; }
+        .d-mono { font-family:ui-monospace,'SF Mono',Menlo,monospace; font-size:12px; font-weight:600; color:var(--ink); white-space:nowrap; }
+        .d-route { display:inline-flex; align-items:center; gap:7px; color:var(--body); white-space:nowrap; }
+        .d-route .arr { color:#C6CBD3; }
+        .d-cust { color:var(--body); }
+        .d-time { color:var(--muted); font-size:12px; font-variant-numeric:tabular-nums; }
+        .d-chev { color:#C6CBD3; opacity:0; transition:opacity 0.12s, color 0.12s; }
+        .d-table tbody tr:hover .d-chev { opacity:1; }
+        .d-chev:hover { color:var(--body); }
+
+        /* card footer + pagination */
+        .d-card-foot { display:flex; align-items:center; justify-content:space-between; gap:12px;
+                       padding:12px 18px; border-top:1px solid #F2F4F7; }
+        .d-pageinfo { font-size:12.5px; color:var(--muted); font-variant-numeric:tabular-nums; }
+        .d-pageinfo b { color:var(--body); font-weight:600; }
+        .d-pg { display:flex; align-items:center; gap:6px; }
+        .d-pgbtn { display:inline-flex; align-items:center; gap:5px; font-size:12.5px; font-weight:500;
+                   color:#344054; background:#fff; border:1px solid var(--line); border-radius:8px;
+                   padding:6px 11px; text-decoration:none; transition:background 0.12s, border-color 0.12s, color 0.12s; }
+        .d-pgbtn:hover { background:#F6F7F9; border-color:#D0D5DD; }
+        .d-pgbtn.is-disabled { color:#CBD0D8; background:#fff; border-color:#EEF0F3; pointer-events:none; }
+
+        /* single muted status pill (neutral bg + small tinted dot) */
+        .st-pill { display:inline-flex; align-items:center; gap:6px; font-size:11.5px; font-weight:500;
+                   color:#344054; background:#F2F4F7; border-radius:6px; padding:3px 9px; white-space:nowrap; }
+        .st-pill .st-dot { width:6px; height:6px; border-radius:50%; flex-shrink:0; }
+
+        /* quick action rows — monochrome */
+        .qa-row { display:flex; align-items:center; gap:11px; padding:9px 10px; border-radius:9px;
+                  font-size:13.5px; font-weight:500; color:#344054; text-decoration:none; transition:background 0.12s; }
+        .qa-row:hover { background:#F6F7F9; }
+        .qa-ic { width:30px; height:30px; border-radius:8px; background:#F2F4F7; color:#475467;
+                 display:flex; align-items:center; justify-content:center; flex-shrink:0; }
+        .qa-row:hover .qa-ic { background:#EAF6DE; color:var(--acc); }
+        .qa-count { margin-left:auto; font-size:11.5px; font-weight:600; color:var(--body);
+                    background:#F2F4F7; border-radius:20px; padding:1px 8px; font-variant-numeric:tabular-nums; }
+
+        /* trust breakdown — one green→gray hue family */
+        .trust-stack { display:flex; height:8px; border-radius:5px; overflow:hidden; background:#EEF0F3; }
+        .trust-stack > span { height:100%; }
+        .trust-row { display:flex; align-items:center; gap:9px; font-size:12.5px; }
+        .trust-key { width:9px; height:9px; border-radius:3px; flex-shrink:0; }
+        .trust-name { color:var(--body); }
+        .trust-val { margin-left:auto; font-weight:600; color:var(--ink); font-variant-numeric:tabular-nums; }
+
         /* ── Stat cards ────────────────────────────────────────── */
         .stat-card {
             background: #fff;
             border: 1px solid #E9EAEC;
-            border-radius: 14px;
+            border-radius: 8px;
             padding: 22px 24px 20px;
-            transition: box-shadow 0.18s, transform 0.18s;
-        }
-        .stat-card:hover {
-            box-shadow: 0 4px 20px rgba(0,0,0,0.07);
-            transform: translateY(-1px);
         }
         /* ── Activity item ─────────────────────────────────────── */
         .activity-item {
@@ -127,7 +225,7 @@
             white-space: nowrap;
             overflow: hidden;
         }
-        .sidebar-user:hover { background: rgba(255,255,255,0.055); }
+        .sidebar-user:hover { background: #F6F7F9; }
         /* ── Mobile overlay ────────────────────────────────────── */
         .mobile-overlay {
             position: fixed; inset: 0; z-index: 30;
@@ -145,7 +243,7 @@
         .trust-unverified    { background:#f3f4f6; color:#6b7280; }
     </style>
 </head>
-<body class="h-full font-sans antialiased" style="background:#F5F7F5;">
+<body class="h-full font-sans antialiased" style="background:#F6F7F9;">
 
 @php
     $user     = Auth::user();
@@ -170,7 +268,7 @@
         default   => [
             ['href' => route('dashboard'), 'label' => 'Overview',   'icon' => 'home',    'route' => 'dashboard'],
             ['href' => '#',               'label' => 'My Parcels',  'icon' => 'package', 'route' => null],
-            ['href' => route('send'),     'label' => 'Send Parcel', 'icon' => 'plus',    'route' => 'send'],
+            ['href' => route('send'),     'label' => 'Book an errand', 'icon' => 'plus', 'route' => 'send'],
             ['href' => '#',               'label' => 'Track',       'icon' => 'location','route' => null],
         ],
     };
@@ -213,7 +311,7 @@
          x-transition:leave-start="translate-x-0"
          x-transition:leave-end="-translate-x-full"
          class="mobile-sidebar lg:hidden"
-         style="background:#062e14;border-right:1px solid rgba(255,255,255,0.055);"
+         style="background:#fff;border-right:1px solid #E9EAEC;"
          x-cloak>
         @include('components.dashboard-sidenav', ['collapsed' => false, 'mobile' => true])
     </div>
@@ -228,8 +326,7 @@
     <div class="flex flex-col flex-1 min-w-0 overflow-hidden">
 
         {{-- Top bar --}}
-        <header class="flex items-center gap-4 px-5 h-[88px] flex-shrink-0"
-                style="background:#fff;border-bottom:1px solid #E9EAEC;">
+        <header class="dash-header flex items-center gap-4 flex-shrink-0">
 
             {{-- Mobile hamburger --}}
             <button @click="mobileOpen = true"
@@ -253,7 +350,7 @@
                     <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
                         <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/>
                     </svg>
-                    <span class="absolute top-1.5 right-1.5 w-1.5 h-1.5 rounded-full bg-brand-green"></span>
+                    <span class="absolute top-1.5 right-1.5 w-1.5 h-1.5 rounded-full" style="background:#6bc630;"></span>
                 </button>
 
                 {{-- User menu --}}

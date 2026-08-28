@@ -46,7 +46,7 @@ body { font-family: var(--f); color: var(--ink); background: var(--shade); -webk
     flex: 1;
     display: flex;
     justify-content: center;
-    padding: 160px 40px 80px;
+    padding: 200px 40px 80px;
 }
 
 /* ── Two-card layout (mirrors send page wiz-layout) ── */
@@ -73,7 +73,7 @@ body { font-family: var(--f); color: var(--ink); background: var(--shade); -webk
 .tk-card {
     background: #fff;
     border: 1px solid var(--border);
-    border-radius: 18px;
+    border-radius: 8px;
     overflow: hidden;
 }
 .tk-card-head {
@@ -155,9 +155,9 @@ body { font-family: var(--f); color: var(--ink); background: var(--shade); -webk
 .tl-step:last-child .tl-body { padding-bottom: 0; }
 
 .tl-cur-wrap {
-    background: #f5f8f4;
+    background: #f9fafb;
     border-left: 3px solid var(--forest);
-    border-radius: 0 9px 9px 0;
+    border-radius: 0 6px 6px 0;
     padding: 13px 18px;
 }
 .tl-step-name { font-family: var(--fh); font-size: 14px; font-weight: 700; color: var(--ink); line-height: 1.3; margin-bottom: 5px; }
@@ -214,16 +214,16 @@ body { font-family: var(--f); color: var(--ink); background: var(--shade); -webk
 .btn-p {
     display: flex; align-items: center; justify-content: center; gap: 7px;
     width: 100%; background: var(--forest); color: #fff;
-    border: none; border-radius: 11px;
+    border: none; border-radius: 6px;
     font-family: var(--f); font-size: 14px; font-weight: 700;
     padding: 13px; cursor: pointer; text-decoration: none;
-    transition: background .18s;
+    transition: background .15s;
 }
 .btn-p:hover { background: var(--forest-d); }
 .btn-g {
     display: flex; align-items: center; justify-content: center;
     background: none; color: var(--muted);
-    border: 1.5px solid var(--border); border-radius: 11px;
+    border: 1.5px solid var(--border); border-radius: 6px;
     font-family: var(--f); font-size: 13px; font-weight: 500;
     padding: 11px; cursor: pointer; text-decoration: none;
     transition: border-color .15s, color .15s;
@@ -237,7 +237,7 @@ body { font-family: var(--f); color: var(--ink); background: var(--shade); -webk
     gap: 22px; padding: 0; width: 100%;
 }
 .landing-icon {
-    width: 52px; height: 52px; border-radius: 14px;
+    width: 52px; height: 52px; border-radius: 8px;
     background: var(--forest);
     display: flex; align-items: center; justify-content: center;
 }
@@ -251,11 +251,10 @@ body { font-family: var(--f); color: var(--ink); background: var(--shade); -webk
     width: 100%; max-width: 400px;
     display: flex; align-items: center;
     background: var(--white); border: 1.5px solid var(--border);
-    border-radius: 11px; padding: 6px 6px 6px 18px;
-    box-shadow: 0 2px 12px rgba(0,0,0,.06);
-    transition: border-color .15s, box-shadow .15s;
+    border-radius: 6px; padding: 6px 6px 6px 18px;
+    transition: border-color .15s;
 }
-.l-form:focus-within { border-color: var(--forest); box-shadow: 0 4px 20px rgba(28,56,41,.1); }
+.l-form:focus-within { border-color: var(--forest); }
 .l-form input {
     flex: 1; border: none; background: transparent; outline: none;
     font-family: var(--f); font-size: 14px; font-weight: 500;
@@ -264,7 +263,7 @@ body { font-family: var(--f); color: var(--ink); background: var(--shade); -webk
 .l-form input::placeholder { color: #9ca3af; font-weight: 400; }
 .l-form button {
     flex-shrink: 0; height: 38px; padding: 0 18px;
-    background: var(--forest); color: #fff; border: none; border-radius: 7px;
+    background: var(--forest); color: #fff; border: none; border-radius: 4px;
     font-family: var(--f); font-size: 13px; font-weight: 700; cursor: pointer;
     display: inline-flex; align-items: center; gap: 6px; transition: background .18s;
 }
@@ -275,8 +274,8 @@ body { font-family: var(--f); color: var(--ink); background: var(--shade); -webk
     display: inline-flex; align-items: center; gap: 7px;
     background: var(--forest); color: #fff;
     font-family: var(--f); font-size: 14px; font-weight: 700;
-    padding: 13px 30px; border: none; border-radius: 10px;
-    cursor: pointer; text-decoration: none; transition: background .18s;
+    padding: 13px 30px; border: none; border-radius: 6px;
+    cursor: pointer; text-decoration: none; transition: background .15s;
 }
 .btn-pi:hover { background: var(--forest-d); }
 
@@ -287,12 +286,12 @@ body { font-family: var(--f); color: var(--ink); background: var(--shade); -webk
 }
 .nf-card {
     background: var(--white); border: 1px solid var(--border);
-    border-radius: 18px; padding: 48px 36px;
+    border-radius: 8px; padding: 48px 36px;
     text-align: center; max-width: 380px; width: 100%;
 }
 .nf-icon {
-    width: 46px; height: 46px; border-radius: 12px;
-    background: #fef3c7; margin: 0 auto 18px;
+    width: 46px; height: 46px; border-radius: 6px;
+    background: #f3f4f6; margin: 0 auto 18px;
     display: flex; align-items: center; justify-content: center;
 }
 .nf-h { font-family: var(--fh); font-size: 18px; font-weight: 700; color: var(--forest); margin-bottom: 9px; letter-spacing: -.02em; }
@@ -305,7 +304,7 @@ body { font-family: var(--f); color: var(--ink); background: var(--shade); -webk
 
 /* ── Mobile ── */
 @media (max-width: 768px) {
-    .track-main { padding: 130px 16px 60px; }
+    .track-main { padding: 160px 16px 60px; }
     .track-layout { grid-template-columns: 1fr; }
     .track-left { padding-right: 0; padding-bottom: 20px; }
     .track-right { position: static; }
@@ -360,7 +359,7 @@ body { font-family: var(--f); color: var(--ink); background: var(--shade); -webk
         </div>
         <h2 class="nf-h">Order not found</h2>
         <p class="nf-p">No order matches <code>{{ $orderNumber }}</code>.<br>Double-check the number and try again.</p>
-        <a href="/send" class="btn-pi" style="display:inline-flex;">Send a parcel</a>
+        <a href="/send" class="btn-pi" style="display:inline-flex;">Book an errand or parcel</a>
     </div>
 </div>
 
@@ -517,7 +516,7 @@ body { font-family: var(--f); color: var(--ink); background: var(--shade); -webk
             <div class="tk-cta-area">
                 <a href="/send" class="btn-p">
                     <svg width="13" height="13" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/></svg>
-                    Send another parcel
+                    Book another errand or parcel
                 </a>
                 <a href="/" class="btn-g">Back to home</a>
             </div>

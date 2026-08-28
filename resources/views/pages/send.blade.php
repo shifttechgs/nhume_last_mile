@@ -39,7 +39,7 @@ body { font-family: var(--font); color: var(--text); background: var(--shade); -
     flex: 1;
     display: flex;
     justify-content: center;
-    padding: 160px 40px 80px;
+    padding: 200px 40px 80px;
 }
 
 /* ── Two-column layout ── */
@@ -85,7 +85,7 @@ body { font-family: var(--font); color: var(--text); background: var(--shade); -
 .wiz-prog-line.done { background: var(--green); }
 
 /* Card shell */
-.wiz-card { background: #fff; border: 1px solid var(--border); border-radius: 18px; overflow: hidden; }
+.wiz-card { background: #fff; border: 1px solid var(--border); border-radius: 8px; overflow: hidden; }
 .wiz-card-head { padding: 28px 28px 20px; border-bottom: 1px solid var(--border); }
 .wiz-title {
     font-family: var(--head); font-size: 20px; font-weight: 700;
@@ -113,14 +113,14 @@ body { font-family: var(--font); color: var(--text); background: var(--shade); -
 .pickup-card {
     display: flex; align-items: center; gap: 14px;
     background: var(--shade); border: 2px solid transparent;
-    border-radius: 12px; padding: 16px 18px;
+    border-radius: 6px; padding: 16px 18px;
     cursor: pointer; position: relative;
     transition: border-color 0.18s, background 0.18s;
 }
 .pickup-card:hover { border-color: #d1d5db; }
-.pickup-card.selected { border-color: var(--forest); background: #f0f7ec; }
+.pickup-card.selected { border-color: var(--forest); background: #fff; }
 .pickup-icon {
-    width: 40px; height: 40px; border-radius: 10px;
+    width: 40px; height: 40px; border-radius: 6px;
     background: #fff; border: 1px solid var(--border);
     display: flex; align-items: center; justify-content: center;
     flex-shrink: 0; color: var(--forest);
@@ -132,11 +132,11 @@ body { font-family: var(--font); color: var(--text); background: var(--shade); -
 .pickup-desc  { font-size: 12.5px; color: var(--text-2); line-height: 1.5; }
 .pickup-badge {
     display: inline-block; margin-top: 3px;
-    font-size: 10.5px; font-weight: 700;
-    padding: 2px 8px; border-radius: 9999px;
-    background: var(--green-light); color: var(--green-mid); width: fit-content;
+    font-size: 10.5px; font-weight: 600;
+    padding: 2px 8px; border-radius: 4px;
+    background: #f3f4f6; color: #6b7280; width: fit-content;
 }
-.pickup-badge.collection { background: #fff3e0; color: #e65100; }
+.pickup-badge.collection { background: #f3f4f6; color: #6b7280; }
 .pickup-check {
     width: 20px; height: 20px; border-radius: 50%;
     background: var(--forest); flex-shrink: 0;
@@ -153,7 +153,7 @@ body { font-family: var(--font); color: var(--text); background: var(--shade); -
 .fopt   { font-weight: 400; color: var(--text-2); margin-left: 3px; }
 .finput {
     width: 100%; padding: 10px 13px;
-    border: 1.5px solid var(--border); border-radius: 9px;
+    border: 1.5px solid var(--border); border-radius: 6px;
     font-family: var(--font); font-size: 14px; color: var(--text);
     background: #fff; outline: none; transition: border-color 0.15s;
 }
@@ -194,7 +194,7 @@ input:checked + .toggle-track .toggle-thumb { left: 19.5px; }
 .sched-btn {
     display: inline-flex; align-items: center; gap: 6px;
     padding: 8px 16px; border: 1.5px solid var(--border);
-    border-radius: 9px; background: #fff;
+    border-radius: 6px; background: #fff;
     font-family: var(--font); font-size: 13.5px; font-weight: 500;
     color: var(--text-2); cursor: pointer; transition: border-color 0.15s, color 0.15s;
 }
@@ -220,7 +220,7 @@ input:checked + .toggle-track .toggle-thumb { left: 19.5px; }
 .summary-card {
     background: #fff;
     border: 1px solid var(--border);
-    border-radius: 16px;
+    border-radius: 8px;
     overflow: hidden;
 }
 
@@ -283,18 +283,18 @@ input:checked + .toggle-track .toggle-thumb { left: 19.5px; }
     display: inline-flex; align-items: center; justify-content: center; gap: 8px;
     background: var(--forest); color: #fff;
     font-family: var(--font); font-size: 14px; font-weight: 700;
-    padding: 12px 24px; border: none; border-radius: 11px;
+    padding: 12px 24px; border: none; border-radius: 6px;
     cursor: pointer; text-decoration: none;
-    transition: background 0.18s, transform 0.18s;
+    transition: background 0.15s;
 }
-.btn-wiz-primary:hover:not(:disabled) { background: #0f2a1d; transform: translateY(-1px); }
+.btn-wiz-primary:hover:not(:disabled) { background: #0f2a1d; }
 .btn-wiz-primary:disabled { opacity: 0.5; cursor: not-allowed; }
 .btn-wiz-ghost {
     display: inline-flex; align-items: center; gap: 7px;
     background: none; color: var(--text-2);
     font-family: var(--font); font-size: 13.5px; font-weight: 500;
     padding: 11px 18px; border: 1.5px solid var(--border);
-    border-radius: 11px; cursor: pointer; text-decoration: none;
+    border-radius: 6px; cursor: pointer; text-decoration: none;
     transition: border-color 0.15s, color 0.15s;
 }
 .btn-wiz-ghost:hover { border-color: #9ca3af; color: var(--text); }
@@ -302,13 +302,13 @@ input:checked + .toggle-track .toggle-thumb { left: 19.5px; }
 /* ── Confirmation screen ── */
 .wiz-confirm {
     background: #fff; border: 1px solid var(--border);
-    border-radius: 20px; padding: 56px 40px;
+    border-radius: 8px; padding: 56px 40px;
     text-align: center; max-width: 520px;
     margin: 0 auto; width: 100%;
 }
 .wiz-confirm-icon {
-    width: 60px; height: 60px; border-radius: 50%;
-    background: var(--green-light);
+    width: 60px; height: 60px; border-radius: 8px;
+    background: #f3f4f6;
     display: flex; align-items: center; justify-content: center;
     margin: 0 auto 20px;
 }
@@ -321,7 +321,7 @@ input:checked + .toggle-track .toggle-thumb { left: 19.5px; }
 .wiz-order-box {
     display: flex; flex-direction: column; align-items: center; gap: 8px;
     background: var(--shade); border: 1.5px solid var(--border);
-    border-radius: 14px; padding: 20px 28px; margin-bottom: 20px;
+    border-radius: 6px; padding: 20px 28px; margin-bottom: 20px;
 }
 .wiz-order-label {
     font-size: 11px; font-weight: 700; letter-spacing: 0.08em;
@@ -340,8 +340,8 @@ input:checked + .toggle-track .toggle-thumb { left: 19.5px; }
 
 .wiz-next-step {
     display: flex; align-items: flex-start; gap: 10px;
-    background: var(--green-light); border-radius: 12px;
-    padding: 14px 18px; font-size: 13.5px; color: var(--green-mid);
+    background: #f3f4f6; border: 1px solid #e5e7eb; border-radius: 6px;
+    padding: 14px 18px; font-size: 13.5px; color: #374151;
     text-align: left; line-height: 1.6; margin-bottom: 28px;
 }
 .wiz-confirm-actions { display: flex; gap: 10px; justify-content: center; flex-wrap: wrap; }
@@ -355,7 +355,7 @@ input:checked + .toggle-track .toggle-thumb { left: 19.5px; }
     .wiz-layout { grid-template-columns: 1fr; gap: 0; }
     .wiz-left { padding-right: 0; padding-bottom: 32px; border-right: none; }
     .wiz-right { position: static; padding-left: 0; border-left: none; border-top: 1px solid var(--border); padding-top: 32px; }
-    .send-main { padding: 130px 16px 60px; }
+    .send-main { padding: 160px 16px 60px; }
     .wiz-card-head, .wiz-card-body, .wiz-card-foot { padding-left: 20px; padding-right: 20px; }
     .summary-title, .summary-rows, .summary-price, .summary-cta { padding-left: 20px; padding-right: 20px; }
     .field-row { flex-direction: column; }

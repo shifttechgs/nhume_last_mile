@@ -28,7 +28,7 @@
         default   => [
             ['href' => route('dashboard'), 'label' => 'Overview',   'icon' => 'home',     'route' => 'dashboard'],
             ['href' => '#',               'label' => 'My Parcels',  'icon' => 'package',  'route' => null],
-            ['href' => route('send'),     'label' => 'Send Parcel', 'icon' => 'plus',     'route' => 'send'],
+            ['href' => route('send'),     'label' => 'Book an errand', 'icon' => 'plus', 'route' => 'send'],
             ['href' => '#',               'label' => 'Track',       'icon' => 'location', 'route' => null],
         ],
     };
@@ -42,11 +42,19 @@
 @endphp
 
 {{-- ── Logo ──────────────────────────────────────────────── --}}
-<div class="flex items-center flex-shrink-0"
-     style="height:88px;padding:0 20px;border-bottom:1px solid rgba(255,255,255,0.07);">
-    <a href="{{ route('dashboard') }}" class="flex items-center overflow-hidden">
-        <img src="/images/nhume_logo_dark_bg.png" alt="Nhume"
-             style="height:68px;width:auto;flex-shrink:0;">
+<div class="flex items-center justify-center flex-shrink-0"
+     style="height:88px;padding:0 16px;border-bottom:1px solid #F2F4F7;">
+    <a href="{{ route('dashboard') }}" class="flex items-center justify-center w-full overflow-hidden">
+        @if($mobile)
+            <img src="/images/nhume_logo_v4.png" alt="Nhume" style="height:104px;width:auto;flex-shrink:0;margin:-18px 0;">
+        @else
+            {{-- Full wordmark when expanded (scaled up; negative margins trim baked-in padding) --}}
+            <img x-show="!collapsed" x-cloak src="/images/nhume_logo_v4.png" alt="Nhume"
+                 style="height:104px;width:auto;flex-shrink:0;margin:-18px 0;">
+            {{-- Icon-only mark when collapsed --}}
+            <img x-show="collapsed" x-cloak src="/images/nhume_icon.png" alt="Nhume"
+                 style="height:34px;width:34px;flex-shrink:0;">
+        @endif
     </a>
 </div>
 
@@ -106,7 +114,7 @@
 </div>
 
 {{-- ── User + collapse at bottom ──────────────────────────── --}}
-<div style="padding:10px;border-top:1px solid rgba(255,255,255,0.055);flex-shrink:0;">
+<div style="padding:10px;border-top:1px solid #F2F4F7;flex-shrink:0;">
 
     {{-- User row --}}
     <div class="sidebar-user overflow-hidden">
@@ -116,19 +124,19 @@
         </div>
         @if($mobile)
             <div class="min-w-0">
-                <div style="font-size:12.5px;font-weight:600;color:rgba(255,255,255,0.82);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">
+                <div style="font-size:12.5px;font-weight:600;color:#344054;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">
                     {{ $user->name }}
                 </div>
-                <div style="font-size:11px;color:rgba(255,255,255,0.38);margin-top:1px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">
+                <div style="font-size:11px;color:#98A2B3;margin-top:1px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">
                     {{ $user->email }}
                 </div>
             </div>
         @else
             <div x-show="!collapsed" x-cloak class="min-w-0">
-                <div style="font-size:12.5px;font-weight:600;color:rgba(255,255,255,0.82);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">
+                <div style="font-size:12.5px;font-weight:600;color:#344054;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">
                     {{ $user->name }}
                 </div>
-                <div style="font-size:11px;color:rgba(255,255,255,0.38);margin-top:1px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">
+                <div style="font-size:11px;color:#98A2B3;margin-top:1px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">
                     {{ $user->email }}
                 </div>
             </div>
@@ -139,7 +147,7 @@
     @if(!$mobile)
     <button @click="toggle()"
             class="nav-item w-full mt-1 justify-center"
-            style="font-size:12px;color:rgba(255,255,255,0.3);">
+            style="font-size:12px;color:#98A2B3;">
         <svg x-show="!collapsed" x-cloak width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
             <path d="M15 18l-6-6 6-6"/>
             <path d="M9 18l-6-6 6-6" opacity=".4"/>
@@ -148,7 +156,7 @@
             <path d="M9 18l6-6-6-6"/>
             <path d="M15 18l6-6-6-6" opacity=".4"/>
         </svg>
-        <span x-show="!collapsed" x-cloak style="font-size:12px;color:rgba(255,255,255,0.3);">Collapse</span>
+        <span x-show="!collapsed" x-cloak style="font-size:12px;color:#98A2B3;">Collapse</span>
     </button>
     @endif
 

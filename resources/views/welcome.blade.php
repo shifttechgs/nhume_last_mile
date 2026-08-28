@@ -48,8 +48,8 @@
     /* ── Spacing scale ── */
     --section-y:    112px;
     --container:    1200px;
-    --card-radius:  16px;
-    --btn-radius:   12px;
+    --card-radius:  8px;
+    --btn-radius:   6px;
 }
 
 * { box-sizing: border-box; }
@@ -220,7 +220,7 @@ body { font-family: var(--font); color: var(--text); background: #fff; -webkit-f
     aspect-ratio: 1 / 0.9;
     background: #f1f0eb;
     border: 1px solid #e8e6df;
-    border-radius: 22px;
+    border-radius: 8px;
     overflow: hidden;
     box-shadow: inset 0 1px 0 rgba(255,255,255,0.7);
 }
@@ -327,47 +327,42 @@ body { font-family: var(--font); color: var(--text); background: #fff; -webkit-f
     padding: 36px 32px;
     transition: box-shadow 0.2s ease, transform 0.2s ease;
 }
-.feature-card:hover { box-shadow: 0 6px 28px rgba(28,56,41,0.08); transform: translateY(-2px); }
+.feature-card:hover { border-color: rgba(107,198,48,0.4); }
 
-/* ── Stats band ── */
+/* ── Stats band — open Stripe-style layout ── */
 .stats-band {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
-    background: var(--white);
-    border: 1px solid var(--border);
-    border-radius: 20px;
-    box-shadow: 0 10px 34px rgba(28,56,41,0.05);
-    overflow: hidden;
 }
 .stat-cell {
-    padding: 34px 22px;
+    padding: clamp(40px, 5vw, 64px) clamp(20px, 3vw, 48px);
     text-align: center;
     border-top: 1px solid var(--border);
     border-left: 1px solid var(--border);
 }
-/* internal dividers only — clear outer edges (2-col layout) */
 .stat-cell:nth-child(-n+2) { border-top: 0; }
 .stat-cell:nth-child(odd)  { border-left: 0; }
 .stat-num {
-    font-family: var(--font);
-    font-size: clamp(38px, 4.4vw, 48px);
+    font-family: var(--head);
+    font-size: clamp(52px, 6.5vw, 80px);
     font-weight: 800;
-    letter-spacing: -0.04em;
-    color: var(--green);
+    letter-spacing: -0.05em;
+    color: var(--forest);
     line-height: 1;
 }
 .stat-label {
     font-family: var(--font);
-    font-size: 14px;
+    font-size: 15px;
     font-weight: 600;
     color: var(--text);
-    margin-top: 10px;
+    margin-top: 14px;
 }
 .stat-sub {
     font-family: var(--font);
-    font-size: 12px;
+    font-size: 13px;
     color: #9aa096;
-    margin-top: 3px;
+    margin-top: 5px;
+    line-height: 1.5;
 }
 @media (min-width: 1024px) {
     .stats-band { grid-template-columns: repeat(4, 1fr); }
@@ -393,8 +388,6 @@ body { font-family: var(--font); color: var(--text); background: #fff; -webkit-f
     transition: box-shadow 0.2s ease, transform 0.2s ease, border-color 0.2s ease;
 }
 .step-card:hover {
-    box-shadow: 0 10px 32px rgba(28,56,41,0.08);
-    transform: translateY(-3px);
     border-color: rgba(107,198,48,0.4);
 }
 .step-head {
@@ -450,7 +443,7 @@ body { font-family: var(--font); color: var(--text); background: #fff; -webkit-f
     overflow: hidden;
     transition: box-shadow 0.2s ease, transform 0.2s ease;
 }
-.journey-card:hover { box-shadow: 0 6px 28px rgba(28,56,41,0.08); transform: translateY(-2px); }
+.journey-card:hover { border-color: rgba(107,198,48,0.4); }
 
 /* ══ Who it's for — roles section ══ */
 .roles-section {
@@ -502,7 +495,7 @@ body { font-family: var(--font); color: var(--text); background: #fff; -webkit-f
     padding: 10px;
     background: rgba(255,255,255,0.02);
     border: 2px solid rgba(255,255,255,0.15);
-    border-radius: 22px;
+    border-radius: 10px;
     transition: border-color 0.2s ease, background 0.2s ease;
 }
 .role-card:hover {
@@ -515,7 +508,7 @@ body { font-family: var(--font); color: var(--text); background: #fff; -webkit-f
     width: 100%;
     aspect-ratio: 16/9;
     overflow: hidden;
-    border-radius: 13px;
+    border-radius: 6px;
     border: 1px solid rgba(255,255,255,0.07);
     background: rgba(0,0,0,0.2);
     position: relative;
@@ -587,7 +580,7 @@ body { font-family: var(--font); color: var(--text); background: #fff; -webkit-f
     flex-direction: column;
     min-height: 230px;
     padding: 28px 24px 34px;
-    border-radius: 13px 13px 15px 15px;
+    border-radius: 0 0 8px 8px;
     background: #14311f;
     border: 1px solid rgba(255,255,255,0.09);
     margin: 0 0 -18px;
@@ -636,7 +629,7 @@ body { font-family: var(--font); color: var(--text); background: #fff; -webkit-f
 }
 .why-card {
     background: var(--white);
-    border-radius: 20px;
+    border-radius: 8px;
     padding: 24px;
     display: flex;
     flex-direction: column;
@@ -725,14 +718,13 @@ body { font-family: var(--font); color: var(--text); background: #fff; -webkit-f
     .testimonials-top > div:last-child { display: none; } /* hide photo on mobile */
 }
 
-/* Testimonials 3-card grid */
+/* Testimonials 2-column grid */
 .testimonials-grid {
     display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 20px;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 24px;
 }
-@media (max-width: 900px) { .testimonials-grid { grid-template-columns: 1fr 1fr; } }
-@media (max-width: 580px) { .testimonials-grid { grid-template-columns: 1fr; } }
+@media (max-width: 640px) { .testimonials-grid { grid-template-columns: 1fr; } }
 
 /* FAQ two-column */
 .faq-layout {
@@ -821,12 +813,9 @@ body { font-family: var(--font); color: var(--text); background: #fff; -webkit-f
     padding: 28px;
     transition: box-shadow 0.2s ease, transform 0.2s ease;
 }
-.tier-card:hover { box-shadow: 0 6px 24px rgba(28,56,41,0.07); transform: translateY(-2px); }
-.tier-featured {
-    border-color: rgba(107,198,48,0.55);
-    box-shadow: 0 0 0 3px var(--green-light), 0 12px 32px rgba(28,56,41,0.08);
-}
-.tier-featured:hover { box-shadow: 0 0 0 3px var(--green-light), 0 16px 36px rgba(28,56,41,0.12); }
+.tier-card:hover { border-color: rgba(107,198,48,0.4); }
+.tier-featured { border-color: rgba(107,198,48,0.55); }
+.tier-featured:hover { border-color: var(--green); }
 
 /* ── Route pill ── */
 .route-pill {
@@ -878,8 +867,6 @@ body { font-family: var(--font); color: var(--text); background: #fff; -webkit-f
     transition: box-shadow 0.2s ease, transform 0.2s ease, border-color 0.2s ease;
 }
 .testimonial-card:hover {
-    box-shadow: 0 12px 34px rgba(28,56,41,0.08);
-    transform: translateY(-3px);
     border-color: rgba(107,198,48,0.35);
 }
 .quote-mark {
@@ -948,7 +935,7 @@ body { font-family: var(--font); color: var(--text); background: #fff; -webkit-f
     right: clamp(16px,2vw,24px);
     z-index: 100;
     background: transparent;
-    border-radius: 16px;
+    border-radius: 8px;
     border: 1px solid transparent;
     transition: top 0.35s ease, left 0.35s ease, right 0.35s ease,
                 border-radius 0.35s ease, background 0.35s ease,
@@ -993,7 +980,7 @@ body { font-family: var(--font); color: var(--text); background: #fff; -webkit-f
     pointer-events: all;
     background: rgba(255,255,255,0.88);
     border: 1px solid rgba(0,0,0,0.07);
-    border-radius: 14px;
+    border-radius: 8px;
     padding: 6px;
     backdrop-filter: blur(12px);
     -webkit-backdrop-filter: blur(12px);
@@ -1013,7 +1000,7 @@ body { font-family: var(--font); color: var(--text); background: #fff; -webkit-f
     font-weight: 500;
     color: var(--text-2);
     padding: 13px 16px;
-    border-radius: 10px;
+    border-radius: 6px;
     transition: color 0.15s, background 0.15s;
     text-decoration: none;
     white-space: nowrap;
@@ -1030,7 +1017,7 @@ body { font-family: var(--font); color: var(--text); background: #fff; -webkit-f
     font-weight: 600;
     color: var(--forest);
     padding: 11px 20px;
-    border-radius: 14px;
+    border-radius: 6px;
     border: 1px solid rgba(12,26,15,0.08);
     background: rgba(255,255,255,0.75);
     box-shadow: none;
@@ -1050,15 +1037,14 @@ body { font-family: var(--font); color: var(--text); background: #fff; -webkit-f
     font-weight: 600;
     color: var(--forest-deep);
     padding: 11px 22px;
-    border-radius: 14px;
+    border-radius: 6px;
     border: none;
     background: var(--green);
-    box-shadow: 0 4px 16px rgba(107,198,48,0.28);
     text-decoration: none;
-    transition: background 0.15s, transform 0.15s;
+    transition: background 0.15s;
     white-space: nowrap;
 }
-.btn-nav-fill:hover { background: var(--green-dark); transform: translateY(-1px); }
+.btn-nav-fill:hover { background: var(--green-dark); }
 
 /* Mobile dropdown card */
 .nav-mobile-dropdown {
@@ -1068,7 +1054,7 @@ body { font-family: var(--font); color: var(--text); background: #fff; -webkit-f
     right: 20px;
     z-index: 99;
     background: #fff;
-    border-radius: 20px;
+    border-radius: 8px;
     border: 1px solid rgba(12,26,15,0.08);
     box-shadow: 0 12px 36px rgba(28,56,41,0.12);
     padding: 16px;
@@ -1302,13 +1288,10 @@ body { font-family: var(--font); color: var(--text); background: #fff; -webkit-f
     justify-content: center;
     gap: 9px;
     letter-spacing: 0.01em;
-    box-shadow: 0 8px 20px rgba(107,198,48,0.28), inset 0 1px 0 rgba(255,255,255,0.25);
-    transition: background 0.18s, transform 0.18s, box-shadow 0.18s;
+    transition: background 0.18s;
 }
 .hero-submit:hover {
     background: var(--green-dark);
-    transform: translateY(-1px);
-    box-shadow: 0 12px 26px rgba(107,198,48,0.34), inset 0 1px 0 rgba(255,255,255,0.25);
 }
 .hero-submit:active { transform: translateY(0); }
 
@@ -1901,10 +1884,34 @@ body { font-family: var(--font); color: var(--text); background: #fff; -webkit-f
 @keyframes ping { 75%,100% { transform: scale(2); opacity: 0; } }
 
 /* ── Marquee ── */
-@keyframes marquee { from { transform: translateX(0) } to { transform: translateX(-50%) } }
+@keyframes marquee         { from { transform: translateX(0);    } to { transform: translateX(-50%); } }
+@keyframes marquee-reverse { from { transform: translateX(-50%); } to { transform: translateX(0);    } }
 .marquee { animation: marquee 36s linear infinite; }
 @keyframes marquee-routes { from { transform: translateX(0) } to { transform: translateX(-50%) } }
 @keyframes livepulse { 0%,100% { opacity:1 } 50% { opacity:0.4 } }
+
+/* ── Testimonial bento ── */
+.t-bento {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 16px;
+    align-items: start;
+}
+.t-col { display: flex; flex-direction: column; gap: 16px; }
+.t-card {
+    background: rgba(255,255,255,0.05);
+    border: 1px solid rgba(255,255,255,0.1);
+    border-radius: 8px;
+    padding: 24px;
+}
+@media (max-width: 900px) {
+    .t-bento { grid-template-columns: 1fr 1fr; }
+    .t-bento .t-col:last-child { display: none; }
+}
+@media (max-width: 580px) {
+    .t-bento { grid-template-columns: 1fr; }
+    .t-bento .t-col:last-child { display: flex; }
+}
 
 /* Auto-scroll city + stats band */
 .marquee-band {
@@ -2030,25 +2037,21 @@ body { font-family: var(--font); color: var(--text); background: #fff; -webkit-f
 ══════════════════════════════════════════════════ --}}
 @php $cities = ['Harare','Bulawayo','Mutare','Gweru','Victoria Falls']; @endphp
 <div style="background:#fff;padding:clamp(16px,2vw,24px)">
-<section style="position:relative;overflow:hidden;background:var(--shade);display:flex;flex-direction:column;min-height:96svh;border-radius:20px;">
+<section style="position:relative;overflow:hidden;background:var(--shade);display:flex;flex-direction:column;min-height:82svh;border-radius:8px;">
 
-    {{-- Soft brand glow — depth without a busy background --}}
-    <div style="position:absolute;inset:0;pointer-events:none;
-        background:
-            radial-gradient(ellipse 45% 45% at 6% 92%, rgba(28,56,41,0.06) 0%, transparent 70%);">
-    </div>
 
-    <div class="mx-auto px-6 sm:px-8" style="position:relative;z-index:2;max-width:1180px;flex:1;display:flex;flex-direction:column;width:100%;">
-        <div style="flex:1;display:flex;flex-direction:column;padding-top:clamp(180px,22vh,240px);padding-bottom:0;">
+    <div class="mx-auto px-6 sm:px-8" style="position:relative;z-index:2;max-width:1180px;margin-left:auto;margin-right:auto;flex:1;display:flex;flex-direction:column;align-items:center;width:100%;">
+        <div style="flex:1;display:flex;flex-direction:column;align-items:center;padding-top:clamp(160px,19vh,220px);padding-bottom:0;">
 
             {{-- ── Centered copy ── --}}
-            <div class="reveal" style="max-width:1000px;margin:0 auto;text-align:center;">
-                <h1 style="font-family:var(--head);font-size:clamp(38px,5.6vw,68px);font-weight:600;letter-spacing:-0.03em;line-height:1.06;color:var(--forest);margin:0 0 22px;">
-                    <span class="h1-nowrap">Parcels, deliveries &amp; errands</span><br><span style="color:var(--green-mid)">moving with purpose.</span>
+            <div class="reveal" style="width:100%;max-width:860px;margin:0 auto;text-align:center;">
+                <h1 style="font-family:var(--head);font-size:clamp(40px,5.6vw,72px);font-weight:800;letter-spacing:-0.04em;line-height:1.04;color:var(--forest);margin:0 0 24px;text-align:center;">
+                    <span class="h1-nowrap">Same-day errands and deliveries</span><br>
+                    <span style="background:linear-gradient(130deg,var(--green-mid) 0%,var(--green) 55%,#8ed64a 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;">across Harare. Intercity too.</span>
                 </h1>
 
-                <p style="font-family:var(--font);font-size:22px;color:#5f6560;line-height:1.6;margin:0 auto 34px;max-width:580px;">
-                    Send intercity parcels, get same-day local deliveries, or have someone run an errand for you. One platform, real people, fair prices.
+                <p style="font-family:var(--font);font-size:19px;color:#5f6560;line-height:1.65;margin:0 auto 36px;max-width:520px;">
+                    Book in under a minute. Real riders in your suburb, real drivers on the road. From $3.
                 </p>
 
                 {{-- Hero CTAs ── --}}
@@ -2064,15 +2067,22 @@ body { font-family: var(--font); color: var(--text); background: #fff; -webkit-f
                         </button>
                     </div>
 
-                    {{-- Service context chips — not buttons, just "Available for X" context --}}
-                    <div style="display:flex;align-items:center;gap:10px;flex-wrap:wrap;justify-content:center;">
-                        <span style="font-family:var(--font);font-size:15px;color:#8a9187;">Available for</span>
-                        @foreach(['Intercity Parcels','Local Delivery','Errands'] as $s)
-                            <span style="display:inline-flex;align-items:center;gap:6px;font-family:var(--font);font-size:15px;font-weight:500;color:var(--text-2);">
-                                <span style="width:6px;height:6px;border-radius:50%;background:var(--green);display:inline-block;"></span>
-                                {{ $s }}
-                            </span>
-                        @endforeach
+                    {{-- Outcome trust chips ── --}}
+                    <div class="hero-trust-chips">
+                        <span class="hero-chip">
+                            <svg width="14" height="14" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"/></svg>
+                            From $3 intercity
+                        </span>
+                        <span class="hero-chip-dot"></span>
+                        <span class="hero-chip">
+                            <svg width="14" height="14" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"/></svg>
+                            Same-day delivery
+                        </span>
+                        <span class="hero-chip-dot"></span>
+                        <span class="hero-chip">
+                            <svg width="14" height="14" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"/></svg>
+                            Tracked live
+                        </span>
                     </div>
 
                 </div>
@@ -2190,6 +2200,37 @@ body { font-family: var(--font); color: var(--text); background: #fff; -webkit-f
 
 
 {{-- ══════════════════════════════════════════════════
+     STATS STRIP
+══════════════════════════════════════════════════ --}}
+<section style="background:#fff">
+    <div style="max-width:1120px;margin:0 auto;padding:0 clamp(16px,3vw,40px)">
+        <div class="reveal stats-band">
+            <div class="stat-cell">
+                <div class="stat-num">4</div>
+                <div class="stat-label">Active routes</div>
+                <div class="stat-sub">Harare, Bulawayo, Mutare &amp; Gweru</div>
+            </div>
+            <div class="stat-cell">
+                <div class="stat-num">60s</div>
+                <div class="stat-label">To book</div>
+                <div class="stat-sub">No account needed to start</div>
+            </div>
+            <div class="stat-cell">
+                <div class="stat-num">$3</div>
+                <div class="stat-label">Starting price</div>
+                <div class="stat-sub">Intercity parcel delivery</div>
+            </div>
+            <div class="stat-cell">
+                <div class="stat-num">10+</div>
+                <div class="stat-label">Harare suburbs</div>
+                <div class="stat-sub">Same-day local errands</div>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+{{-- ══════════════════════════════════════════════════
      WHO IT'S FOR — 3-column role cards (Trackeo pattern)
 ══════════════════════════════════════════════════ --}}
 <section class="roles-section">
@@ -2197,11 +2238,8 @@ body { font-family: var(--font); color: var(--text); background: #fff; -webkit-f
 
         {{-- Header --}}
         <div class="roles-header reveal">
-            <p class="roles-eyebrow">
-                <svg width="14" height="14" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0"/></svg>
-                For every role
-            </p>
-            <h2 class="roles-heading">Built for senders,<br>drivers, and businesses.</h2>
+            <p class="roles-eyebrow">Who it's for</p>
+            <h2 class="roles-heading">For senders. For drivers.<br>For businesses.</h2>
         </div>
 
         {{-- 3 cards --}}
@@ -2245,7 +2283,7 @@ body { font-family: var(--font); color: var(--text); background: #fff; -webkit-f
                 </div>
                 <div class="role-body">
                     <h3 class="role-title">Senders</h3>
-                    <p class="role-desc">Post your parcel in 60 seconds. Browse drivers heading your way, see upfront pricing, and track every step live.</p>
+                    <p class="role-desc">Book an errand or send a parcel in 60 seconds. Pick a rider or driver near you, see upfront pricing, and track every step live.</p>
                     <a href="{{ route('register') }}" class="role-link">Get started <svg width="14" height="14" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"/></svg></a>
                 </div>
             </div>
@@ -2277,9 +2315,9 @@ body { font-family: var(--font); color: var(--text); background: #fff; -webkit-f
                     </div>
                 </div>
                 <div class="role-body">
-                    <h3 class="role-title">Drivers</h3>
-                    <p class="role-desc">Already making the trip? List your available space, set your own fare, and earn on every journey you're taking anyway.</p>
-                    <a href="{{ route('register') }}" class="role-link">Become a driver <svg width="14" height="14" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"/></svg></a>
+                    <h3 class="role-title">Drivers & Riders</h3>
+                    <p class="role-desc">Driving intercity? Fill the empty space and earn on the way. Local rider? Take errands and deliveries across Harare on your own schedule.</p>
+                    <a href="{{ route('register') }}" class="role-link">Become a driver or rider <svg width="14" height="14" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"/></svg></a>
                 </div>
             </div>
 
@@ -2336,12 +2374,12 @@ body { font-family: var(--font); color: var(--text); background: #fff; -webkit-f
 @php
     // [route, when, spacesLeft, priceFrom, soonBadge]
     $tickerJourneys = [
-        ['Harare → Bulawayo',      '14:00 today',     4, '$3.00',  true],
-        ['Harare → Mutare',        '15:30 today',     2, '$4.00',  true],
-        ['Harare → Gweru',         '16:00 today',     6, '$2.50',  false],
-        ['Bulawayo → Vic Falls',   '17:15 today',     3, '$5.00',  false],
-        ['Harare → Masvingo',      '18:00 today',     5, '$4.00',  false],
-        ['Gweru → Harare',         '07:00 tomorrow',  4, '$3.00',  false],
+        ['Harare → Bulawayo',      'Leaving soon',       4, '$3.00',  true],
+        ['Harare → Mutare',        'Available today',    2, '$4.00',  true],
+        ['Harare → Gweru',         'Daily departures',   6, '$2.50',  false],
+        ['Bulawayo → Vic Falls',   'Available today',    3, '$5.00',  false],
+        ['Harare → Masvingo',      'Daily departures',   5, '$4.00',  false],
+        ['Gweru → Harare',         'Daily departures',   4, '$3.00',  false],
     ];
 @endphp
 <section aria-label="Journeys leaving soon — book a space" class="marquee-band">
@@ -2374,11 +2412,8 @@ body { font-family: var(--font); color: var(--text); background: #fff; -webkit-f
 <section id="how-it-works" style="padding:var(--section-y) 0;background:var(--white)">
     <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
         <div class="reveal section-head">
-            <p class="eyebrow eyebrow-ic">
-                <svg width="15" height="15" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 20l-5.447-2.724A1 1 0 013 16.382V5.618a1 1 0 011.447-.894L9 7m0 13l6-3m-6 3V7m6 10l4.553 2.276A1 1 0 0021 18.382V7.618a1 1 0 00-.553-.894L15 4m0 13V4m0 0L9 7"/></svg>
-                How it works
-            </p>
-            <h2 class="section-title">How to send<br>a parcel</h2>
+            <p class="eyebrow">How it works</p>
+            <h2 class="section-title">Done in three steps.</h2>
         </div>
 
         <div class="how-grid" x-data="{ open: 1 }">
@@ -2386,9 +2421,9 @@ body { font-family: var(--font); color: var(--text); background: #fff; -webkit-f
             <div class="reveal">
                 <div class="how-acc">
                     @foreach ([
-                        [1, 'Drop in your pickup address', 'Enter where the parcel is, add a note for the driver (gate codes, fragile items, anything useful), then pick your parcel type. Done in under a minute.'],
-                        [2, 'Pick a driver already on the route', 'You see real names, verified badges, departure times, and prices. You know who is carrying your parcel before you confirm.'],
-                        [3, 'Watch it move, kilometre by kilometre', 'The moment your driver picks up, a live map shows exactly where it is. Your recipient gets notified the second it arrives.'],
+                        [1, 'Tell us where to pick up and deliver', 'Enter the pickup address, add a note for the driver or rider (gate code, fragile items, anything useful), and you\'re done. Under a minute.'],
+                        [2, 'Pick a driver or rider near you', 'You see real names, verified badges, availability, and prices. You know exactly who is handling your parcel or errand before you confirm.'],
+                        [3, 'Watch it move, in real time', 'The moment your driver or rider picks up, a live map shows exactly where it is. Your recipient gets notified the second it arrives.'],
                     ] as [$n, $title, $body])
                     <div class="how-item" :class="open === {{ $n }} ? 'is-open' : ''">
                         <button type="button" class="how-item-head" @click="open = {{ $n }}" @mouseenter="open = {{ $n }}" @focus="open = {{ $n }}" :aria-expanded="open === {{ $n }}">
@@ -2403,8 +2438,8 @@ body { font-family: var(--font); color: var(--text); background: #fff; -webkit-f
                     @endforeach
                 </div>
 
-                <a href="{{ route('register') }}" class="how-cta">
-                    Post a parcel
+                <a href="{{ route('send') }}" class="how-cta">
+                    Get started
                     <svg width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"/></svg>
                 </a>
             </div>
@@ -2441,7 +2476,7 @@ body { font-family: var(--font); color: var(--text); background: #fff; -webkit-f
                             <span style="width:8px;height:8px;border-radius:50%;background:var(--green);flex-shrink:0"></span>
                             <div style="flex:1">
                                 <div style="font-family:var(--font);font-size:9.5px;font-weight:700;letter-spacing:0.05em;text-transform:uppercase;color:#9aa096">From</div>
-                                <div style="font-family:var(--head);font-size:13.5px;font-weight:600;color:var(--forest);margin-top:2px">Harare</div>
+                                <div style="font-family:var(--head);font-size:13.5px;font-weight:600;color:var(--forest);margin-top:2px">Borrowdale, Harare</div>
                             </div>
                         </div>
                         {{-- to field --}}
@@ -2449,22 +2484,22 @@ body { font-family: var(--font); color: var(--text); background: #fff; -webkit-f
                             <span style="width:8px;height:8px;border-radius:50%;background:#fff;border:2px solid var(--border);flex-shrink:0"></span>
                             <div style="flex:1">
                                 <div style="font-family:var(--font);font-size:9.5px;font-weight:700;letter-spacing:0.05em;text-transform:uppercase;color:#9aa096">To</div>
-                                <div style="font-family:var(--head);font-size:13.5px;font-weight:600;color:var(--forest);margin-top:2px">Bulawayo</div>
+                                <div style="font-family:var(--head);font-size:13.5px;font-weight:600;color:var(--forest);margin-top:2px">Avondale, Harare</div>
                             </div>
                         </div>
-                        {{-- parcel type chips --}}
+                        {{-- service type chips --}}
                         <div style="padding:11px 17px;border-bottom:1px solid #f0ece6">
-                            <div style="font-family:var(--font);font-size:9.5px;font-weight:700;letter-spacing:0.05em;text-transform:uppercase;color:#9aa096;margin-bottom:8px">Parcel type</div>
+                            <div style="font-family:var(--font);font-size:9.5px;font-weight:700;letter-spacing:0.05em;text-transform:uppercase;color:#9aa096;margin-bottom:8px">What is it?</div>
                             <div style="display:flex;gap:6px;flex-wrap:wrap">
-                                <span style="font-family:var(--font);font-size:11px;font-weight:700;color:var(--forest-deep);background:var(--green);border-radius:8px;padding:5px 10px">Documents</span>
-                                <span style="font-family:var(--font);font-size:11px;font-weight:500;color:var(--text-2);background:#f5f3ef;border:1px solid var(--border);border-radius:8px;padding:5px 10px">Electronics</span>
-                                <span style="font-family:var(--font);font-size:11px;font-weight:500;color:var(--text-2);background:#f5f3ef;border:1px solid var(--border);border-radius:8px;padding:5px 10px">Clothing</span>
+                                <span style="font-family:var(--font);font-size:11px;font-weight:700;color:var(--forest-deep);background:var(--green);border-radius:8px;padding:5px 10px">Groceries</span>
+                                <span style="font-family:var(--font);font-size:11px;font-weight:500;color:var(--text-2);background:#f5f3ef;border:1px solid var(--border);border-radius:8px;padding:5px 10px">Documents</span>
+                                <span style="font-family:var(--font);font-size:11px;font-weight:500;color:var(--text-2);background:#f5f3ef;border:1px solid var(--border);border-radius:8px;padding:5px 10px">Parcel</span>
                             </div>
                         </div>
-                        {{-- find drivers button --}}
+                        {{-- find button --}}
                         <div style="padding:12px 17px">
                             <div style="width:100%;background:var(--forest);color:#fff;font-family:var(--font);font-size:12.5px;font-weight:700;text-align:center;padding:10px;border-radius:10px;display:flex;align-items:center;justify-content:center;gap:7px">
-                                Find drivers
+                                Find drivers &amp; riders
                                 <svg width="13" height="13" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M17 8l4 4m0 0l-4 4m4-4H3"/></svg>
                             </div>
                         </div>
@@ -2479,14 +2514,14 @@ body { font-family: var(--font); color: var(--text); background: #fff; -webkit-f
                                 <div style="font-family:var(--head);font-size:22px;font-weight:700;color:var(--forest);letter-spacing:-0.02em;margin-top:2px">$3.00</div>
                             </div>
                             <div style="text-align:right">
-                                <div style="font-family:var(--font);font-size:9.5px;font-weight:700;letter-spacing:0.05em;text-transform:uppercase;color:#9aa096">Drivers today</div>
+                                <div style="font-family:var(--font);font-size:9.5px;font-weight:700;letter-spacing:0.05em;text-transform:uppercase;color:#9aa096">Available now</div>
                                 <div style="font-family:var(--head);font-size:22px;font-weight:700;color:var(--green-mid);letter-spacing:-0.02em;margin-top:2px">4</div>
                             </div>
                         </div>
                         {{-- ETA row --}}
                         <div style="padding:12px 17px;display:flex;align-items:center;gap:8px">
                             <svg width="13" height="13" fill="none" stroke="#c9a96e" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
-                            <span style="font-family:var(--font);font-size:12px;color:var(--text-2)">Next departure <strong style="color:var(--forest)">14:00 today</strong></span>
+                            <span style="font-family:var(--font);font-size:12px;color:var(--text-2)">First available <strong style="color:var(--forest)">right now</strong></span>
                         </div>
                     </div>
                 </div>
@@ -2496,7 +2531,7 @@ body { font-family: var(--font); color: var(--text); background: #fff; -webkit-f
                     <div class="hv-soft"></div>
                     <div class="hv-float hv-pad" style="left:11%;right:11%;top:17%">
                         <div class="hv-head">
-                            <span class="hv-title">Drivers heading there</span>
+                            <span class="hv-title">Available near you</span>
                             <span class="hv-pill">3 today</span>
                         </div>
                         <div class="hv-driver is-pick">
@@ -2514,7 +2549,7 @@ body { font-family: var(--font); color: var(--text); background: #fff; -webkit-f
                             <img src="/images/driver-1.jpg" alt="" class="hv-avatar">
                             <div>
                                 <div class="hv-dname">Rudo Kadenge</div>
-                                <div class="hv-badge" style="color:#9aa096">Departs 15:30</div>
+                                <div class="hv-badge" style="color:#9aa096">Ready in 12 min</div>
                             </div>
                             <span class="hv-price">$3.50</span>
                         </div>
@@ -2522,7 +2557,7 @@ body { font-family: var(--font); color: var(--text); background: #fff; -webkit-f
                             <div style="width:36px;height:36px;border-radius:50%;background:#1C3829;display:flex;align-items:center;justify-content:center;font-family:var(--head);font-size:12px;font-weight:700;color:#fff;flex-shrink:0">SM</div>
                             <div>
                                 <div class="hv-dname">Sifiso Mhlanga</div>
-                                <div class="hv-badge" style="color:#9aa096">Departs 16:00</div>
+                                <div class="hv-badge" style="color:#9aa096">Ready in 28 min</div>
                             </div>
                             <span class="hv-price">$2.50</span>
                         </div>
@@ -2552,14 +2587,14 @@ body { font-family: var(--font); color: var(--text); background: #fff; -webkit-f
                     {{-- overlay tracking card --}}
                     <div class="hv-float hv-pad" style="left:8%;right:8%;bottom:9%">
                         <div class="hv-head" style="margin-bottom:12px">
-                            <span class="hv-title">Harare → Bulawayo</span>
-                            <span class="hv-eta">42 km left</span>
+                            <span class="hv-title">En route to you</span>
+                            <span class="hv-eta">On the way</span>
                         </div>
                         <div class="hv-row">
                             <img src="/images/driver-1.jpg" alt="" class="hv-track-avatar">
                             <div style="flex:1">
                                 <div class="hv-val">Tendai is on the way</div>
-                                <div class="hv-label" style="margin-top:2px">In transit · near Kadoma</div>
+                                <div class="hv-label" style="margin-top:2px">In transit · nearby</div>
                             </div>
                             <span class="hv-status-dot"></span>
                         </div>
@@ -2588,13 +2623,12 @@ body { font-family: var(--font); color: var(--text); background: #fff; -webkit-f
             {{-- COL 1 tall: brand card --}}
             <div class="why-card why-c1">
                 <div>
-                    <div class="why-logo-wrap">
-                        <img src="/images/nhume_brand.png" alt="Nhume" style="width:28px;height:28px;object-fit:contain;">
+                    <div style="margin-bottom:22px;">
+                        <img src="/images/nhume_logo_v4.png" alt="Nhume" style="width:120px;height:auto;">
                     </div>
-                    <p class="why-name">Nhume.</p>
-                    <p class="why-desc">Parcels travel in vehicles already heading your way. No depots, no fixed schedules, no anonymous drivers.</p>
+                    <p class="why-desc">Errands and parcels handled by real people — riders in your suburb, drivers already on the road. No depots, no anonymous strangers.</p>
                 </div>
-                <a href="{{ route('register') }}" class="why-cta">
+                <a href="{{ route('send') }}" class="why-cta">
                     Get started
                     <svg width="14" height="14" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"/></svg>
                 </a>
@@ -2603,8 +2637,8 @@ body { font-family: var(--font); color: var(--text); background: #fff; -webkit-f
             {{-- COL 2 top: stat + badges row --}}
             <div class="why-card why-c2-top">
                 <div>
-                    <p class="why-stat-title">Verified Drivers</p>
-                    <p class="why-stat-sub">Nhume Reviewed, minimum</p>
+                    <p class="why-stat-title">Verified Drivers & Riders</p>
+                    <p class="why-stat-sub">Nhume Reviewed as a minimum</p>
                 </div>
                 <div class="why-badges">
                     @foreach(['var(--green-mid)','var(--forest)','var(--amber)'] as $c)
@@ -2624,9 +2658,9 @@ body { font-family: var(--font); color: var(--text); background: #fff; -webkit-f
 
             {{-- COL 3 tall: big number --}}
             <div class="why-card why-c3">
-                <p class="why-big">4</p>
-                <p class="why-name" style="margin-top:14px">Active routes</p>
-                <p class="why-desc">Harare, Bulawayo, Mutare and Gweru. More opening as drivers join.</p>
+                <p class="why-big">10+</p>
+                <p class="why-name" style="margin-top:14px">Harare suburbs</p>
+                <p class="why-desc">Borrowdale, Highlands, Avondale, Mount Pleasant and more. Same-day, every day.</p>
             </div>
 
             {{-- BOTTOM WIDE: driver card spanning cols 2+3 --}}
@@ -2634,7 +2668,7 @@ body { font-family: var(--font); color: var(--text); background: #fff; -webkit-f
                 <img src="/images/driver-2.jpg" alt="" class="why-person-img">
                 <div>
                     <p class="why-person-name">Tendai Moyo</p>
-                    <p class="why-person-role">Driver, Harare to Bulawayo</p>
+                    <p class="why-person-role">Driver · Harare intercity & local</p>
                 </div>
                 <div class="why-soc">
                     <svg width="16" height="16" fill="none" stroke="var(--green-mid)" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
@@ -2656,7 +2690,7 @@ body { font-family: var(--font); color: var(--text); background: #fff; -webkit-f
     <div class="reveal" style="padding:var(--section-y) clamp(28px,5vw,72px);display:flex;flex-direction:column;justify-content:center">
         <p class="eyebrow" style="color:var(--green);margin-bottom:18px">Drive, ride &amp; earn</p>
         <h2 style="font-family:var(--head);font-size:clamp(32px,4vw,52px);font-weight:700;letter-spacing:-0.03em;line-height:1.1;color:#fff;margin:0 0 26px">
-            Got a vehicle? Turn every trip into income.
+            Turn your wheels into income.
         </h2>
 
         {{-- Two pathway cards --}}
@@ -2710,7 +2744,7 @@ body { font-family: var(--font); color: var(--text); background: #fff; -webkit-f
         <div style="position:absolute;bottom:28px;left:28px;display:flex;align-items:center;gap:12px;background:rgba(4,16,8,0.78);backdrop-filter:blur(12px);border:1px solid rgba(255,255,255,0.1);border-radius:14px;padding:12px 18px">
             <div>
                 <p style="font-family:var(--head);font-size:14px;font-weight:700;color:#fff;margin:0">Tendai Moyo</p>
-                <p style="font-family:var(--font);font-size:12px;color:rgba(255,255,255,0.5);margin:3px 0 0">Harare to Bulawayo, 3x a week</p>
+                <p style="font-family:var(--font);font-size:12px;color:rgba(255,255,255,0.5);margin:3px 0 0">Intercity &amp; local runs, Harare</p>
             </div>
             <span style="display:inline-flex;align-items:center;gap:5px;font-family:var(--font);font-size:11px;font-weight:700;color:var(--green);background:rgba(107,198,48,0.14);border-radius:9999px;padding:4px 10px;white-space:nowrap">
                 <svg width="11" height="11" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
@@ -2727,70 +2761,134 @@ body { font-family: var(--font); color: var(--text); background: #fff; -webkit-f
 <section id="routes" style="padding:var(--section-y) 0;background:var(--shade);overflow:hidden">
     <div style="max-width:1120px;margin:0 auto;padding:0 clamp(20px,4vw,48px)">
 
-        {{-- Heading row --}}
-        <div class="reveal routes-head">
+        {{-- Section heading --}}
+        <div class="reveal routes-head" style="margin-bottom:clamp(40px,5vw,64px)">
             <div>
-                <p class="eyebrow mb-4" style="display:inline-flex;align-items:center;gap:6px">
-                    <svg width="13" height="13" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
-                    Routes
-                </p>
-                <h2 style="font-family:var(--head);font-size:clamp(32px,4vw,52px);font-weight:700;letter-spacing:-0.03em;line-height:1.1;color:var(--forest-deep);margin:0">Starts in Zimbabwe.<br>Built for the region.</h2>
+                <p class="eyebrow mb-4">Routes</p>
+                <h2 style="font-family:var(--head);font-size:clamp(32px,4vw,52px);font-weight:700;letter-spacing:-0.03em;line-height:1.1;color:var(--forest-deep);margin:0">Local Harare errands.<br>Intercity parcels.</h2>
             </div>
-            <p style="font-family:var(--font);font-size:15px;color:#6b7280;max-width:340px;line-height:1.65;margin:0;padding-bottom:6px">We launch where we can earn trust and grow route by route. Harare–Bulawayo is live, with more corridors to follow.</p>
+            <p style="font-family:var(--font);font-size:15px;color:#6b7280;max-width:340px;line-height:1.65;margin:0;padding-bottom:6px">Two services, one platform. Get things done across Harare's upmarket suburbs or ship between cities — same-day, every day.</p>
         </div>
 
-        {{-- Route cards --}}
-        <div class="reveal routes-grid">
-
-            {{-- Card 1: LIVE --}}
-            <div style="background:#fff;border:1px solid #e5e7eb;border-radius:16px;padding:28px;display:flex;flex-direction:column">
-                <span style="display:inline-flex;align-items:center;gap:7px;background:var(--green-mid);color:#fff;font-family:var(--font);font-size:10.5px;font-weight:700;letter-spacing:0.07em;padding:5px 11px;border-radius:6px;width:fit-content;margin-bottom:32px">
-                    <span style="width:6px;height:6px;background:#fff;border-radius:50%;animation:livepulse 1.8s ease-in-out infinite;flex-shrink:0"></span>
-                    LIVE NOW
-                </span>
-                <p style="font-family:var(--font);font-size:10.5px;font-weight:700;letter-spacing:0.1em;color:#9ca3af;text-transform:uppercase;margin:0 0 8px">Zimbabwe</p>
-                <h3 style="font-family:var(--head);font-size:21px;font-weight:700;color:var(--forest-deep);letter-spacing:-0.02em;margin:0 0 12px;line-height:1.2">Harare → Bulawayo</h3>
-                <p style="font-family:var(--font);font-size:14px;color:#6b7280;line-height:1.65;margin:0 0 28px;flex:1">Zimbabwe's busiest corridor. Drivers available daily, both directions.</p>
-                <a href="/journeys" style="font-family:var(--font);font-size:14px;font-weight:600;color:var(--forest-deep);text-decoration:none">View drivers →</a>
+        {{-- ── HARARE LOCAL ──────────────────────────────────── --}}
+        <div class="reveal" style="margin-bottom:48px">
+            <div style="display:flex;align-items:center;gap:12px;margin-bottom:20px">
+                <div style="display:flex;align-items:center;gap:8px">
+                    <svg width="16" height="16" fill="none" stroke="var(--green-mid)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M12 2v3M12 19v3M2 12h3M19 12h3"/></svg>
+                    <span style="font-family:var(--font);font-size:11px;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:var(--forest-deep)">Harare Local Errands</span>
+                </div>
+                <div style="flex:1;height:1px;background:#e5e7eb"></div>
+                <span style="font-family:var(--font);font-size:12px;color:#9ca3af">Same-day · Upmarket suburbs</span>
             </div>
 
-            {{-- Card 2: LIVE --}}
-            <div style="background:#fff;border:1px solid #e5e7eb;border-radius:16px;padding:28px;display:flex;flex-direction:column">
-                <span style="display:inline-flex;align-items:center;gap:7px;background:var(--green-mid);color:#fff;font-family:var(--font);font-size:10.5px;font-weight:700;letter-spacing:0.07em;padding:5px 11px;border-radius:6px;width:fit-content;margin-bottom:32px">
-                    <span style="width:6px;height:6px;background:#fff;border-radius:50%;animation:livepulse 1.8s ease-in-out infinite 0.3s;flex-shrink:0"></span>
-                    LIVE NOW
-                </span>
-                <p style="font-family:var(--font);font-size:10.5px;font-weight:700;letter-spacing:0.1em;color:#9ca3af;text-transform:uppercase;margin:0 0 8px">Zimbabwe</p>
-                <h3 style="font-family:var(--head);font-size:21px;font-weight:700;color:var(--forest-deep);letter-spacing:-0.02em;margin:0 0 12px;line-height:1.2">Harare → Mutare</h3>
-                <p style="font-family:var(--font);font-size:14px;color:#6b7280;line-height:1.65;margin:0 0 28px;flex:1">Eastern highlands route. Growing fast, with new drivers weekly.</p>
-                <a href="/journeys" style="font-family:var(--font);font-size:14px;font-weight:600;color:var(--forest-deep);text-decoration:none">View drivers →</a>
-            </div>
+            <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:16px">
 
-            {{-- Card 3: NEXT --}}
-            <div style="background:#fff;border:1px solid #e5e7eb;border-radius:16px;padding:28px;display:flex;flex-direction:column;opacity:0.6">
-                <span style="display:inline-flex;align-items:center;background:var(--forest-deep);color:rgba(255,255,255,0.7);font-family:var(--font);font-size:10.5px;font-weight:700;letter-spacing:0.07em;padding:5px 11px;border-radius:6px;width:fit-content;margin-bottom:32px">NEXT</span>
-                <p style="font-family:var(--font);font-size:10.5px;font-weight:700;letter-spacing:0.1em;color:#9ca3af;text-transform:uppercase;margin:0 0 8px">Zimbabwe</p>
-                <h3 style="font-family:var(--head);font-size:21px;font-weight:700;color:var(--forest-deep);letter-spacing:-0.02em;margin:0 0 12px;line-height:1.2">Bulawayo → Victoria Falls</h3>
-                <p style="font-family:var(--font);font-size:14px;color:#6b7280;line-height:1.65;margin:0 0 28px;flex:1">Tourist-ready corridor. Drivers and senders signing up now.</p>
-                <a href="{{ route('register') }}" style="font-family:var(--font);font-size:14px;font-weight:600;color:var(--forest-deep);text-decoration:none">Join the waitlist →</a>
-            </div>
+                {{-- Local live card --}}
+                <div style="background:#fff;border:1px solid #e5e7eb;border-radius:16px;padding:28px;display:flex;flex-direction:column">
+                    <span style="display:inline-flex;align-items:center;font-family:var(--font);font-size:11px;font-weight:600;color:var(--green-mid);margin-bottom:28px">Taking bookings</span>
+                    <p style="font-family:var(--font);font-size:10.5px;font-weight:700;letter-spacing:0.1em;color:#9ca3af;text-transform:uppercase;margin:0 0 6px">Harare</p>
+                    <h3 style="font-family:var(--head);font-size:21px;font-weight:700;color:var(--forest-deep);letter-spacing:-0.02em;margin:0 0 10px;line-height:1.2">Upmarket Suburbs</h3>
+                    <p style="font-family:var(--font);font-size:14px;color:#6b7280;line-height:1.65;margin:0 0 16px;flex:1">Same-day errands and deliveries across Harare's upmarket areas. Our riders handle pickups, drop-offs, and runs so you don't have to.</p>
+                    {{-- Suburb tags --}}
+                    <div style="display:flex;flex-wrap:wrap;gap:6px;margin-bottom:20px">
+                        @foreach(['Borrowdale','Highlands','Avondale','Mount Pleasant','Chisipite','Glen Lorne','Greystone Park','Mandara','Gunhill','Greendale'] as $suburb)
+                        <span style="font-family:var(--font);font-size:11.5px;font-weight:500;color:var(--forest-deep);background:#f0fde4;border:1px solid #d1fae5;border-radius:20px;padding:3px 10px">{{ $suburb }}</span>
+                        @endforeach
+                    </div>
+                    <a href="{{ route('send') }}" style="font-family:var(--font);font-size:14px;font-weight:600;color:var(--forest-deep);text-decoration:none">Book a local errand →</a>
+                </div>
 
+                {{-- What we handle --}}
+                <div style="background:var(--forest-deep);border-radius:16px;padding:28px;display:flex;flex-direction:column;gap:0">
+                    <p style="font-family:var(--font);font-size:11px;font-weight:700;letter-spacing:0.1em;color:rgba(255,255,255,0.4);text-transform:uppercase;margin:0 0 20px">What we handle</p>
+                    @foreach([
+                        ['Parcel pickups & drop-offs', 'Collect from one address, deliver to another — within hours.'],
+                        ['Document runs', 'Contracts, invoices, ID copies. Safe hands, fast delivery.'],
+                        ['Grocery & pharmacy runs', 'We collect from your preferred store and bring it to your door.'],
+                        ['Business errands', 'Bank deposits, stationery, anything you need moved around Harare.'],
+                    ] as [$title, $desc])
+                    <div style="display:flex;gap:12px;padding:14px 0;border-bottom:1px solid rgba(255,255,255,0.08);">
+                        <div style="width:7px;height:7px;border-radius:50%;background:var(--green-mid);flex-shrink:0;margin-top:6px"></div>
+                        <div>
+                            <p style="font-family:var(--head);font-size:14px;font-weight:600;color:#fff;margin:0 0 3px">{{ $title }}</p>
+                            <p style="font-family:var(--font);font-size:13px;color:rgba(255,255,255,0.5);margin:0;line-height:1.5">{{ $desc }}</p>
+                        </div>
+                    </div>
+                    @endforeach
+                    <div style="margin-top:24px">
+                        <a href="{{ route('send') }}" style="display:inline-flex;align-items:center;gap:7px;font-family:var(--font);font-size:14px;font-weight:600;color:var(--green-mid);text-decoration:none">
+                            Book now
+                            <svg width="14" height="14" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"/></svg>
+                        </a>
+                    </div>
+                </div>
+
+            </div>
         </div>
 
-        {{-- City marquee --}}
-        <div style="overflow:hidden;-webkit-mask-image:linear-gradient(to right,transparent,black 12%,black 88%,transparent);mask-image:linear-gradient(to right,transparent,black 12%,black 88%,transparent)">
-            <div style="display:flex;width:max-content;animation:marquee-routes 28s linear infinite">
-                @foreach(array_merge(
-                    ['Harare','Bulawayo','Mutare','Gweru','Victoria Falls','Masvingo','Kadoma','Kwekwe','Chinhoyi','Bindura','Marondera','Chegutu'],
-                    ['Harare','Bulawayo','Mutare','Gweru','Victoria Falls','Masvingo','Kadoma','Kwekwe','Chinhoyi','Bindura','Marondera','Chegutu']
-                ) as $city)
-                <span style="display:inline-flex;align-items:center;gap:24px;font-family:var(--font);font-size:14px;color:#9ca3af;padding:0 24px;white-space:nowrap">
-                    {{ $city }}
-                    <span style="width:5px;height:5px;border-radius:50%;background:var(--green-mid);flex-shrink:0"></span>
-                </span>
-                @endforeach
+        {{-- ── INTERCITY ─────────────────────────────────────── --}}
+        <div class="reveal">
+            <div style="display:flex;align-items:center;gap:12px;margin-bottom:20px">
+                <div style="display:flex;align-items:center;gap:8px">
+                    <svg width="16" height="16" fill="none" stroke="var(--green-mid)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><path d="M3 17l2 2 4-4"/><path d="M13 6h8"/><path d="M13 12h8"/><path d="M13 18h8"/></svg>
+                    <span style="font-family:var(--font);font-size:11px;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:var(--forest-deep)">Intercity Routes</span>
+                </div>
+                <div style="flex:1;height:1px;background:#e5e7eb"></div>
+                <span style="font-family:var(--font);font-size:12px;color:#9ca3af">Long-distance · Harare ↔ Zimbabwe</span>
+            </div>
+
+            <div class="routes-grid">
+
+                {{-- Harare → Bulawayo LIVE --}}
+                <div style="background:#fff;border:1px solid #e5e7eb;border-radius:16px;padding:28px;display:flex;flex-direction:column">
+                    <span style="display:inline-flex;align-items:center;font-family:var(--font);font-size:11px;font-weight:600;color:var(--green-mid);margin-bottom:28px">Taking bookings</span>
+                    <p style="font-family:var(--font);font-size:10.5px;font-weight:700;letter-spacing:0.1em;color:#9ca3af;text-transform:uppercase;margin:0 0 6px">Zimbabwe</p>
+                    <h3 style="font-family:var(--head);font-size:21px;font-weight:700;color:var(--forest-deep);letter-spacing:-0.02em;margin:0 0 10px;line-height:1.2">Harare ↔ Bulawayo</h3>
+                    <p style="font-family:var(--font);font-size:14px;color:#6b7280;line-height:1.65;margin:0 0 20px;flex:1">Zimbabwe's busiest corridor. Drivers running daily, both directions. Door collection available.</p>
+                    <div style="display:flex;align-items:center;gap:12px;flex-wrap:wrap;margin-bottom:20px">
+                        <span style="font-family:var(--font);font-size:12px;color:#6b7280;display:inline-flex;align-items:center;gap:5px">
+                            <svg width="12" height="12" fill="none" stroke="currentColor" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="12,6 12,12 16,14"/></svg>
+                            4–6 hrs
+                        </span>
+                        <span style="font-family:var(--font);font-size:12px;color:#6b7280;display:inline-flex;align-items:center;gap:5px">
+                            <svg width="12" height="12" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+                            Multiple drivers daily
+                        </span>
+                    </div>
+                    <a href="{{ route('send') }}" style="font-family:var(--font);font-size:14px;font-weight:600;color:var(--forest-deep);text-decoration:none">Send a parcel →</a>
+                </div>
+
+                {{-- Harare → Mutare LIVE --}}
+                <div style="background:#fff;border:1px solid #e5e7eb;border-radius:16px;padding:28px;display:flex;flex-direction:column">
+                    <span style="display:inline-flex;align-items:center;font-family:var(--font);font-size:11px;font-weight:600;color:var(--green-mid);margin-bottom:28px">Taking bookings</span>
+                    <p style="font-family:var(--font);font-size:10.5px;font-weight:700;letter-spacing:0.1em;color:#9ca3af;text-transform:uppercase;margin:0 0 6px">Zimbabwe</p>
+                    <h3 style="font-family:var(--head);font-size:21px;font-weight:700;color:var(--forest-deep);letter-spacing:-0.02em;margin:0 0 10px;line-height:1.2">Harare ↔ Mutare</h3>
+                    <p style="font-family:var(--font);font-size:14px;color:#6b7280;line-height:1.65;margin:0 0 20px;flex:1">Eastern highlands corridor. New drivers joining weekly, parcels and documents welcome.</p>
+                    <div style="display:flex;align-items:center;gap:12px;flex-wrap:wrap;margin-bottom:20px">
+                        <span style="font-family:var(--font);font-size:12px;color:#6b7280;display:inline-flex;align-items:center;gap:5px">
+                            <svg width="12" height="12" fill="none" stroke="currentColor" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="12,6 12,12 16,14"/></svg>
+                            3–4 hrs
+                        </span>
+                        <span style="font-family:var(--font);font-size:12px;color:#6b7280;display:inline-flex;align-items:center;gap:5px">
+                            <svg width="12" height="12" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+                            Growing driver pool
+                        </span>
+                    </div>
+                    <a href="{{ route('send') }}" style="font-family:var(--font);font-size:14px;font-weight:600;color:var(--forest-deep);text-decoration:none">Send a parcel →</a>
+                </div>
+
+                {{-- More corridors --}}
+                <div style="background:#fff;border:1px solid #e5e7eb;border-radius:16px;padding:28px;display:flex;flex-direction:column;opacity:0.55">
+                    <span style="display:inline-flex;align-items:center;background:var(--forest-deep);color:rgba(255,255,255,0.7);font-family:var(--font);font-size:10.5px;font-weight:700;letter-spacing:0.07em;padding:5px 11px;border-radius:6px;width:fit-content;margin-bottom:28px">COMING SOON</span>
+                    <p style="font-family:var(--font);font-size:10.5px;font-weight:700;letter-spacing:0.1em;color:#9ca3af;text-transform:uppercase;margin:0 0 6px">Zimbabwe</p>
+                    <h3 style="font-family:var(--head);font-size:21px;font-weight:700;color:var(--forest-deep);letter-spacing:-0.02em;margin:0 0 10px;line-height:1.2">Bulawayo → Vic Falls<br>+ more</h3>
+                    <p style="font-family:var(--font);font-size:14px;color:#6b7280;line-height:1.65;margin:0 0 20px;flex:1">Gweru, Masvingo, and the SA corridor expanding soon. Register your interest now.</p>
+                    <a href="{{ route('register') }}" style="font-family:var(--font);font-size:14px;font-weight:600;color:var(--forest-deep);text-decoration:none">Join the waitlist →</a>
+                </div>
+
             </div>
         </div>
+
 
     </div>
 </section>
@@ -2802,49 +2900,85 @@ body { font-family: var(--font); color: var(--text); background: #fff; -webkit-f
 <section style="padding:var(--section-y) 0;background:var(--forest-deep)">
     <div style="max-width:1120px;margin:0 auto;padding:0 clamp(20px,4vw,48px)">
 
-        {{-- TOP: heading left + photo right --}}
-        <div class="reveal testimonials-top">
+        {{-- Heading --}}
+        <div class="reveal routes-head">
             <div>
-                <p class="eyebrow" style="color:rgba(255,255,255,0.5);margin-bottom:16px;display:inline-flex;align-items:center;gap:7px">
-                    <svg width="14" height="14" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0"/></svg>
-                    Trusted by senders and drivers
-                </p>
-                <h2 style="font-family:var(--head);font-size:clamp(32px,4vw,52px);font-weight:700;letter-spacing:-0.03em;line-height:1.1;color:#fff;margin:0">See how Nhume moves parcels for people across Zimbabwe</h2>
+                <p class="eyebrow" style="color:rgba(255,255,255,0.5);margin-bottom:14px">What people say</p>
+                <h2 style="font-family:var(--head);font-size:clamp(32px,4vw,52px);font-weight:700;letter-spacing:-0.03em;line-height:1.1;color:#fff;margin:0">Trusted by senders, drivers,<br>and riders across Zimbabwe.</h2>
             </div>
-            <div style="border-radius:18px;overflow:hidden;aspect-ratio:16/10">
-                <img src="/images/team.jpg" alt="Nhume team" style="width:100%;height:100%;object-fit:cover;object-position:center 30%">
-            </div>
+            <p style="font-family:var(--font);font-size:15px;color:rgba(255,255,255,0.5);line-height:1.65;max-width:340px;margin:0;padding-bottom:6px">Real people. Real deliveries. Across Harare suburbs and intercity.</p>
         </div>
 
-        {{-- 3x2 GRID: borderless testimonials on dark bg --}}
         @php
         $reviews = [
-            ['Ruvimbo T.',   '/images/driver-2.jpg',  true,  'Harare · Sender',       'Sent documents to Bulawayo. Arrived in under 5 hours. The driver collected from my office. I did not move.'],
-            ['Blessing M.',  null,                    false, 'Bulawayo · Driver',      'I drive Harare to Byo three times a week. I earn an extra $30 to $40 per trip just from parcels. Straightforward.'],
-            ['Tariro S.',    null,                    false, 'Harare · Business',      'We send spare parts between branches weekly. Nhume is faster than the depot schedule and the pricing is fair.'],
-            ['Chipo N.',     null,                    false, 'Mutare · Sender',        'Booked a space in 2 minutes. My parcel was in Harare by 3pm the same day. Faster than I expected.'],
-            ['Sifiso M.',    '/images/driver-1.jpg',  true,  'Gweru · Driver',         'I was already driving. Now I earn on every trip. No pressure, no fixed schedule. Just extra income when I want it.'],
-            ['Rudo K.',      null,                    false, 'Harare · SME owner',     'Consistent, affordable, and the drivers actually pick up when you call. Nothing else on this route compares.'],
+            ['Ruvimbo T.',  'Borrowdale · Sender',  'Had my prescription collected from Avenues Clinic and delivered home. The rider was there in under <span style="color:var(--green);font-weight:600">30 minutes</span>. I did not leave my house.'],
+            ['Blessing M.', 'Bulawayo · Driver',    'I drive Harare to Byo three times a week. I earn an extra <span style="color:var(--green);font-weight:600">$30 to $40 per trip</span> just from parcels. Straightforward.'],
+            ['Chipo N.',    'Mutare · Sender',      'Booked a space in <span style="color:var(--green);font-weight:600">2 minutes</span>. My parcel was in Harare by <span style="color:var(--green);font-weight:600">3pm the same day</span>. Faster than I expected.'],
+            ['Rudo K.',     'Highlands · Business', 'We use Nhume for document runs around Harare every week. <span style="color:var(--green);font-weight:600">Replaced our company car</span> for anything under 10km. Costs half as much.'],
         ];
         @endphp
-        <div class="reveal testimonials-grid">
-            @foreach ($reviews as [$name, $img, $hasImg, $role, $quote])
-            <div style="background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.09);border-radius:14px;padding:24px;display:flex;flex-direction:column;gap:16px">
-                {{-- name row --}}
-                <div style="display:flex;align-items:center;gap:11px">
-                    @if($hasImg)
-                    <img src="{{ $img }}" alt="{{ $name }}" style="width:40px;height:40px;border-radius:50%;object-fit:cover;object-position:26% 15%;flex-shrink:0">
-                    @else
-                    <span style="width:40px;height:40px;border-radius:50%;background:rgba(255,255,255,0.1);display:flex;align-items:center;justify-content:center;font-family:var(--head);font-size:14px;font-weight:700;color:rgba(255,255,255,0.7);flex-shrink:0">{{ substr($name,0,1) }}</span>
-                    @endif
-                    <span style="font-family:var(--head);font-size:15px;font-weight:600;color:#fff;letter-spacing:-0.01em;flex:1">{{ $name }}</span>
-                    <span style="font-family:Georgia,serif;font-size:22px;font-weight:700;color:rgba(255,255,255,0.18);line-height:1">&rdquo;</span>
+
+        {{-- Bento grid --}}
+        <div class="reveal t-bento">
+
+            {{-- Col 1: two testimonial cards --}}
+            <div class="t-col">
+                @foreach ([$reviews[0], $reviews[1]] as [$name, $role, $quote])
+                <div class="t-card">
+                    <div style="display:flex;align-items:center;gap:10px;margin-bottom:18px">
+                        <span style="width:38px;height:38px;border-radius:50%;background:rgba(255,255,255,0.1);display:flex;align-items:center;justify-content:center;font-family:var(--head);font-size:13px;font-weight:700;color:#fff;flex-shrink:0">{{ substr($name,0,1) }}</span>
+                        <div style="min-width:0;flex:1">
+                            <p style="font-family:var(--head);font-size:14px;font-weight:600;color:#fff;margin:0">{{ $name }}</p>
+                            <p style="font-family:var(--font);font-size:12px;color:rgba(255,255,255,0.45);margin:2px 0 0">{{ $role }}</p>
+                        </div>
+                        <svg width="14" height="14" fill="none" stroke="var(--green)" viewBox="0 0 24 24" style="flex-shrink:0"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+                    </div>
+                    <p style="font-family:var(--font);font-size:15px;line-height:1.72;color:rgba(255,255,255,0.78);margin:0">{!! $quote !!}</p>
                 </div>
-                {{-- quote --}}
-                <p style="font-family:var(--font);font-size:14px;line-height:1.72;color:rgba(255,255,255,0.55);margin:0;flex:1">{{ $quote }}</p>
-                <p style="font-family:var(--font);font-size:11.5px;color:rgba(255,255,255,0.28);margin:0">{{ $role }}</p>
+                @endforeach
             </div>
-            @endforeach
+
+            {{-- Col 2: featured photo + stat --}}
+            <div class="t-col">
+                {{-- Photo card --}}
+                <div style="border-radius:16px;overflow:hidden;position:relative;aspect-ratio:3/4">
+                    <img src="/images/driver-1.jpg" alt="Nhume driver" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:15% 18%">
+                    <div style="position:absolute;inset:0;background:linear-gradient(to top,rgba(6,30,14,0.9) 0%,rgba(6,30,14,0.2) 50%,transparent 70%)"></div>
+                    <div style="position:absolute;bottom:0;left:0;right:0;padding:22px">
+                        <p style="font-family:var(--font);font-size:14px;color:rgba(255,255,255,0.85);line-height:1.65;margin:0 0 14px">"I've been driving this route for years. Nhume turned empty space into <span style="color:var(--green);font-weight:600">real income</span> every trip."</p>
+                        <p style="font-family:var(--head);font-size:13px;font-weight:700;color:#fff;margin:0">Tendai Moyo</p>
+                        <p style="font-family:var(--font);font-size:11px;color:rgba(255,255,255,0.5);margin:3px 0 0">Intercity &amp; local runs, Harare</p>
+                    </div>
+                </div>
+            </div>
+
+            {{-- Col 3: two testimonial cards --}}
+            <div class="t-col">
+                @foreach ([$reviews[2], $reviews[3]] as [$name, $role, $quote])
+                <div class="t-card">
+                    <div style="display:flex;align-items:center;gap:10px;margin-bottom:18px">
+                        <span style="width:38px;height:38px;border-radius:50%;background:rgba(255,255,255,0.1);display:flex;align-items:center;justify-content:center;font-family:var(--head);font-size:13px;font-weight:700;color:#fff;flex-shrink:0">{{ substr($name,0,1) }}</span>
+                        <div style="min-width:0;flex:1">
+                            <p style="font-family:var(--head);font-size:14px;font-weight:600;color:#fff;margin:0">{{ $name }}</p>
+                            <p style="font-family:var(--font);font-size:12px;color:rgba(255,255,255,0.45);margin:2px 0 0">{{ $role }}</p>
+                        </div>
+                        <svg width="14" height="14" fill="none" stroke="var(--green)" viewBox="0 0 24 24" style="flex-shrink:0"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+                    </div>
+                    <p style="font-family:var(--font);font-size:15px;line-height:1.72;color:rgba(255,255,255,0.78);margin:0">{!! $quote !!}</p>
+                </div>
+                @endforeach
+            </div>
+
+            {{-- Full-width stat bar --}}
+            <div style="grid-column:1/-1;background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.1);border-radius:16px;padding:28px 36px;display:flex;align-items:center;gap:36px;flex-wrap:wrap">
+                <p style="font-family:var(--head);font-size:64px;font-weight:800;letter-spacing:-0.05em;line-height:1;color:var(--green);margin:0;flex-shrink:0">20+</p>
+                <div style="width:1px;height:52px;background:rgba(255,255,255,0.1);flex-shrink:0"></div>
+                <div>
+                    <p style="font-family:var(--head);font-size:18px;font-weight:600;color:#fff;margin:0 0 6px">Reviewed drivers &amp; riders</p>
+                    <p style="font-family:var(--font);font-size:14px;color:rgba(255,255,255,0.5);line-height:1.6;margin:0;max-width:560px">Every driver personally vetted by the Nhume team before going live. No anonymous strangers.</p>
+                </div>
+            </div>
+
         </div>
 
     </div>
@@ -2859,45 +2993,56 @@ body { font-family: var(--font); color: var(--text); background: #fff; -webkit-f
 
         <div class="reveal faq-layout">
 
-            {{-- Left: sticky heading --}}
-            <div class="faq-sticky" style="position:sticky;top:100px">
-                <p style="font-family:var(--font);font-size:12px;font-weight:600;letter-spacing:0.06em;color:#6b7280;display:inline-flex;align-items:center;gap:7px;margin:0 0 20px">
-                    <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><path stroke-linecap="round" d="M8.228 9c.549-1.165 2.03-2 3.772-2 2.21 0 4 1.343 4 3 0 1.4-1.278 2.575-3.006 2.907-.542.104-.994.54-.994 1.093m0 3h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
-                    Need help?
-                </p>
-                <h2 style="font-family:var(--head);font-size:clamp(32px,4vw,52px);font-weight:700;letter-spacing:-0.03em;line-height:1.1;color:var(--forest-deep);margin:0">Answers to common questions about Nhume's services</h2>
+            {{-- Left: sticky heading + contact + watermark --}}
+            <div class="faq-sticky" style="position:sticky;top:100px;overflow:hidden">
+                <p class="eyebrow" style="margin:0 0 18px">Need help?</p>
+                <h2 style="font-family:var(--head);font-size:clamp(28px,3.5vw,46px);font-weight:700;letter-spacing:-0.03em;line-height:1.1;color:var(--forest-deep);margin:0 0 16px">Your questions,<br>answered.</h2>
+                <p style="font-family:var(--font);font-size:14px;color:#6b7280;line-height:1.65;margin:0 0 32px">Can't find what you're looking for?<br>Reach out directly.</p>
+
+                {{-- Contact items --}}
+                <div style="display:flex;flex-direction:column;gap:14px">
+                    <a href="https://wa.me/263771234567" style="display:inline-flex;align-items:center;gap:12px;text-decoration:none;color:var(--forest-deep)">
+                        <span style="width:36px;height:36px;border-radius:10px;background:var(--green-light);border:1px solid rgba(107,198,48,0.2);display:flex;align-items:center;justify-content:center;flex-shrink:0">
+                            <svg width="16" height="16" fill="none" stroke="var(--green-mid)" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"/></svg>
+                        </span>
+                        <span style="font-family:var(--font);font-size:14px;font-weight:500;color:var(--forest-deep)">+263 77 123 4567</span>
+                    </a>
+                    <a href="mailto:hello@nhume.co.zw" style="display:inline-flex;align-items:center;gap:12px;text-decoration:none;color:var(--forest-deep)">
+                        <span style="width:36px;height:36px;border-radius:10px;background:var(--green-light);border:1px solid rgba(107,198,48,0.2);display:flex;align-items:center;justify-content:center;flex-shrink:0">
+                            <svg width="16" height="16" fill="none" stroke="var(--green-mid)" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/></svg>
+                        </span>
+                        <span style="font-family:var(--font);font-size:14px;font-weight:500;color:var(--forest-deep)">hello@nhume.co.zw</span>
+                    </a>
+                </div>
+
+                {{-- Watermark --}}
+                <p style="position:absolute;bottom:-10px;left:-8px;font-family:var(--head);font-size:clamp(120px,20vw,200px);font-weight:800;letter-spacing:-0.05em;line-height:1;color:rgba(28,56,41,0.05);pointer-events:none;user-select:none;margin:0">FAQ</p>
             </div>
 
-            {{-- Right: accordion --}}
+            {{-- Right: individual question cards --}}
             @php $faqs = [
-                ['Is my parcel insured?', 'Every booking on Nhume includes basic parcel cover. For high-value items, you can declare the value and add extended cover at checkout. We always show you your cover details before you confirm.'],
-                ["What if the transporter doesn't show up?", 'You only pay after the transporter confirms pickup. If they cancel, you get a full refund instantly. We also have backup transporter options on all popular routes.'],
-                ['How are transporters verified?', 'Our team speaks personally to every transporter before they go live. That is the minimum. Higher tiers require ID and background checks.'],
-                ['What can I send?', 'Documents, clothing, electronics, food items, and small household goods. No hazardous materials, no live animals. Maximum dimensions are shown at checkout.'],
-                ['How does the transporter pick up my parcel?', 'Once booked, you agree on a pickup point with the transporter, usually somewhere central. You will not hand over a parcel without a confirmed booking first.'],
-                ['Do I need an account to book?', 'You can browse all trips without an account. You only need to sign up when you are ready to book. It takes under 60 seconds.'],
+                ['Is my delivery covered?', 'Every booking includes basic cover for your parcel or errand. For high-value items you can declare the value and add extended cover at checkout. We show your cover details before you confirm.'],
+                ["What if my driver or rider doesn't show up?", 'You only pay after the driver or rider confirms pickup. If they cancel, you get a full refund instantly. We also have backup options on all active routes and areas.'],
+                ['How are drivers and riders verified?', 'Our team speaks personally to every driver and rider before they go live. That is the minimum. Higher trust tiers require ID submission and background checks.'],
+                ['What can I send or have collected?', 'Documents, clothing, electronics, food items, groceries, and small household goods. No hazardous materials, no live animals. For errands, just describe what you need in the booking notes.'],
+                ['How does pickup work?', 'Once booked, you agree on a pickup point with your driver or rider — usually your gate, office, or a nearby landmark. You will not hand anything over without a confirmed booking first.'],
+                ['Do I need an account to book?', 'You can browse available drivers and riders without an account. You only need to sign up when you are ready to book. It takes under 60 seconds.'],
             ]; @endphp
 
-            <div x-data="{ open: 0 }" style="background:#fff;border:1px solid #e5e7eb;border-radius:16px;overflow:hidden">
+            <div x-data="{ open: 0 }" style="display:flex;flex-direction:column;gap:8px">
                 @foreach ($faqs as $i => $faq)
-                <div style="{{ $i > 0 ? 'border-top:1px solid #e5e7eb' : '' }}">
+                <div style="background:#fff;border:1px solid #e5e7eb;border-radius:12px;overflow:hidden">
                     <button @click="open = open === {{ $i }} ? null : {{ $i }}"
-                            style="width:100%;display:flex;align-items:center;justify-content:space-between;padding:22px 24px;text-align:left;background:none;border:none;cursor:pointer;gap:20px">
-                        <span style="font-family:var(--font);font-size:15px;font-weight:500;color:#1c1c1c;line-height:1.4">{{ $faq[0] }}</span>
-                        <span style="flex-shrink:0;line-height:0">
-                            {{-- Plus: shown when closed --}}
-                            <svg x-show="open !== {{ $i }}" width="18" height="18" fill="none" stroke="#9ca3af" stroke-width="2" stroke-linecap="round" viewBox="0 0 18 18">
-                                <line x1="9" y1="3" x2="9" y2="15"/><line x1="3" y1="9" x2="15" y2="9"/>
-                            </svg>
-                            {{-- X: shown when open --}}
-                            <svg x-show="open === {{ $i }}" width="18" height="18" fill="none" stroke="#6b7280" stroke-width="2" stroke-linecap="round" viewBox="0 0 18 18">
-                                <line x1="4" y1="4" x2="14" y2="14"/><line x1="14" y1="4" x2="4" y2="14"/>
-                            </svg>
+                            style="width:100%;display:flex;align-items:center;gap:16px;padding:20px 22px;text-align:left;background:none;border:none;cursor:pointer">
+                        <span style="font-family:var(--head);font-size:12px;font-weight:700;color:#9ca3af;letter-spacing:0.04em;flex-shrink:0">{{ str_pad($i + 1, 2, '0', STR_PAD_LEFT) }}</span>
+                        <span style="font-family:var(--font);font-size:15px;font-weight:500;color:#1c1c1c;line-height:1.4;flex:1">{{ $faq[0] }}</span>
+                        <span style="flex-shrink:0;line-height:0;transition:transform 0.2s" :style="open === {{ $i }} ? 'transform:rotate(180deg)' : ''">
+                            <svg width="18" height="18" fill="none" stroke="#9ca3af" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><path d="M6 9l6 6 6-6"/></svg>
                         </span>
                     </button>
                     <div class="faq-body" :class="open === {{ $i }} ? 'open' : ''">
                         <div class="faq-inner">
-                            <div style="padding:0 24px 22px">
+                            <div style="padding:0 22px 20px 50px">
                                 <p style="font-family:var(--font);font-size:14px;color:#6b7280;line-height:1.75;margin:0">{{ $faq[1] }}</p>
                             </div>
                         </div>
@@ -2908,18 +3053,6 @@ body { font-family: var(--font); color: var(--text); background: #fff; -webkit-f
 
         </div>
 
-        {{-- Bottom: still have questions bar --}}
-        <div class="reveal" style="background:#fff;border-radius:16px;padding:28px 32px;display:flex;align-items:center;justify-content:space-between;gap:24px;flex-wrap:wrap">
-            <div>
-                <p style="font-family:var(--head);font-size:19px;font-weight:700;color:#1c1c1c;margin:0 0 5px">Still have questions?</p>
-                <p style="font-family:var(--font);font-size:14px;color:#6b7280;margin:0">Our support team can help you out.</p>
-            </div>
-            <a href="/contact" style="display:inline-flex;align-items:center;gap:8px;background:var(--forest-deep);color:#fff;font-family:var(--font);font-size:14px;font-weight:600;padding:13px 24px;border-radius:10px;text-decoration:none;white-space:nowrap;transition:opacity 0.2s" onmouseover="this.style.opacity='0.85'" onmouseout="this.style.opacity='1'">
-                Get in touch
-                <svg width="14" height="14" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"/></svg>
-            </a>
-        </div>
-
     </div>
 </section>
 
@@ -2928,25 +3061,25 @@ body { font-family: var(--font); color: var(--text); background: #fff; -webkit-f
      CTA
 ══════════════════════════════════════════════════ --}}
 <div style="background:#fff;padding:clamp(40px,6vw,80px) clamp(16px,3vw,40px)">
-<section style="background:var(--forest-deep);border-radius:20px;overflow:hidden;position:relative">
+<section style="background:var(--forest-deep);border-radius:8px;overflow:hidden;position:relative">
 
     {{-- Full-width heading --}}
-    <div class="reveal" style="padding:clamp(24px,3vw,40px) clamp(20px,4vw,48px) 14px;text-align:center">
-        <h2 style="font-family:var(--head);font-size:clamp(32px,5.5vw,72px);font-weight:700;letter-spacing:-0.04em;line-height:1.06;color:#fff;margin:0">Moving Parcels With<br>Drivers Already in Motion.</h2>
+    <div class="reveal" style="padding:clamp(40px,5vw,72px) clamp(20px,4vw,48px) 14px;text-align:center">
+        <h2 style="font-family:var(--head);font-size:clamp(32px,5.5vw,72px);font-weight:700;letter-spacing:-0.04em;line-height:1.06;color:#fff;margin:0">Errands done.<br>Parcels delivered.</h2>
     </div>
 
     {{-- Subtitle + buttons + social proof --}}
     <div class="reveal" style="max-width:560px;margin:0 auto;padding:0 clamp(20px,4vw,48px) 40px;text-align:center">
 
-        <p style="font-family:var(--font);font-size:16px;color:rgba(255,255,255,0.5);line-height:1.65;margin:0 auto 32px">Connect your parcel with transporters already heading your way. Fast, trusted, and community-driven.</p>
+        <p style="font-family:var(--font);font-size:16px;color:rgba(255,255,255,0.5);line-height:1.65;margin:0 auto 32px">Run Harare errands or ship intercity to Bulawayo and beyond. Real people, real prices, same day.</p>
 
         <div style="display:flex;align-items:center;justify-content:center;gap:12px;flex-wrap:wrap;margin-bottom:32px">
-            <a href="{{ route('register') }}" style="display:inline-flex;align-items:center;gap:8px;background:var(--green);color:var(--forest-deep);font-family:var(--font);font-size:15px;font-weight:700;padding:14px 28px;border-radius:12px;text-decoration:none;transition:background 0.2s" onmouseover="this.style.background='#5aad28'" onmouseout="this.style.background='var(--green)'">
-                Browse drivers
+            <a href="{{ route('send') }}" style="display:inline-flex;align-items:center;gap:8px;background:var(--green);color:var(--forest-deep);font-family:var(--font);font-size:15px;font-weight:700;padding:14px 28px;border-radius:12px;text-decoration:none;transition:background 0.2s" onmouseover="this.style.background='#5aad28'" onmouseout="this.style.background='var(--green)'">
+                Book an errand
                 <svg width="14" height="14" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M17 8l4 4m0 0l-4 4m4-4H3"/></svg>
             </a>
             <a href="{{ route('register') }}" style="display:inline-flex;align-items:center;font-family:var(--font);font-size:15px;font-weight:600;padding:13px 26px;border-radius:12px;text-decoration:none;border:1.5px solid rgba(255,255,255,0.2);color:rgba(255,255,255,0.65);transition:all 0.2s" onmouseover="this.style.borderColor='rgba(255,255,255,0.45)';this.style.color='#fff'" onmouseout="this.style.borderColor='rgba(255,255,255,0.2)';this.style.color='rgba(255,255,255,0.65)'">
-                Become a transporter
+                Become a driver or rider
             </a>
         </div>
 
@@ -2956,75 +3089,11 @@ body { font-family: var(--font); color: var(--text); background: #fff; -webkit-f
                 <img src="/images/driver-2.jpg" style="width:34px;height:34px;border-radius:50%;object-fit:cover;object-position:26% 15%;border:2.5px solid var(--forest-deep);margin-right:-10px;position:relative;z-index:2">
                 <img src="/images/driver-3.jpg" style="width:34px;height:34px;border-radius:50%;object-fit:cover;object-position:50% 20%;border:2.5px solid var(--forest-deep);position:relative;z-index:1">
             </div>
-            <p style="font-family:var(--font);font-size:12.5px;color:rgba(255,255,255,0.38);margin:0;text-align:left">Trusted by senders &amp; drivers<br>across Zimbabwe</p>
+            <p style="font-family:var(--font);font-size:12.5px;color:rgba(255,255,255,0.38);margin:0;text-align:left">Trusted by senders, drivers &amp; riders<br>across Zimbabwe</p>
         </div>
 
     </div>
 
-    {{-- Hero scene reused --}}
-    <div class="hero-scene cta-scene" aria-hidden="true" style="min-height:160px;max-height:180px">
-
-        <svg class="scene-globe" viewBox="0 0 1000 500" fill="none" preserveAspectRatio="xMidYMid meet">
-            <defs>
-                <pattern id="ctaMapDots" width="13" height="13" patternUnits="userSpaceOnUse">
-                    <circle cx="2" cy="2" r="1.7" fill="rgba(255,255,255,0.07)"/>
-                </pattern>
-            </defs>
-            <g fill="url(#ctaMapDots)">
-                <path d="M120 90 C100 120 105 150 130 165 C120 200 155 220 185 205 C200 235 235 235 250 210 C270 215 285 190 275 165 C295 150 295 120 270 108 C260 85 225 78 200 88 C175 78 140 78 120 90 Z"/>
-                <path d="M300 250 C280 260 275 290 290 320 C292 360 312 408 332 406 C354 400 350 360 342 330 C352 300 345 270 328 258 C320 250 310 249 300 250 Z"/>
-                <path d="M500 105 C486 110 484 128 496 140 C491 158 513 164 530 157 C548 161 560 146 552 130 C561 115 548 100 528 103 C518 98 508 101 500 105 Z"/>
-                <path d="M520 180 C500 195 500 228 515 256 C515 300 535 352 560 356 C584 351 598 314 590 282 C608 252 603 210 580 194 C560 178 538 174 520 180 Z"/>
-                <path d="M620 85 C596 93 591 122 611 143 C601 176 640 204 685 199 C734 208 798 194 843 172 C876 156 880 120 850 103 C814 82 746 76 696 80 C671 78 646 79 620 85 Z"/>
-                <path d="M792 335 C772 345 774 372 794 388 C817 402 853 400 873 385 C889 371 884 346 863 337 C839 328 812 328 792 335 Z"/>
-            </g>
-        </svg>
-
-        <svg class="scene-route" viewBox="0 0 1000 380" fill="none" preserveAspectRatio="none">
-            <circle cx="132" cy="120" r="5.5" fill="var(--green)"/>
-            <path d="M132 120 C 300 170, 300 244, 480 257 C 640 268, 660 293, 792 305" stroke="var(--green)" stroke-width="2.4" stroke-dasharray="1.5 12" stroke-linecap="round" opacity="0.9"/>
-        </svg>
-
-        <svg class="scene-van" viewBox="0 0 240 150" fill="none">
-            <ellipse cx="118" cy="128" rx="98" ry="9" fill="rgba(0,0,0,0.2)"/>
-            <rect x="22" y="34" width="118" height="66" rx="10" fill="#fff" stroke="var(--forest-deep)" stroke-width="3.5"/>
-            <path d="M140 34 H176 L206 66 V100 H140 Z" fill="#fff" stroke="var(--forest-deep)" stroke-width="3.5" stroke-linejoin="round"/>
-            <path d="M150 46 H172 L191 64 H150 Z" fill="var(--green-light)" stroke="var(--forest-deep)" stroke-width="2.5" stroke-linejoin="round"/>
-            <path d="M84 36 V98" stroke="var(--forest-deep)" stroke-width="2.5"/>
-            <path d="M28 82 H132" stroke="var(--green)" stroke-width="6" stroke-linecap="round"/>
-            <circle cx="200" cy="86" r="4" fill="var(--green)"/>
-            <circle cx="62" cy="100" r="18" fill="#fff" stroke="var(--forest-deep)" stroke-width="3.5"/>
-            <circle cx="62" cy="100" r="6.5" fill="var(--forest-deep)"/>
-            <circle cx="176" cy="100" r="18" fill="#fff" stroke="var(--forest-deep)" stroke-width="3.5"/>
-            <circle cx="176" cy="100" r="6.5" fill="var(--forest-deep)"/>
-        </svg>
-
-        <div class="scene-pin scene-pin-depot">
-            <span class="scene-pin-pulse"></span>
-            <svg width="30" height="30" viewBox="0 0 24 24" fill="var(--forest-deep)"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5a2.5 2.5 0 110-5 2.5 2.5 0 010 5z"/></svg>
-        </div>
-
-        <div class="scene-card sc-status">
-            <div class="sc-row" style="margin-bottom:11px;">
-                <span class="sc-ic"><svg width="15" height="15" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 7l-8-4-8 4m16 0v10l-8 4m0-14L4 17m8 4V11"/></svg></span>
-                <span class="sc-title">Driver status</span>
-            </div>
-            <span class="sc-tag">In transit</span>
-            <div class="sc-row" style="margin-top:12px;gap:9px;">
-                <span class="sc-photo-avatar"><img src="/images/driver-2.jpg" alt="" style="object-position:26% 42%"></span>
-                <div><p class="sc-strong">NHM-4821</p><p class="sc-sub">Harare → Bulawayo</p></div>
-            </div>
-        </div>
-
-        <div class="scene-card sc-driver sc-photo">
-            <img class="sc-photo-img" src="/images/driver-1.jpg" alt="Nhume driver" style="object-position:42% 16%">
-            <span class="sc-photo-tag">
-                <svg width="11" height="11" fill="none" stroke="var(--green-mid)" viewBox="0 0 24 24" style="flex-shrink:0"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/></svg>
-                Tendai Moyo
-            </span>
-        </div>
-
-    </div>
 
 </section>
 </div>

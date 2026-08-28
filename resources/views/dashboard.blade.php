@@ -24,217 +24,226 @@
 
         @if($isSender)
         <a href="{{ route('send') }}"
-           class="hidden sm:inline-flex items-center gap-2 px-4 py-2.5 rounded-xl text-sm font-semibold text-white transition-all"
-           style="background:#6bc630;box-shadow:0 4px 16px rgba(107,198,48,0.3);"
+           class="hidden sm:inline-flex items-center gap-2 px-4 py-2.5 rounded-md text-sm font-semibold text-white transition-colors"
+           style="background:#6bc630;"
            onmouseover="this.style.background='#5aad28'"
            onmouseout="this.style.background='#6bc630'">
             <svg width="15" height="15" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
                 <line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/>
             </svg>
-            Send Parcel
+            Book an errand
         </a>
         @endif
     </div>
 
     {{-- ── Stat cards ──────────────────────────────────────── --}}
     @if($isAdmin)
+    <div class="ov space-y-5">
+    @php
+        // ── Sparkline (Total orders, 14d) ──
+        $spark = $ordersTrend ?? array_fill(0, 14, 0);
+        $sMax  = max(1, max($spark));
+        $sN    = count($spark);
+        $sStep = $sN > 1 ? 100 / ($sN - 1) : 0;
+        $sPts  = [];
+        foreach ($spark as $i => $v) { $sPts[] = round($i * $sStep, 2) . ',' . round(28 - ($v / $sMax) * 24, 2); }
+        $sparkLine = implode(' ', $sPts);
+        $sparkArea = '0,30 ' . $sparkLine . ' 100,30';
+        $delta = $ordersDelta ?? 0;
+        $tot   = max($totalDrivers, 1);
+    @endphp
+
+    {{-- ── KPI row ── --}}
     <div class="grid grid-cols-2 lg:grid-cols-4 gap-4">
 
-        <div class="stat-card">
-            <div class="flex items-center justify-between mb-3">
-                <span class="text-xs font-semibold text-gray-400 uppercase tracking-wide">Total Orders</span>
-                <div class="w-8 h-8 rounded-lg flex items-center justify-center" style="background:#F0FDE4;">
-                    <svg width="15" height="15" fill="none" stroke="#6bc630" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24">
-                        <line x1="16.5" y1="9.4" x2="7.5" y2="4.21"/>
-                        <path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/>
-                    </svg>
-                </div>
-            </div>
-            <div class="text-3xl font-bold text-gray-900 tabular-nums">{{ $totalOrders }}</div>
-            <div class="text-xs text-gray-400 mt-1">All time</div>
-        </div>
-
-        <div class="stat-card">
-            <div class="flex items-center justify-between mb-3">
-                <span class="text-xs font-semibold text-gray-400 uppercase tracking-wide">Active Drivers</span>
-                <div class="w-8 h-8 rounded-lg flex items-center justify-center" style="background:#EFF6FF;">
-                    <svg width="15" height="15" fill="none" stroke="#3b82f6" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24">
-                        <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/>
-                        <path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/>
-                    </svg>
-                </div>
-            </div>
-            <div class="text-3xl font-bold text-gray-900 tabular-nums">{{ $activeDrivers }}</div>
-            <div class="text-xs text-gray-400 mt-1">of {{ $totalDrivers }} total</div>
-        </div>
-
-        <div class="stat-card">
-            <div class="flex items-center justify-between mb-3">
-                <span class="text-xs font-semibold text-gray-400 uppercase tracking-wide">Verified</span>
-                <div class="w-8 h-8 rounded-lg flex items-center justify-center" style="background:#F0FDE4;">
-                    <svg width="15" height="15" fill="none" stroke="#6bc630" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24">
-                        <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22,4 12,14.01 9,11.01"/>
-                    </svg>
-                </div>
-            </div>
-            <div class="text-3xl font-bold text-gray-900 tabular-nums">{{ $verifiedDrivers }}</div>
-            <div class="flex items-center gap-1.5 mt-1">
-                <span class="text-xs text-gray-400">Fully verified drivers</span>
+        {{-- Total orders + sparkline --}}
+        <div class="kpi">
+            <div class="kpi-label">Total orders</div>
+            <div class="kpi-num">{{ number_format($totalOrders) }}</div>
+            <svg viewBox="0 0 100 30" preserveAspectRatio="none" style="width:100%;height:30px;display:block;">
+                <defs><linearGradient id="sparkGrad" x1="0" y1="0" x2="0" y2="1">
+                    <stop offset="0" stop-color="#6bc630" stop-opacity="0.16"/>
+                    <stop offset="1" stop-color="#6bc630" stop-opacity="0"/>
+                </linearGradient></defs>
+                <polyline points="{{ $sparkArea }}" fill="url(#sparkGrad)" stroke="none"/>
+                <polyline points="{{ $sparkLine }}" fill="none" stroke="#6bc630" stroke-width="1.5"
+                          vector-effect="non-scaling-stroke" stroke-linejoin="round" stroke-linecap="round"/>
+            </svg>
+            <div class="kpi-foot">
+                <span class="kpi-sub">Last 14 days</span>
+                @if($delta > 0)
+                    <span class="kpi-delta up"><svg width="11" height="11" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24"><path d="M7 17 17 7M9 7h8v8"/></svg>{{ $delta }}%</span>
+                @elseif($delta < 0)
+                    <span class="kpi-delta down"><svg width="11" height="11" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24"><path d="M7 7l10 10M17 9v8H9"/></svg>{{ abs($delta) }}%</span>
+                @else
+                    <span class="kpi-delta flat">No change</span>
+                @endif
             </div>
         </div>
 
-        <div class="stat-card">
-            <div class="flex items-center justify-between mb-3">
-                <span class="text-xs font-semibold text-gray-400 uppercase tracking-wide">Need Review</span>
-                <div class="w-8 h-8 rounded-lg flex items-center justify-center" style="background:#FEF3C7;">
-                    <svg width="15" height="15" fill="none" stroke="#d97706" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24">
-                        <path d="M10.29 3.86 1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/>
-                    </svg>
-                </div>
-            </div>
-            <div class="text-3xl font-bold text-gray-900 tabular-nums">{{ $pendingReview }}</div>
-            <div class="text-xs text-gray-400 mt-1">Unverified drivers</div>
+        {{-- Active drivers --}}
+        <div class="kpi">
+            <div class="kpi-label">Active drivers</div>
+            <div class="kpi-num">{{ $activeDrivers }}</div>
+            <div class="mini-bar"><span style="width:{{ round($activeDrivers / $tot * 100) }}%"></span></div>
+            <div class="kpi-foot"><span class="kpi-sub">of {{ $totalDrivers }} total</span></div>
+        </div>
+
+        {{-- Verified --}}
+        <div class="kpi">
+            <div class="kpi-label">Verified</div>
+            <div class="kpi-num">{{ $verifiedDrivers }}</div>
+            <div class="mini-bar"><span style="width:{{ round($verifiedDrivers / $tot * 100) }}%"></span></div>
+            <div class="kpi-foot"><span class="kpi-sub">{{ round($verifiedDrivers / $tot * 100) }}% of drivers</span></div>
+        </div>
+
+        {{-- Need review --}}
+        <div class="kpi">
+            <div class="kpi-label">Need review</div>
+            <div class="kpi-num">{{ $pendingReview }}</div>
+            <div class="mini-bar"><span style="width:{{ round($pendingReview / $tot * 100) }}%;background:#D0D5DD"></span></div>
+            <div class="kpi-foot"><span class="kpi-sub">Unverified drivers</span></div>
         </div>
 
     </div>
 
-    {{-- ── Admin: Two columns ────────────────────────────── --}}
-    <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+    {{-- ── Main grid ── --}}
+    <div class="grid grid-cols-1 lg:grid-cols-3 gap-5">
 
-        {{-- Recent Orders --}}
-        <div class="lg:col-span-2"
-             style="background:#fff;border:1px solid #E9EAEC;border-radius:16px;overflow:hidden;">
-            <div class="flex items-center justify-between px-6 py-4"
-                 style="border-bottom:1px solid #F0F1F0;">
-                <h2 class="text-sm font-semibold text-gray-800">Recent orders</h2>
-                <a href="{{ route('admin.orders.index') }}" class="text-xs font-medium" style="color:#6bc630;">View all</a>
-            </div>
-            @forelse($recentOrders as $order)
-            @php
-                $adminSc = [
-                    'draft'       => ['bg'=>'#F3F4F6','text'=>'#6B7280'],
-                    'posted'      => ['bg'=>'#FEF3C7','text'=>'#B45309'],
-                    'assigned'    => ['bg'=>'#DBEAFE','text'=>'#1D4ED8'],
-                    'in_progress' => ['bg'=>'#EDE9FE','text'=>'#6D28D9'],
-                    'delivered'   => ['bg'=>'#DCFCE7','text'=>'#15803D'],
-                    'cancelled'   => ['bg'=>'#FEE2E2','text'=>'#DC2626'],
-                ];
-                $sv = $order->status instanceof \App\Enums\TaskStatus ? $order->status->value : $order->status;
-                $osc = $adminSc[$sv] ?? $adminSc['draft'];
-                $orderNum = $order->order_number ?? '#'.str_pad($order->id, 5, '0', STR_PAD_LEFT);
-            @endphp
-            <div class="flex items-center gap-3 px-6 py-3.5 border-b border-gray-50 last:border-0 hover:bg-gray-50/50 transition-colors group">
-                <div class="flex-1 min-w-0">
-                    <div class="flex items-center gap-2 mb-0.5 flex-wrap">
-                        <span class="font-mono text-xs font-bold text-gray-600">{{ $orderNum }}</span>
-                        <span class="inline-flex px-2 py-0.5 rounded-full text-[11px] font-semibold"
-                              style="background:{{ $osc['bg'] }};color:{{ $osc['text'] }};">
-                            {{ $order->status instanceof \App\Enums\TaskStatus ? $order->status->label() : ucfirst(str_replace('_',' ',$sv)) }}
-                        </span>
-                    </div>
-                    <div class="text-xs text-gray-500 truncate">
-                        {{ Str::limit($order->pickup_address, 24) }}
-                        <span class="text-gray-300 mx-1">→</span>
-                        {{ Str::limit($order->dropoff_address, 24) }}
+        {{-- Left column --}}
+        <div class="lg:col-span-2 flex flex-col">
+
+            {{-- Recent orders table --}}
+            <div class="d-card" style="flex:1;display:flex;flex-direction:column;">
+                <div class="d-card-head">
+                    <div class="d-h">Recent orders</div>
+                    <a href="{{ route('admin.orders.index') }}" class="d-link">View all</a>
+                </div>
+                @if($recentOrders->total())
+                @php
+                    $dot = [
+                        'draft'=>'#98A2B3','posted'=>'#E0A64B','assigned'=>'#6E9BF0',
+                        'in_progress'=>'#9B8AF0','delivered'=>'#5aad28','cancelled'=>'#E56A6A',
+                    ];
+                @endphp
+                <div style="flex:1;overflow-x:auto;">
+                <table class="d-table">
+                    <thead><tr>
+                        <th>Order</th>
+                        <th>Route</th>
+                        <th class="hidden sm:table-cell">Customer</th>
+                        <th>Status</th>
+                        <th class="hidden sm:table-cell">Time</th>
+                        <th></th>
+                    </tr></thead>
+                    <tbody>
+                    @foreach($recentOrders as $order)
+                    @php
+                        $sv  = $order->status instanceof \App\Enums\TaskStatus ? $order->status->value : $order->status;
+                        $lbl = $order->status instanceof \App\Enums\TaskStatus ? $order->status->label() : ucfirst(str_replace('_',' ',$sv));
+                        $orderNum = $order->order_number ?? '#'.str_pad($order->id, 5, '0', STR_PAD_LEFT);
+                    @endphp
+                    <tr>
+                        <td><span class="d-mono">{{ $orderNum }}</span></td>
+                        <td><span class="d-route">{{ Str::limit($order->pickup_address, 16) }} <span class="arr">→</span> {{ Str::limit($order->dropoff_address, 16) }}</span></td>
+                        <td class="hidden sm:table-cell"><span class="d-cust">{{ $order->user?->name ? Str::limit($order->user->name, 18) : '—' }}</span></td>
+                        <td><span class="st-pill"><span class="st-dot" style="background:{{ $dot[$sv] ?? '#98A2B3' }}"></span>{{ $lbl }}</span></td>
+                        <td class="hidden sm:table-cell"><span class="d-time">{{ $order->created_at->diffForHumans() }}</span></td>
+                        <td style="width:28px;text-align:right;"><a href="{{ route('admin.orders.show', $order) }}" class="d-chev"><svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="m9 18 6-6-6-6"/></svg></a></td>
+                    </tr>
+                    @endforeach
+                    </tbody>
+                </table>
+                </div>
+
+                {{-- Footer: pagination --}}
+                <div class="d-card-foot">
+                    <span class="d-pageinfo">Showing <b>{{ $recentOrders->firstItem() ?? 0 }}–{{ $recentOrders->lastItem() ?? 0 }}</b> of {{ number_format($recentOrders->total()) }}</span>
+                    <div class="d-pg">
+                        <a href="{{ $recentOrders->previousPageUrl() ?? '#' }}"
+                           class="d-pgbtn {{ $recentOrders->onFirstPage() ? 'is-disabled' : '' }}"
+                           @if($recentOrders->onFirstPage()) tabindex="-1" aria-disabled="true" @endif>
+                            <svg width="13" height="13" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="m15 18-6-6 6-6"/></svg>
+                            Prev
+                        </a>
+                        <a href="{{ $recentOrders->nextPageUrl() ?? '#' }}"
+                           class="d-pgbtn {{ $recentOrders->hasMorePages() ? '' : 'is-disabled' }}"
+                           @if(!$recentOrders->hasMorePages()) tabindex="-1" aria-disabled="true" @endif>
+                            Next
+                            <svg width="13" height="13" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="m9 18 6-6-6-6"/></svg>
+                        </a>
                     </div>
                 </div>
-                <div class="text-right flex-shrink-0 hidden sm:block">
-                    @if($order->user)
-                    <div class="text-xs font-medium text-gray-700">{{ Str::limit($order->user->name, 18) }}</div>
-                    @endif
-                    <div class="text-[11px] text-gray-400">{{ $order->created_at->diffForHumans() }}</div>
+                @else
+                <div style="flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:44px 18px;text-align:center;">
+                    <div class="d-h" style="font-weight:500;color:var(--body);">No orders yet</div>
+                    <div class="ov-sub" style="margin-top:4px;">Orders will appear here as they come in.</div>
                 </div>
-                <a href="{{ route('admin.orders.show', $order) }}"
-                   class="opacity-0 group-hover:opacity-100 text-gray-300 hover:text-gray-600 transition-all flex-shrink-0">
-                    <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="m9 18 6-6-6-6"/></svg>
-                </a>
+                @endif
             </div>
-            @empty
-            <div class="px-6 py-14 text-center">
-                <div class="text-2xl mb-2">📦</div>
-                <div class="text-sm font-medium text-gray-500">No orders yet</div>
-                <div class="text-xs text-gray-400 mt-1 mb-4">Orders will appear here as they come in</div>
-                <a href="{{ route('admin.orders.create') }}"
-                   class="inline-flex items-center gap-1.5 text-xs font-semibold px-3 py-1.5 rounded-lg"
-                   style="background:#6bc630;color:#fff;">
-                    + Create first order
-                </a>
-            </div>
-            @endforelse
+
         </div>
 
-        {{-- Quick actions + trust breakdown --}}
-        <div class="space-y-4">
+        {{-- Right column --}}
+        <div class="space-y-5">
+
+            {{-- Trust breakdown --}}
+            <div class="d-card">
+                <div class="d-card-head">
+                    <div class="d-h">Trust breakdown</div>
+                    <span class="ov-sub">{{ $totalDrivers }} drivers</span>
+                </div>
+                <div style="padding:16px 18px;">
+                    @php
+                        $tiers = [
+                            ['label'=>'Verified', 'color'=>'#5aad28', 'count'=>$verifiedDrivers],
+                            ['label'=>'Reviewed', 'color'=>'#8bd45f', 'count'=>$reviewedDrivers],
+                            ['label'=>'ID sent',  'color'=>'#cfe8b4', 'count'=>$idSubmittedDrivers],
+                            ['label'=>'New',      'color'=>'#E5E7EB', 'count'=>$pendingReview],
+                        ];
+                    @endphp
+                    <div class="trust-stack" style="margin-bottom:16px;">
+                        @foreach($tiers as $t)
+                            @if($t['count'] > 0)
+                            <span style="width:{{ round($t['count'] / $tot * 100, 1) }}%;background:{{ $t['color'] }}"></span>
+                            @endif
+                        @endforeach
+                    </div>
+                    <div class="space-y-2.5">
+                        @foreach($tiers as $t)
+                        <div class="trust-row">
+                            <span class="trust-key" style="background:{{ $t['color'] }}"></span>
+                            <span class="trust-name">{{ $t['label'] }}</span>
+                            <span class="trust-val">{{ $t['count'] }}</span>
+                        </div>
+                        @endforeach
+                    </div>
+                </div>
+            </div>
 
             {{-- Quick actions --}}
-            <div style="background:#fff;border:1px solid #E9EAEC;border-radius:16px;padding:20px;">
-                <h2 class="text-sm font-semibold text-gray-800 mb-3">Quick actions</h2>
-                <div class="space-y-2">
-                    <a href="{{ route('admin.orders.create') }}"
-                       class="flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm font-medium text-gray-700 hover:bg-gray-50 transition-colors">
-                        <div class="w-8 h-8 rounded-lg flex items-center justify-center" style="background:#F0FDE4;">
-                            <svg width="14" height="14" fill="none" stroke="#6bc630" stroke-width="2.5" viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
-                        </div>
-                        New Order
+            <div class="d-card">
+                <div class="d-card-head"><div class="d-h">Quick actions</div></div>
+                <div style="padding:8px;">
+                    <a href="{{ route('admin.orders.create') }}" class="qa-row">
+                        <span class="qa-ic"><svg width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></span>
+                        New order
                     </a>
-                    <a href="{{ route('admin.drivers.create') }}"
-                       class="flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm font-medium text-gray-700 hover:bg-gray-50 transition-colors">
-                        <div class="w-8 h-8 rounded-lg flex items-center justify-center" style="background:#EFF6FF;">
-                            <svg width="14" height="14" fill="none" stroke="#3b82f6" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24">
-                                <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/>
-                                <path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/>
-                            </svg>
-                        </div>
-                        Add Driver
+                    <a href="{{ route('admin.drivers.create') }}" class="qa-row">
+                        <span class="qa-ic"><svg width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M19 8v6M22 11h-6"/></svg></span>
+                        Add driver
                     </a>
-                    <a href="{{ route('admin.drivers.index') }}"
-                       class="flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm font-medium text-gray-700 hover:bg-gray-50 transition-colors">
-                        <div class="w-8 h-8 rounded-lg flex items-center justify-center" style="background:#FEF3C7;">
-                            <svg width="14" height="14" fill="none" stroke="#d97706" stroke-width="2" viewBox="0 0 24 24">
-                                <path d="M10.29 3.86 1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/>
-                                <line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/>
-                            </svg>
-                        </div>
-                        Review Queue
-                        @if($pendingReview > 0)
-                        <span class="ml-auto text-xs font-bold text-white px-1.5 py-0.5 rounded-full" style="background:#d97706;">
-                            {{ $pendingReview }}
-                        </span>
-                        @endif
+                    <a href="{{ route('admin.drivers.index') }}" class="qa-row">
+                        <span class="qa-ic"><svg width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg></span>
+                        Review queue
+                        @if($pendingReview > 0)<span class="qa-count">{{ $pendingReview }}</span>@endif
                     </a>
-                </div>
-            </div>
-
-            {{-- Trust tier breakdown --}}
-            <div style="background:#fff;border:1px solid #E9EAEC;border-radius:16px;padding:20px;">
-                <h2 class="text-sm font-semibold text-gray-800 mb-4">Trust breakdown</h2>
-                @php
-                    $tiers = [
-                        ['label' => 'Verified',  'color' => '#6bc630', 'count' => $verifiedDrivers],
-                        ['label' => 'Reviewed',  'color' => '#3b82f6', 'count' => $reviewedDrivers],
-                        ['label' => 'ID Sent',   'color' => '#f59e0b', 'count' => $idSubmittedDrivers],
-                        ['label' => 'New',       'color' => '#e5e7eb', 'count' => $pendingReview],
-                    ];
-                    $total = max($totalDrivers, 1);
-                @endphp
-                <div class="space-y-3">
-                    @foreach($tiers as $tier)
-                    <div>
-                        <div class="flex items-center justify-between mb-1">
-                            <span class="text-xs text-gray-500">{{ $tier['label'] }}</span>
-                            <span class="text-xs font-semibold text-gray-700">{{ $tier['count'] }}</span>
-                        </div>
-                        <div class="h-1.5 rounded-full" style="background:#F3F4F6;">
-                            <div class="h-1.5 rounded-full transition-all duration-500"
-                                 style="background:{{ $tier['color'] }};width:{{ $total > 0 ? round($tier['count']/$total*100) : 0 }}%"></div>
-                        </div>
-                    </div>
-                    @endforeach
                 </div>
             </div>
 
         </div>
     </div>
+    </div>{{-- /.ov --}}
 
     @elseif($isSender)
     @php
@@ -281,7 +290,7 @@
             $timelineIdx = collect($timeline)->search(fn($s) => $s->value === $sv) ?? -1;
             $orderNum = $order->order_number ?? '#'.str_pad($order->id, 5, '0', STR_PAD_LEFT);
         @endphp
-        <div style="background:#fff;border:1px solid #E9EAEC;border-radius:16px;overflow:hidden;">
+        <div style="background:#fff;border:1px solid #E9EAEC;border-radius:8px;overflow:hidden;">
 
             {{-- Card header --}}
             <div class="flex items-center justify-between px-5 py-4" style="border-bottom:1px solid #F5F6F5;">
@@ -385,31 +394,31 @@
 
     {{-- ── Empty state (no orders at all) ─────────────────── --}}
     @if($totalOrders === 0)
-    <div style="background:#fff;border:1px solid #E9EAEC;border-radius:20px;padding:56px 32px;text-align:center;">
-        <div style="width:64px;height:64px;border-radius:20px;background:linear-gradient(135deg,#f0fde4,#dcfce7);display:flex;align-items:center;justify-content:center;margin:0 auto 20px;">
+    <div style="background:#fff;border:1px solid #E9EAEC;border-radius:8px;padding:56px 32px;text-align:center;">
+        <div style="width:64px;height:64px;border-radius:8px;background:#f0fde4;display:flex;align-items:center;justify-content:center;margin:0 auto 20px;">
             <svg width="30" height="30" fill="none" stroke="#6bc630" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24">
                 <line x1="16.5" y1="9.4" x2="7.5" y2="4.21"/>
                 <path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/>
             </svg>
         </div>
-        <h3 class="text-lg font-bold text-gray-900 mb-2">Send your first parcel</h3>
+        <h3 class="text-lg font-bold text-gray-900 mb-2">Book your first errand or parcel</h3>
         <p class="text-sm text-gray-400 max-w-xs mx-auto mb-6">
-            Moving a parcel between cities? We match it to a driver already travelling that route.
+            Need a grocery run, document drop, or intercity delivery? Real riders and drivers, ready today.
         </p>
         <a href="{{ route('send') }}"
-           class="inline-flex items-center gap-2 px-6 py-3 rounded-xl text-sm font-semibold text-white"
-           style="background:#6bc630;box-shadow:0 4px 20px rgba(107,198,48,0.35);"
+           class="inline-flex items-center gap-2 px-6 py-3 rounded-md text-sm font-semibold text-white"
+           style="background:#6bc630;"
            onmouseover="this.style.background='#5aad28'"
            onmouseout="this.style.background='#6bc630'">
             <svg width="15" height="15" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
-            Send a parcel
+            Get started
         </a>
     </div>
     @endif
 
     {{-- ── Order history ────────────────────────────────────── --}}
     @if($pastOrders->count() > 0)
-    <div style="background:#fff;border:1px solid #E9EAEC;border-radius:16px;overflow:hidden;">
+    <div style="background:#fff;border:1px solid #E9EAEC;border-radius:8px;overflow:hidden;">
         <div class="flex items-center justify-between px-6 py-4" style="border-bottom:1px solid #F0F1F0;">
             <h2 class="text-sm font-semibold text-gray-800">Order history</h2>
             <a href="{{ route('send') }}"
