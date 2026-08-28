@@ -15,6 +15,18 @@ Route::get('/', fn () => view('welcome'))->name('home');
 Route::get('/send',              [ParcelController::class, 'create'])->name('send');
 Route::get('/track/{orderNumber?}', [TrackController::class, 'show'])->name('track');
 
+// Public informational pages
+Route::get('/about',            fn () => view('pages.about'))->name('about');
+Route::get('/contact',          fn () => view('pages.contact'))->name('contact');
+Route::get('/safety',           fn () => view('pages.safety'))->name('safety');
+Route::get('/report',           fn () => view('pages.report'))->name('report');
+Route::get('/blog',             fn () => view('pages.blog'))->name('blog');
+Route::get('/become-a-partner', fn () => view('pages.partner'))->name('partner');
+Route::get('/careers',          fn () => view('pages.careers'))->name('careers');
+Route::get('/terms',            fn () => view('pages.terms'))->name('terms');
+Route::get('/privacy',          fn () => view('pages.privacy'))->name('privacy');
+Route::get('/cookies',          fn () => view('pages.cookies'))->name('cookies');
+
 Route::get('/dashboard', [DashboardController::class, 'index'])
     ->middleware(['auth', 'verified'])
     ->name('dashboard');

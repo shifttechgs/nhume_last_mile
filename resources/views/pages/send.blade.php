@@ -35,11 +35,53 @@ body { font-family: var(--font); color: var(--text); background: var(--shade); -
 /* ── Page shell ── */
 .send-page { min-height: 100vh; display: flex; flex-direction: column; }
 
+/* ── Hero banner ── */
+.send-hero {
+    background: var(--forest-deep);
+    padding: clamp(120px,16vh,180px) clamp(20px,4vw,48px) clamp(40px,5vw,60px);
+    text-align: center;
+    position: relative;
+}
+.send-hero::after {
+    content: '';
+    position: absolute; bottom: 0; left: 0; right: 0;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, rgba(107,198,48,0.35), transparent);
+}
+.hero-eyebrow {
+    display: inline-block;
+    font-family: var(--font);
+    font-size: 11px; font-weight: 700;
+    letter-spacing: 0.1em; text-transform: uppercase;
+    color: var(--green-mid); margin-bottom: 14px;
+}
+.hero-crumb {
+    display: inline-flex; align-items: center; gap: 6px;
+    font-family: var(--font); font-size: 12px;
+    color: rgba(255,255,255,0.3); margin-bottom: 16px;
+    list-style: none;
+}
+.hero-crumb a { color: rgba(255,255,255,0.3); text-decoration: none; transition: color .15s; }
+.hero-crumb a:hover { color: rgba(255,255,255,0.65); }
+.hero-title {
+    font-family: var(--head);
+    font-size: clamp(28px, 4vw, 48px);
+    font-weight: 700; letter-spacing: -0.03em;
+    line-height: 1.1; color: #fff;
+    margin: 0 0 14px;
+}
+.hero-sub {
+    font-family: var(--font);
+    font-size: 15px; color: rgba(255,255,255,0.45);
+    line-height: 1.65; max-width: 440px;
+    margin: 0 auto;
+}
+
 .send-main {
     flex: 1;
     display: flex;
     justify-content: center;
-    padding: 200px 40px 80px;
+    padding: 48px clamp(20px,4vw,40px) 80px;
 }
 
 /* ── Two-column layout ── */
@@ -355,7 +397,7 @@ input:checked + .toggle-track .toggle-thumb { left: 19.5px; }
     .wiz-layout { grid-template-columns: 1fr; gap: 0; }
     .wiz-left { padding-right: 0; padding-bottom: 32px; border-right: none; }
     .wiz-right { position: static; padding-left: 0; border-left: none; border-top: 1px solid var(--border); padding-top: 32px; }
-    .send-main { padding: 160px 16px 60px; }
+    .send-main { padding: 28px 16px 60px; }
     .wiz-card-head, .wiz-card-body, .wiz-card-foot { padding-left: 20px; padding-right: 20px; }
     .summary-title, .summary-rows, .summary-price, .summary-cta { padding-left: 20px; padding-right: 20px; }
     .field-row { flex-direction: column; }
@@ -366,6 +408,12 @@ input:checked + .toggle-track .toggle-thumb { left: 19.5px; }
 <body class="send-page" x-data="{ trackOpen: false, trackNum: '' }" @keydown.escape.window="trackOpen = false">
 
     <x-landing.nav :frosted="true" />
+
+    <div class="send-hero">
+        <span class="hero-eyebrow">Book a delivery</span>
+        <h1 class="hero-title">Send a parcel or<br>book an errand</h1>
+        <p class="hero-sub">Same-day errands in Harare. Intercity deliveries across Zimbabwe.</p>
+    </div>
 
     <main class="send-main">
         @livewire('parcel.create-order-wizard')

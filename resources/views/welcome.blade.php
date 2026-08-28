@@ -2609,6 +2609,65 @@ body { font-family: var(--font); color: var(--text); background: #fff; -webkit-f
 
 
 {{-- ══════════════════════════════════════════════════
+     NHUME STORE — physical drop-off
+══════════════════════════════════════════════════ --}}
+<section style="padding:var(--section-y) 0;background:#fff;overflow:hidden">
+    <div style="max-width:1200px;margin:0 auto;padding:0 clamp(20px,4vw,48px)">
+        <div class="reveal" style="display:grid;grid-template-columns:1fr 1fr;gap:clamp(40px,6vw,80px);align-items:center">
+
+            {{-- Left: photo --}}
+            <div style="position:relative;border-radius:12px;overflow:hidden;box-shadow:0 24px 64px rgba(28,56,41,0.14)">
+                <img src="/images/nhume-store-exterior.jpg"
+                     alt="Nhume Store — drop off, pick up, done"
+                     style="width:100%;height:auto;display:block;border-radius:12px">
+                {{-- Pill badge over image --}}
+                <div style="position:absolute;bottom:20px;left:20px;display:flex;gap:8px;flex-wrap:wrap">
+                    @foreach(['Drop off', 'Pick up', 'Returns'] as $tag)
+                    <span style="font-family:var(--font);font-size:11px;font-weight:700;letter-spacing:0.06em;text-transform:uppercase;background:rgba(0,0,0,0.55);backdrop-filter:blur(8px);color:#fff;padding:6px 14px;border-radius:999px;border:1px solid rgba(255,255,255,0.15)">{{ $tag }}</span>
+                    @endforeach
+                </div>
+            </div>
+
+            {{-- Right: copy --}}
+            <div>
+                <p style="font-family:var(--font);font-size:11px;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:var(--green-mid);margin:0 0 16px">Nhume Store</p>
+                <h2 style="font-family:var(--head);font-size:clamp(28px,3.5vw,44px);font-weight:700;letter-spacing:-0.03em;line-height:1.1;color:var(--forest);margin:0 0 20px">Your packages.<br>Safe with us.<br>Ready for you.</h2>
+                <p style="font-family:var(--font);font-size:15px;color:var(--text-2);line-height:1.75;margin:0 0 32px;max-width:400px">Walk in, hand over your parcel, and we handle the rest. Every item is logged, tracked, and handed to a verified driver or rider heading to your destination.</p>
+
+                <div style="display:flex;flex-direction:column;gap:14px;margin-bottom:36px">
+                    @foreach([
+                        ['Drop off', 'Bring your parcel in. We log it and keep it safe until pickup.', 'M20 7l-8-4-8 4m16 0v10l-8 4m0-14L4 17m8 4V11'],
+                        ['Pick up', 'Recipients collect from our store or we dispatch to their door.', 'M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6'],
+                        ['Live tracking', 'You and your recipient get a tracking link the moment we scan it in.', 'M9 20l-5.447-2.724A1 1 0 013 16.382V5.618a1 1 0 011.447-.894L9 7m0 13l6-3m-6 3V7m6 10l4.553 2.276A1 1 0 0021 18.382V7.618a1 1 0 00-.553-.894L15 4m0 13V4m0 0L9 7'],
+                    ] as [$title, $desc, $icon])
+                    <div style="display:flex;align-items:flex-start;gap:14px">
+                        <span style="width:36px;height:36px;border-radius:8px;background:var(--green-light);display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:1px">
+                            <svg width="16" height="16" fill="none" stroke="var(--green-mid)" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="{{ $icon }}"/></svg>
+                        </span>
+                        <div>
+                            <p style="font-family:var(--head);font-size:14px;font-weight:700;color:var(--forest);margin:0 0 3px">{{ $title }}</p>
+                            <p style="font-family:var(--font);font-size:13.5px;color:var(--text-2);line-height:1.55;margin:0">{{ $desc }}</p>
+                        </div>
+                    </div>
+                    @endforeach
+                </div>
+
+                <a href="{{ route('send') }}" style="display:inline-flex;align-items:center;gap:8px;background:var(--forest);color:#fff;font-family:var(--font);font-size:14px;font-weight:600;padding:13px 26px;border-radius:6px;text-decoration:none;transition:background 0.15s" onmouseover="this.style.background='var(--forest-deep)'" onmouseout="this.style.background='var(--forest)'">
+                    Book a drop-off
+                    <svg width="14" height="14" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"/></svg>
+                </a>
+            </div>
+
+        </div>
+    </div>
+    <style>
+    @media (max-width: 768px) {
+        .reveal[style*="grid-template-columns:1fr 1fr"] { grid-template-columns: 1fr !important; }
+    }
+    </style>
+</section>
+
+{{-- ══════════════════════════════════════════════════
      WHY NHUME — bento grid
 ══════════════════════════════════════════════════ --}}
 <section style="padding:var(--section-y) 0;background:var(--shade)">
@@ -2734,21 +2793,23 @@ body { font-family: var(--font); color: var(--text); background: #fff; -webkit-f
         </div>
     </div>
 
-    {{-- RIGHT: full-bleed driver face photo --}}
+    {{-- RIGHT: full-bleed rider photo --}}
     <div class="reveal transporter-photo" style="position:relative;overflow:hidden;min-height:0">
-        <img src="/images/driver-1.jpg" alt="Nhume driver Tendai"
-             style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:15% 18%">
-        {{-- subtle dark gradient on left edge to blend into section bg --}}
-        <div style="position:absolute;inset:0;background:linear-gradient(90deg,rgba(6,30,14,0.55) 0%,transparent 35%)"></div>
-        {{-- name chip bottom-left --}}
+        <img src="/images/nhume-rider-go.jpg" alt="Nhume GO rider"
+             style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:40% 30%">
+        {{-- gradient left edge to blend into section --}}
+        <div style="position:absolute;inset:0;background:linear-gradient(90deg,rgba(6,30,14,0.65) 0%,transparent 40%)"></div>
+        {{-- bottom gradient for chip legibility --}}
+        <div style="position:absolute;inset:0;background:linear-gradient(0deg,rgba(6,30,14,0.7) 0%,transparent 40%)"></div>
+        {{-- badge chip --}}
         <div style="position:absolute;bottom:28px;left:28px;display:flex;align-items:center;gap:12px;background:rgba(4,16,8,0.78);backdrop-filter:blur(12px);border:1px solid rgba(255,255,255,0.1);border-radius:14px;padding:12px 18px">
             <div>
-                <p style="font-family:var(--head);font-size:14px;font-weight:700;color:#fff;margin:0">Tendai Moyo</p>
-                <p style="font-family:var(--font);font-size:12px;color:rgba(255,255,255,0.5);margin:3px 0 0">Intercity &amp; local runs, Harare</p>
+                <p style="font-family:var(--head);font-size:14px;font-weight:700;color:#fff;margin:0">Nhume GO</p>
+                <p style="font-family:var(--font);font-size:12px;color:rgba(255,255,255,0.5);margin:3px 0 0">Same-day errands &amp; local runs</p>
             </div>
             <span style="display:inline-flex;align-items:center;gap:5px;font-family:var(--font);font-size:11px;font-weight:700;color:var(--green);background:rgba(107,198,48,0.14);border-radius:9999px;padding:4px 10px;white-space:nowrap">
-                <svg width="11" height="11" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
-                Reviewed
+                <svg width="11" height="11" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
+                Moving what matters
             </span>
         </div>
     </div>

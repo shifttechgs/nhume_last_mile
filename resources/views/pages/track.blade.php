@@ -40,13 +40,56 @@ body { font-family: var(--f); color: var(--ink); background: var(--shade); -webk
 @keyframes fadeUp  { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: none; } }
 @keyframes ripple  { 0% { box-shadow: 0 0 0 0 currentColor; } 70% { box-shadow: 0 0 0 8px transparent; } 100% { box-shadow: 0 0 0 0 transparent; } }
 
-/* ── Page shell (matches send page) ── */
+/* ── Page shell ── */
 .track-page { min-height: 100vh; display: flex; flex-direction: column; }
+
+/* ── Hero banner ── */
+.track-hero {
+    background: var(--forest-deep);
+    padding: clamp(120px,16vh,180px) clamp(20px,4vw,48px) clamp(40px,5vw,60px);
+    text-align: center;
+    position: relative;
+}
+.track-hero::after {
+    content: '';
+    position: absolute; bottom: 0; left: 0; right: 0;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, rgba(107,198,48,0.35), transparent);
+}
+.hero-eyebrow {
+    display: inline-block;
+    font-family: var(--f);
+    font-size: 11px; font-weight: 700;
+    letter-spacing: 0.1em; text-transform: uppercase;
+    color: var(--green-mid); margin-bottom: 14px;
+}
+.hero-crumb {
+    display: inline-flex; align-items: center; gap: 6px;
+    font-family: var(--f); font-size: 12px;
+    color: rgba(255,255,255,0.3); margin-bottom: 16px;
+    list-style: none;
+}
+.hero-crumb a { color: rgba(255,255,255,0.3); text-decoration: none; transition: color .15s; }
+.hero-crumb a:hover { color: rgba(255,255,255,0.65); }
+.hero-title {
+    font-family: var(--fh);
+    font-size: clamp(28px, 4vw, 48px);
+    font-weight: 700; letter-spacing: -0.03em;
+    line-height: 1.1; color: #fff;
+    margin: 0 0 14px;
+}
+.hero-sub {
+    font-family: var(--f);
+    font-size: 15px; color: rgba(255,255,255,0.45);
+    line-height: 1.65; max-width: 440px;
+    margin: 0 auto;
+}
+
 .track-main {
     flex: 1;
     display: flex;
     justify-content: center;
-    padding: 200px 40px 80px;
+    padding: 48px clamp(20px,4vw,40px) 80px;
 }
 
 /* ── Two-card layout (mirrors send page wiz-layout) ── */
@@ -304,7 +347,7 @@ body { font-family: var(--f); color: var(--ink); background: var(--shade); -webk
 
 /* ── Mobile ── */
 @media (max-width: 768px) {
-    .track-main { padding: 160px 16px 60px; }
+    .track-main { padding: 28px 16px 60px; }
     .track-layout { grid-template-columns: 1fr; }
     .track-left { padding-right: 0; padding-bottom: 20px; }
     .track-right { position: static; }
@@ -315,6 +358,27 @@ body { font-family: var(--f); color: var(--ink); background: var(--shade); -webk
 <body class="track-page" x-data="{ trackOpen: false, trackNum: '' }" @keydown.escape.window="trackOpen = false">
 
 <x-landing.nav :frosted="true" />
+
+<div class="track-hero">
+    <span class="hero-eyebrow">
+        @if($orderNumber && $task) Live tracking
+        @elseif($orderNumber) Not found
+        @else Track a parcel
+        @endif
+    </span>
+    <h1 class="hero-title">
+        @if($orderNumber && $task) {{ $orderNumber }}
+        @elseif($orderNumber) Order not found
+        @else Where is<br>your parcel?
+        @endif
+    </h1>
+    <p class="hero-sub">
+        @if($orderNumber && $task) Real-time delivery status for your order.
+        @elseif($orderNumber) No order matches that number — double-check and try again.
+        @else Enter your order number for real-time delivery updates.
+        @endif
+    </p>
+</div>
 
 <main class="track-main">
 

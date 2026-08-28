@@ -58,8 +58,8 @@
 
             @foreach ([
                 ['Platform', ['How it works' => '/#how-it-works', 'Book an errand' => route('send'), 'Find a driver or rider' => '/journeys', 'Become a driver or rider' => '/#transporters', 'Pricing' => '#']],
-                ['Support',  ['FAQ' => '/#faq', 'Contact us' => '/contact', 'Track a parcel' => '#', 'Report an issue' => '#', 'Safety' => '#']],
-                ['Company',  ['About Nhume' => '#', 'Blog' => '#', 'Careers' => '#', 'Become a partner' => '#', 'Press' => '#']],
+                ['Support',  ['FAQ' => '/#faq', 'Contact us' => route('contact'), 'Track a parcel' => '#', 'Report an issue' => route('report'), 'Safety' => route('safety')]],
+                ['Company',  ['About Nhume' => route('about'), 'Blog' => route('blog'), 'Careers' => route('careers'), 'Become a partner' => route('partner')]],
             ] as [$heading, $links])
             <div>
                 <p style="font-family:'DM Sans',system-ui,sans-serif;font-size:10.5px;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:rgba(255,255,255,0.22);margin-bottom:18px;">{{ $heading }}</p>
@@ -76,8 +76,8 @@
         <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px;">
             <p style="font-family:'DM Sans',system-ui,sans-serif;font-size:12px;color:rgba(255,255,255,0.18);margin:0">© {{ date('Y') }} Nhume Technologies. All rights reserved. &nbsp;·&nbsp; <span style="color:rgba(255,255,255,0.28)">A <a href="#" style="color:rgba(255,255,255,0.35);text-decoration:none;transition:color 0.15s" onmouseover="this.style.color='rgba(255,255,255,0.6)'" onmouseout="this.style.color='rgba(255,255,255,0.35)'">ShiftTech</a> product</span></p>
             <div style="display:flex;gap:24px;">
-                @foreach (['Terms of Service', 'Privacy Policy', 'Cookie Policy'] as $l)
-                <a href="#" style="font-family:'DM Sans',system-ui,sans-serif;font-size:12px;color:rgba(255,255,255,0.16);text-decoration:none;transition:color 0.15s" onmouseover="this.style.color='rgba(255,255,255,0.45)'" onmouseout="this.style.color='rgba(255,255,255,0.16)'">{{ $l }}</a>
+                @foreach (['Terms of Service' => 'terms', 'Privacy Policy' => 'privacy', 'Cookie Policy' => 'cookies'] as $l => $r)
+                <a href="{{ route($r) }}" style="font-family:'DM Sans',system-ui,sans-serif;font-size:12px;color:rgba(255,255,255,0.16);text-decoration:none;transition:color 0.15s" onmouseover="this.style.color='rgba(255,255,255,0.45)'" onmouseout="this.style.color='rgba(255,255,255,0.16)'">{{ $l }}</a>
                 @endforeach
             </div>
         </div>
