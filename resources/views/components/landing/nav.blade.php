@@ -155,7 +155,6 @@
             @auth
                 <a href="{{ url('/dashboard') }}" class="btn-nav-fill">Dashboard</a>
             @else
-                <a href="{{ route('login') }}" class="nav-link">Sign in</a>
                 <button type="button" @click="trackOpen = true; $nextTick(() => $refs.trackInput?.focus())" class="btn-nav-outline">Track</button>
                 <a href="{{ route('send') }}" class="btn-nav-fill">Book an errand
                     <svg width="15" height="15" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"/></svg>
@@ -183,7 +182,6 @@
             @auth
                 <a href="{{ url('/dashboard') }}" class="btn-nav-fill" style="justify-content:center;">Dashboard</a>
             @else
-                <a href="{{ route('login') }}"    class="btn-nav-outline" style="justify-content:center;">Sign in</a>
                 <a href="{{ route('send') }}"     class="btn-nav-fill"    style="justify-content:center;">Book an errand</a>
             @endauth
         </div>
