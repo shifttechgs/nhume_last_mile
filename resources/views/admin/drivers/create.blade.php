@@ -1,6 +1,6 @@
 <x-dashboard-layout title="Add Driver">
 
-<div class="p-6 lg:p-8 max-w-[720px] mx-auto space-y-6">
+<div class="p-6 lg:p-8 space-y-6">
 
     <div>
         <a href="{{ route('admin.drivers.index') }}"
@@ -21,7 +21,9 @@
     </div>
     @endif
 
+    <div class="flex gap-6 items-start" style="flex-wrap:wrap">
     <form method="POST" action="{{ route('admin.drivers.store') }}" class="space-y-5"
+          style="flex:1 1 480px;min-width:0"
           x-data="{ loading: false }" @submit="loading = true">
         @csrf
 
@@ -145,6 +147,44 @@
             </button>
         </div>
     </form>
+
+    {{-- Context panel --}}
+    <div style="flex:0 0 280px;position:sticky;top:88px;align-self:flex-start;display:flex;flex-direction:column;gap:16px">
+
+        <div style="background:#fff;border:1px solid #E9EAEC;border-radius:16px;overflow:hidden;">
+            <div class="px-5 py-4" style="border-bottom:1px solid #F0F1F0;">
+                <p class="text-xs font-semibold text-gray-500 uppercase tracking-wide">Trust tier guide</p>
+                <p class="text-xs text-gray-400 mt-0.5">What senders see on each transporter</p>
+            </div>
+            <div class="px-5 py-5 space-y-4">
+                @foreach([
+                    ['Unverified',     '#f3f4f6','#6b7280','#9ca3af', 'Just signed up. Can post journeys — senders see the badge and decide.'],
+                    ['Nhume Reviewed', '#dbeafe','#1d4ed8','#3b82f6', 'Team has spoken to this person offline. Blue badge builds confidence.'],
+                    ['ID Submitted',   '#fef3c7','#b45309','#f59e0b', 'Documents uploaded, pending full check.'],
+                    ['Nhume Verified', '#dcfce7','#15803d','#22c55e', 'Fully vetted. Preferred for high-value parcels.'],
+                ] as [$label, $bg, $txt, $dot, $desc])
+                <div class="flex gap-3 items-start">
+                    <span class="inline-flex items-center gap-1.5 text-[10px] font-bold px-2 py-0.5 rounded-full flex-shrink-0 mt-0.5"
+                          style="background:{{ $bg }};color:{{ $txt }};">
+                        <span class="w-1.5 h-1.5 rounded-full" style="background:{{ $dot }};"></span>
+                        {{ $label }}
+                    </span>
+                    <p class="text-xs text-gray-400 leading-relaxed">{{ $desc }}</p>
+                </div>
+                @endforeach
+            </div>
+        </div>
+
+        <div style="background:#fff;border:1px solid #E9EAEC;border-radius:16px;padding:20px;">
+            <p class="text-xs font-semibold text-gray-500 uppercase tracking-wide mb-3">Password</p>
+            <p class="text-xs text-gray-400 leading-relaxed">
+                A random password is assigned. The driver can use "Forgot password" to set their own when they first log in.
+            </p>
+        </div>
+
+    </div>
+
+    </div>{{-- end flex --}}
 </div>
 
 </x-dashboard-layout>
