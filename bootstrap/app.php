@@ -19,7 +19,8 @@ return Application::configure(basePath: dirname(__DIR__))
             Request::HEADER_X_FORWARDED_PREFIX);
 
         $middleware->alias([
-            'admin' => \App\Http\Middleware\AdminOnly::class,
+            'admin'       => \App\Http\Middleware\AdminOnly::class,
+            'transporter' => \App\Http\Middleware\TransporterOnly::class,
         ]);
     })
     ->withExceptions(function (Exceptions $exceptions): void {

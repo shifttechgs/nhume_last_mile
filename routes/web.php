@@ -5,15 +5,18 @@ use App\Http\Controllers\Admin\DriverController as AdminDriverController;
 use App\Http\Controllers\Admin\OrderController as AdminOrderController;
 use App\Http\Controllers\Admin\RouteController as AdminRouteController;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\JourneysController;
 use App\Http\Controllers\ParcelController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\TrackController;
+use App\Http\Controllers\Transporter\JourneyController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', fn () => view('welcome'))->name('home');
 
-Route::get('/send',              [ParcelController::class, 'create'])->name('send');
+Route::get('/send',                 [ParcelController::class, 'create'])->name('send');
 Route::get('/track/{orderNumber?}', [TrackController::class, 'show'])->name('track');
+Route::get('/journeys',             [JourneysController::class, 'index'])->name('journeys');
 
 // Public informational pages
 Route::get('/about',            fn () => view('pages.about'))->name('about');
@@ -36,6 +39,16 @@ Route::middleware('auth')->group(function () {
     Route::patch('/profile',  [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
+
+Route::prefix('transporter')
+    ->middleware(['auth', 'verified', 'transporter'])
+    ->name('transporter.')
+    ->group(function () {
+        Route::get('/journeys',                         [JourneyController::class, 'index'])->name('journeys.index');
+        Route::get('/journeys/create',                  [JourneyController::class, 'create'])->name('journeys.create');
+        Route::post('/journeys',                        [JourneyController::class, 'store'])->name('journeys.store');
+        Route::patch('/journeys/{journey}/cancel',      [JourneyController::class, 'cancel'])->name('journeys.cancel');
+    });
 
 Route::prefix('admin')
     ->middleware(['auth', 'verified', 'admin'])

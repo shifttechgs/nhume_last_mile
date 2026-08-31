@@ -20,10 +20,10 @@
             ['href' => route('admin.routes.index'),    'label' => 'Routes',    'icon' => 'map',      'route' => 'admin.routes.*'],
         ],
         $isDriver => [
-            ['href' => route('dashboard'), 'label' => 'Overview',   'icon' => 'home',     'route' => 'dashboard'],
-            ['href' => '#',               'label' => 'My Journeys', 'icon' => 'map',      'route' => null],
-            ['href' => '#',               'label' => 'Assigned',    'icon' => 'package',  'route' => null],
-            ['href' => '#',               'label' => 'Earnings',    'icon' => 'dollar',   'route' => null],
+            ['href' => route('dashboard'),                     'label' => 'Overview',    'icon' => 'home',    'route' => 'dashboard'],
+            ['href' => route('transporter.journeys.index'),    'label' => 'My Journeys', 'icon' => 'map',     'route' => 'transporter.journeys.*'],
+            ['href' => route('transporter.journeys.create'),   'label' => 'Post Journey','icon' => 'plus',    'route' => 'transporter.journeys.create'],
+            ['href' => '#',                                    'label' => 'Earnings',    'icon' => 'dollar',  'route' => null],
         ],
         default   => [
             ['href' => route('dashboard'), 'label' => 'Overview',   'icon' => 'home',     'route' => 'dashboard'],

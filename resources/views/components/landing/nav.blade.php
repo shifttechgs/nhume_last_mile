@@ -202,9 +202,9 @@
         {{-- Centered links (desktop) --}}
         <nav class="nav-center nav-desktop" @mouseleave="dd = ''">
 
-            <a href="/#how-it-works" class="nav-link">How it works</a>
-            <a href="/#routes"       class="nav-link">Routes</a>
-            <a href="/#transporters" class="nav-link">For transporters</a>
+            <a href="/#how-it-works"        class="nav-link">How it works</a>
+            <a href="{{ route('journeys') }}" class="nav-link {{ request()->routeIs('journeys') ? 'active' : '' }}">Marketplace</a>
+            <a href="/#transporters"        class="nav-link">For transporters</a>
 
             {{-- Company dropdown --}}
             <div class="nav-dropdown-wrap" @mouseenter="dd = 'company'">
@@ -294,7 +294,7 @@
 
         <div class="mobile-section-label">Platform</div>
         <nav style="display:flex;flex-direction:column;gap:2px;margin-bottom:8px;">
-            @foreach(['/#how-it-works' => 'How it works', '/#routes' => 'Routes', '/#transporters' => 'For transporters'] as $href => $label)
+            @foreach(['/#how-it-works' => 'How it works', route('journeys') => 'Marketplace', '/#transporters' => 'For transporters'] as $href => $label)
             <a href="{{ $href }}" @click="open=false"
                style="display:block;padding:10px 12px;font-size:14px;font-weight:500;color:#374151;border-radius:6px;text-decoration:none;transition:background 0.15s;"
                onmouseover="this.style.background='#f3f4f6'" onmouseout="this.style.background='transparent'">{{ $label }}</a>

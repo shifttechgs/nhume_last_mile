@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Enums\TrustTier;
 use App\Enums\UserRole;
+use App\Models\Journey;
 use App\Models\Task;
 use App\Models\TransporterProfile;
 use App\Models\User;
@@ -90,7 +91,7 @@ class DashboardController extends Controller
 
     private function driverData(User $user): array
     {
-        $profile = $user->transporterProfile;
+        $profile  = $user->transporterProfile;
         $driverId = $profile?->id;
 
         $taskStats = Cache::remember("dashboard.driver_stats.{$driverId}", 120, fn () =>
@@ -105,10 +106,29 @@ class DashboardController extends Controller
 
         $recentOrders = Task::where('assigned_driver_id', $driverId)
             ->latest()
-            ->limit(8)
+            ->limit(5)
             ->get();
 
-        return compact('profile', 'assignedTasks', 'completedTasks', 'recentOrders');
+        $journeyStats = Cache::remember("dashboard.journey_stats.{$driverId}", 120, fn () =>
+            Journey::where('transporter_profile_id', $driverId)
+                ->selectRaw("COUNT(*) as total, COUNT(CASE WHEN status = 'scheduled' THEN 1 END) as upcoming")
+                ->first()
+                ->toArray()
+        );
+
+        $totalJourneys    = (int) $journeyStats['total'];
+        $upcomingJourneys = (int) $journeyStats['upcoming'];
+
+        $recentJourneys = Journey::where('transporter_profile_id', $driverId)
+            ->with('route')
+            ->orderByDesc('departs_at')
+            ->limit(5)
+            ->get();
+
+        return compact(
+            'profile', 'assignedTasks', 'completedTasks', 'recentOrders',
+            'totalJourneys', 'upcomingJourneys', 'recentJourneys'
+        );
     }
 
     private function senderData(User $user): array
