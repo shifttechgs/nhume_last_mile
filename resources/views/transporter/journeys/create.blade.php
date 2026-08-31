@@ -199,8 +199,8 @@
             <div class="space-y-4" style="flex:0 0 300px;position:sticky;top:88px;align-self:flex-start">
 
                 {{-- Live preview --}}
-                <div style="background:#fff;border:1px solid #E9EAEC;border-radius:16px;overflow:hidden;">
-                    <div class="px-5 py-4" style="border-bottom:1px solid #F0F1F0;">
+                <div style="background:#fff;border:1px solid #E9EAEC;border-radius:16px;">
+                    <div class="px-5 py-4" style="border-bottom:1px solid #F0F1F0;border-radius:16px 16px 0 0;">
                         <p class="text-xs font-semibold text-gray-500 uppercase tracking-wide">Marketplace preview</p>
                         <p class="text-xs text-gray-400 mt-0.5">How senders will see your journey</p>
                     </div>
