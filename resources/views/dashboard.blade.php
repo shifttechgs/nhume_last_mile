@@ -485,8 +485,7 @@
 
     {{-- Trust banner --}}
     @if($tier !== 'verified')
-    <div class="flex items-center gap-3 px-5 py-3.5 rounded-xl text-sm"
-         style="background:#FFFBEB;border:1px solid #FDE68A;">
+    <div style="display:flex;align-items:center;gap:12px;padding:14px 20px;border-radius:12px;font-size:13.5px;background:#FFFBEB;border:1px solid #FDE68A;">
         <svg width="16" height="16" fill="none" stroke="#d97706" stroke-width="2" viewBox="0 0 24 24">
             <path d="M10.29 3.86 1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/>
             <line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/>
@@ -501,7 +500,7 @@
     @endif
 
     {{-- 4-stat strip --}}
-    <div class="grid grid-cols-2 lg:grid-cols-4 gap-4">
+    <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:16px">
 
         <div class="stat-card">
             <div class="flex items-center justify-between mb-3">
@@ -559,10 +558,10 @@
     </div>
 
     {{-- Main grid: journeys (2/3) + sidebar (1/3) --}}
-    <div class="grid grid-cols-1 lg:grid-cols-3 gap-5">
+    <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:20px;align-items:start">
 
         {{-- My journeys — 2/3 --}}
-        <div class="lg:col-span-2 flex flex-col">
+        <div style="grid-column:span 2;display:flex;flex-direction:column">
             <div class="d-card" style="flex:1;display:flex;flex-direction:column;padding:0;overflow:hidden;">
                 <div class="d-card-head">
                     <div class="d-h">My Journeys</div>
@@ -643,7 +642,7 @@
         </div>
 
         {{-- Sidebar: tasks + quick actions --}}
-        <div class="space-y-5">
+        <div style="display:flex;flex-direction:column;gap:20px">
 
             {{-- Assigned tasks --}}
             <div class="d-card" style="padding:0;overflow:hidden;">
@@ -710,6 +709,17 @@
     </div>
 
     </div>{{-- end .ov --}}
+
+    <style>
+    @media(max-width:900px){
+        div[style*="grid-template-columns:1fr 1fr 1fr"]{grid-template-columns:1fr!important}
+        div[style*="grid-column:span 2"]{grid-column:span 1!important}
+        div[style*="repeat(4,1fr)"]{grid-template-columns:repeat(2,1fr)!important}
+    }
+    @media(max-width:480px){
+        div[style*="repeat(4,1fr)"]{grid-template-columns:repeat(2,1fr)!important}
+    }
+    </style>
 
     @endif
 
