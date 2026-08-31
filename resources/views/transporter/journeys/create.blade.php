@@ -256,9 +256,9 @@
                         {{-- Price + WhatsApp --}}
                         <div style="border-top:1px solid #F0F1F0;" class="pt-4 flex items-center justify-between gap-2">
                             <div>
-                                <p class="text-base font-bold text-gray-900 leading-none"
+                                <p class="text-base font-bold text-gray-900 leading-tight"
                                    x-text="price ? '$' + parseFloat(price).toFixed(2) : 'Negotiate'"></p>
-                                <p class="text-[10px] text-gray-400 mt-1" x-show="price" x-cloak>per kg</p>
+                                <p class="text-[10px] text-gray-400 mt-0.5" x-show="price" x-cloak>per kg</p>
                             </div>
                             <span class="inline-flex items-center gap-1.5 px-3 py-2 rounded-lg text-[11px] font-bold text-white"
                                   style="background:#25D366;">
