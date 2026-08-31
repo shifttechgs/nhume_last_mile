@@ -1,136 +1,188 @@
 @extends('layouts.landing')
-@section('title', 'Become a Partner — Nhume')
-@section('description', 'Partner with Nhume to expand your logistics reach across Zimbabwe.')
+@section('title', 'Become a Transporter — Nhume')
+@section('description', 'Already making regular trips? List your empty space on Nhume and earn from journeys you were already going to make.')
 
 @section('content')
+
 <div class="lp-hero">
-    <span class="lp-eyebrow">Partners</span>
-    <h1>Grow together<br>with Nhume</h1>
-    <p>We work with businesses, courier companies, and community organisations to expand reliable delivery across Zimbabwe.</p>
+    <span class="lp-eyebrow">For transporters</span>
+    <h1>Turn your regular trip<br>into extra income.</h1>
+    <p>You're already driving to Bulawayo this Friday. List that space on Nhume and let senders WhatsApp you directly.</p>
 </div>
 
 <div style="background:var(--shade)">
 <div class="lp-body">
 
-    {{-- Partnership types --}}
+    {{-- Success state --}}
+    @if(session('applied'))
     <div class="lp-section">
-        <p class="lp-sh">Partnership types</p>
-        <p class="lp-sp">We're open to a range of partnerships — here are the models that work best today.</p>
+        <div class="lp-card" style="text-align:center;padding:56px 32px;max-width:520px;margin:0 auto">
+            <div style="width:52px;height:52px;background:var(--green-light);border-radius:10px;display:flex;align-items:center;justify-content:center;margin:0 auto 20px">
+                <svg width="24" height="24" fill="none" stroke="var(--green-mid)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><polyline points="20,6 9,17 4,12"/></svg>
+            </div>
+            <p style="font-family:var(--head);font-size:20px;font-weight:700;color:var(--forest);margin:0 0 10px">Application received</p>
+            <p style="font-family:var(--font);font-size:14px;color:var(--text-2);line-height:1.75;margin:0 0 8px">
+                Our team will call you within <strong style="color:var(--text)">24–48 hours</strong> to verify your details and get you set up.
+            </p>
+            <p style="font-family:var(--font);font-size:14px;color:var(--text-2);line-height:1.75;margin:0 0 28px">
+                We've also sent a link to your email so you can set your password and explore the platform while you wait.
+            </p>
+            <a href="{{ route('journeys') }}" class="lp-btn-ghost">Browse the marketplace</a>
+        </div>
+    </div>
+    @else
+
+    {{-- How it works --}}
+    <div class="lp-section">
+        <p class="lp-sh">How it works</p>
+        <p class="lp-sp">Three steps from application to your first parcel booking.</p>
         <div class="lp-grid-3">
             @foreach([
-                [
-                    'Business Accounts',
-                    'Send regular parcels or run errands on behalf of your business. Get a dedicated account manager, consolidated billing, and volume pricing.',
-                    'M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-2 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4',
-                    'Retailers, importers, small businesses'
-                ],
-                [
-                    'Fleet Partners',
-                    'You have vehicles making regular intercity or intracity runs. List your capacity on Nhume and earn from the space you\'re already using.',
-                    'M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z',
-                    'Transporters, logistics companies, fleet operators'
-                ],
-                [
-                    'Community Partners',
-                    'Churches, schools, community groups, or neighbourhood associations that want to offer Nhume as a trusted service to their members.',
-                    'M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z',
-                    'NGOs, churches, schools, SACCOs'
-                ],
-            ] as [$title, $desc, $icon, $examples])
-            <div class="lp-card" style="display:flex;flex-direction:column;gap:16px">
-                <div style="width:42px;height:42px;border-radius:8px;background:var(--green-light);display:flex;align-items:center;justify-content:center;flex-shrink:0">
-                    <svg width="20" height="20" fill="none" stroke="var(--green-mid)" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="{{ $icon }}"/></svg>
-                </div>
-                <div style="flex:1">
-                    <p style="font-family:var(--head);font-size:16px;font-weight:700;color:var(--forest);margin:0 0 8px">{{ $title }}</p>
-                    <p style="font-family:var(--font);font-size:14px;color:var(--text-2);line-height:1.65;margin:0 0 12px">{{ $desc }}</p>
-                    <p style="font-family:var(--font);font-size:11.5px;color:var(--text-2);border-top:1px solid var(--border);padding-top:12px;margin:0"><span style="font-weight:600;color:var(--text)">Best for:</span> {{ $examples }}</p>
+                ['1', 'Apply below', 'Fill in the form. Takes two minutes. Our team gets a notification immediately.'],
+                ['2', 'We call you', 'Someone from the Nhume team calls to verify your details and answer any questions. Usually within 24 hours.'],
+                ['3', 'Start posting', 'Log in, post your first journey, and let senders WhatsApp you directly to arrange pickups.'],
+            ] as [$num, $title, $desc])
+            <div class="lp-card" style="display:flex;align-items:flex-start;gap:16px">
+                <div style="width:32px;height:32px;border-radius:50%;background:var(--forest);color:#fff;font-family:var(--head);font-size:14px;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:2px">{{ $num }}</div>
+                <div>
+                    <p style="font-family:var(--head);font-size:15px;font-weight:700;color:var(--forest);margin:0 0 6px">{{ $title }}</p>
+                    <p style="font-family:var(--font);font-size:14px;color:var(--text-2);line-height:1.65;margin:0">{{ $desc }}</p>
                 </div>
             </div>
             @endforeach
         </div>
     </div>
 
-    {{-- Benefits --}}
+    {{-- Application form --}}
     <div class="lp-section">
-        <p class="lp-sh">What you get as a partner</p>
-        <p class="lp-sp">Every partnership is different. These are the things we offer across all our models.</p>
+        <p class="lp-sh">Apply to join</p>
+        <p class="lp-sp">Tell us a bit about yourself and the trips you make. We'll be in touch shortly.</p>
+
+        @if($errors->any())
+        <div style="background:#fef2f2;border:1px solid #fca5a5;border-radius:8px;padding:14px 18px;margin-bottom:20px">
+            <p style="font-family:var(--font);font-size:13px;font-weight:600;color:#dc2626;margin:0 0 6px">Please fix the following:</p>
+            <ul style="font-family:var(--font);font-size:13px;color:#dc2626;margin:0;padding-left:18px">
+                @foreach($errors->all() as $error)<li>{{ $error }}</li>@endforeach
+            </ul>
+        </div>
+        @endif
+
+        <form method="POST" action="{{ route('partner.apply') }}"
+              x-data="{ loading: false }" @submit="loading = true">
+            @csrf
+            <div class="lp-card" style="display:flex;flex-direction:column;gap:20px">
+
+                <div class="lp-grid-2">
+                    <div>
+                        <label class="lp-label">Full name *</label>
+                        <input type="text" name="name" value="{{ old('name') }}" required
+                               class="lp-input" placeholder="e.g. Tafadzwa Moyo">
+                    </div>
+                    <div>
+                        <label class="lp-label">Email address *</label>
+                        <input type="email" name="email" value="{{ old('email') }}" required
+                               class="lp-input" placeholder="you@example.com">
+                    </div>
+                </div>
+
+                <div class="lp-grid-2">
+                    <div>
+                        <label class="lp-label">Phone number *</label>
+                        <input type="tel" name="phone" value="{{ old('phone') }}" required
+                               class="lp-input" placeholder="+263 77 123 4567">
+                    </div>
+                    <div>
+                        <label class="lp-label">WhatsApp number</label>
+                        <input type="tel" name="whatsapp" value="{{ old('whatsapp') }}"
+                               class="lp-input" placeholder="Same as phone if blank">
+                    </div>
+                </div>
+
+                <div>
+                    <label class="lp-label">Tell us about your trips</label>
+                    <textarea name="bio" rows="4" class="lp-input" style="resize:vertical"
+                              placeholder="e.g. I drive Harare to Bulawayo every Friday and Sunday in a Toyota Land Cruiser. I have plenty of boot space and I'm happy to carry parcels both ways.">{{ old('bio') }}</textarea>
+                    <p style="font-family:var(--font);font-size:11.5px;color:var(--text-2);margin:6px 0 0">This becomes your profile bio on the marketplace. Senders read it before they WhatsApp you.</p>
+                </div>
+
+                <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px;padding-top:4px">
+                    <p style="font-family:var(--font);font-size:12.5px;color:var(--text-2);margin:0;max-width:400px;line-height:1.6">
+                        By applying you agree to our
+                        <a href="{{ route('terms') }}" style="color:var(--forest);font-weight:500;text-decoration:none">Terms</a>
+                        and
+                        <a href="{{ route('privacy') }}" style="color:var(--forest);font-weight:500;text-decoration:none">Privacy Policy</a>.
+                    </p>
+                    <button type="submit" class="lp-btn" :disabled="loading"
+                            style="min-width:140px;justify-content:center"
+                            :style="loading ? 'opacity:0.7;cursor:not-allowed' : ''">
+                        <svg x-show="loading" x-cloak width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.5"
+                             stroke-linecap="round" viewBox="0 0 24 24"
+                             style="animation:spin 0.7s linear infinite;flex-shrink:0">
+                            <path d="M21 12a9 9 0 1 1-6.219-8.56"/>
+                        </svg>
+                        <span x-show="!loading">Submit application</span>
+                        <span x-show="loading" x-cloak>Submitting…</span>
+                    </button>
+                </div>
+
+            </div>
+        </form>
+    </div>
+
+    {{-- Trust tiers explained --}}
+    <div class="lp-section">
+        <p class="lp-sh">How trust works on Nhume</p>
+        <p class="lp-sp">Every transporter starts as Unverified and moves up as our team gets to know them. Senders can see your tier.</p>
+        <div style="display:flex;flex-direction:column;gap:0">
+            @foreach([
+                ['Unverified',    'unverified', '#f3f4f6', '#6b7280', 'You\'ve applied and created your account. You can post journeys immediately — senders see your tier and choose who to contact.'],
+                ['Nhume Reviewed','reviewed',   '#dbeafe', '#1d4ed8', 'Our team has spoken to you offline and confirmed your identity. The blue badge builds sender confidence significantly.'],
+                ['ID Submitted',  'id',         '#fef3c7', '#d97706', 'You\'ve submitted a valid national ID or passport. Pending full verification.'],
+                ['Nhume Verified','verified',   '#edf8df', 'var(--green-mid)', 'Full verification complete. The highest trust level — senders prefer verified transporters for high-value parcels.'],
+            ] as $i => [$label, $key, $bg, $color, $desc])
+            <div class="lp-card" style="display:flex;align-items:flex-start;gap:16px;border-radius:{{ $i === 0 ? '8px 8px 0 0' : ($i === 3 ? '0 0 8px 8px' : '0') }};margin-bottom:{{ $i < 3 ? '-1px' : '0' }};position:relative;z-index:{{ $i === 0 ? 4 : (4 - $i) }}">
+                <span style="display:inline-flex;align-items:center;padding:4px 12px;border-radius:4px;font-family:var(--font);font-size:11px;font-weight:700;background:{{ $bg }};color:{{ $color }};white-space:nowrap;flex-shrink:0;margin-top:2px">{{ $label }}</span>
+                <p style="font-family:var(--font);font-size:14px;color:var(--text-2);line-height:1.65;margin:0">{{ $desc }}</p>
+            </div>
+            @endforeach
+        </div>
+    </div>
+
+    {{-- Other partnership types --}}
+    <div class="lp-section">
+        <p class="lp-sh">Other partnership types</p>
+        <p class="lp-sp">Not a transporter? We work with businesses and community organisations too.</p>
         <div class="lp-grid-2">
             @foreach([
-                ['Dedicated support', 'A real contact at Nhume. Not a ticket queue — an actual person you can call or WhatsApp when something needs attention.'],
-                ['Flexible pricing', 'Volume pricing for high-frequency senders. Revenue share for fleet partners. We\'ll find a model that works for your situation.'],
-                ['Co-marketing opportunities', 'We feature partners on our platform and across our community channels. If you serve a community we serve, we tell that story together.'],
-                ['Early access to new features', 'Partners are the first to know about new routes, service types, and product improvements before public launch.'],
-            ] as [$title, $body])
+                ['Business Accounts', 'Send regular parcels or run errands on behalf of your business. Get consolidated billing and volume pricing.', 'Retailers, importers, small businesses'],
+                ['Community Partners', 'Churches, schools, and community groups that want to offer Nhume as a trusted service to their members.', 'NGOs, churches, schools, SACCOs'],
+            ] as [$title, $desc, $examples])
             <div class="lp-card">
                 <p style="font-family:var(--head);font-size:15px;font-weight:700;color:var(--forest);margin:0 0 8px">{{ $title }}</p>
-                <p style="font-family:var(--font);font-size:14px;color:var(--text-2);line-height:1.65;margin:0">{{ $body }}</p>
+                <p style="font-family:var(--font);font-size:14px;color:var(--text-2);line-height:1.65;margin:0 0 12px">{{ $desc }}</p>
+                <p style="font-family:var(--font);font-size:11.5px;color:var(--text-2);border-top:1px solid var(--border);padding-top:12px;margin:0"><strong style="color:var(--text)">Best for:</strong> {{ $examples }}</p>
             </div>
             @endforeach
         </div>
-    </div>
-
-    {{-- Enquiry form --}}
-    <div class="lp-section">
-        <p class="lp-sh">Tell us about your business</p>
-        <p class="lp-sp">Fill in the form below and we'll get back to you within two business days.</p>
-
-        <div x-data="{ sent: false, loading: false }">
-            <div x-show="!sent">
-                <form class="lp-card" style="display:flex;flex-direction:column;gap:18px"
-                      @submit.prevent="loading = true; setTimeout(() => { sent = true; loading = false }, 900)">
-                    <div class="lp-grid-2">
-                        <div>
-                            <label class="lp-label">Name</label>
-                            <input type="text" class="lp-input" placeholder="Your name" required>
-                        </div>
-                        <div>
-                            <label class="lp-label">Company / organisation</label>
-                            <input type="text" class="lp-input" placeholder="Your company name" required>
-                        </div>
-                    </div>
-                    <div class="lp-grid-2">
-                        <div>
-                            <label class="lp-label">Email</label>
-                            <input type="email" class="lp-input" placeholder="you@company.com" required>
-                        </div>
-                        <div>
-                            <label class="lp-label">Phone / WhatsApp</label>
-                            <input type="tel" class="lp-input" placeholder="+263 77 ...">
-                        </div>
-                    </div>
-                    <div>
-                        <label class="lp-label">Partnership type</label>
-                        <select class="lp-input" style="appearance:none;cursor:pointer">
-                            <option value="">Select a type...</option>
-                            <option>Business Account</option>
-                            <option>Fleet Partner</option>
-                            <option>Community Partner</option>
-                            <option>Something else</option>
-                        </select>
-                    </div>
-                    <div>
-                        <label class="lp-label">Tell us about your needs</label>
-                        <textarea class="lp-input" rows="5" placeholder="What are you trying to accomplish? How often do you need to send things, and on which routes?" style="resize:vertical"></textarea>
-                    </div>
-                    <div style="display:flex;justify-content:flex-end">
-                        <button type="submit" class="lp-btn" :disabled="loading">
-                            <svg x-show="loading" class="lp-spinner" width="14" height="14" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"/></svg>
-                            <span x-text="loading ? 'Sending...' : 'Submit enquiry'"></span>
-                        </button>
-                    </div>
-                </form>
-            </div>
-            <div x-show="sent" x-cloak class="lp-card" style="text-align:center;padding:56px 32px;max-width:480px;margin:0 auto">
-                <div style="width:52px;height:52px;background:var(--green-light);border-radius:8px;display:flex;align-items:center;justify-content:center;margin:0 auto 18px">
-                    <svg width="24" height="24" fill="none" stroke="var(--green-mid)" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
-                </div>
-                <p style="font-family:var(--head);font-size:18px;font-weight:700;color:var(--forest);margin:0 0 8px">Enquiry received</p>
-                <p style="font-family:var(--font);font-size:14px;color:var(--text-2);line-height:1.65;margin:0">Our team will review your enquiry and get back to you within two business days. We look forward to talking.</p>
+        <div style="margin-top:16px">
+            <div class="lp-card" style="display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap">
+                <p style="font-family:var(--font);font-size:14px;color:var(--text-2);margin:0">Interested in a business or community partnership?</p>
+                <a href="{{ route('contact') }}" class="lp-btn-ghost">Get in touch</a>
             </div>
         </div>
     </div>
 
+    @endif
+
 </div>
 </div>
+
+@section('styles')
+<style>
+.lp-input:focus-visible { outline: none; }
+.lp-input { accent-color: var(--forest); }
+@keyframes spin { to { transform: rotate(360deg); } }
+</style>
+@endsection
+
 @endsection

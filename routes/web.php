@@ -10,6 +10,7 @@ use App\Http\Controllers\ParcelController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\TrackController;
 use App\Http\Controllers\Transporter\JourneyController;
+use App\Http\Controllers\TransporterApplicationController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', fn () => view('welcome'))->name('home');
@@ -24,7 +25,8 @@ Route::get('/contact',          fn () => view('pages.contact'))->name('contact')
 Route::get('/safety',           fn () => view('pages.safety'))->name('safety');
 Route::get('/report',           fn () => view('pages.report'))->name('report');
 Route::get('/blog',             fn () => view('pages.blog'))->name('blog');
-Route::get('/become-a-partner', fn () => view('pages.partner'))->name('partner');
+Route::get('/become-a-partner',  [TransporterApplicationController::class, 'show'])->name('partner');
+Route::post('/become-a-partner', [TransporterApplicationController::class, 'store'])->name('partner.apply');
 Route::get('/careers',          fn () => view('pages.careers'))->name('careers');
 Route::get('/terms',            fn () => view('pages.terms'))->name('terms');
 Route::get('/privacy',          fn () => view('pages.privacy'))->name('privacy');
