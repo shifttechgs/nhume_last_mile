@@ -2611,42 +2611,54 @@ body { font-family: var(--font); color: var(--text); background: #fff; -webkit-f
 {{-- ══════════════════════════════════════════════════
      NHUME STORE — physical drop-off
 ══════════════════════════════════════════════════ --}}
-<section style="padding:var(--section-y) 0;background:#fff;overflow:hidden">
+<section style="padding:var(--section-y) 0;background:var(--shade)">
     <div style="max-width:1200px;margin:0 auto;padding:0 clamp(20px,4vw,48px)">
-        <div class="reveal" style="display:grid;grid-template-columns:1fr 1fr;gap:clamp(40px,6vw,80px);align-items:center">
 
-            {{-- Left: photo --}}
-            <div style="position:relative;border-radius:12px;overflow:hidden;box-shadow:0 24px 64px rgba(28,56,41,0.14)">
-                <img src="/images/nhume-store-exterior.jpg"
-                     alt="Nhume Store — drop off, pick up, done"
-                     style="width:100%;height:auto;display:block;border-radius:12px">
-                {{-- Pill badge over image --}}
-                <div style="position:absolute;bottom:20px;left:20px;display:flex;gap:8px;flex-wrap:wrap">
-                    @foreach(['Drop off', 'Pick up', 'Returns'] as $tag)
-                    <span style="font-family:var(--font);font-size:11px;font-weight:700;letter-spacing:0.06em;text-transform:uppercase;background:rgba(0,0,0,0.55);backdrop-filter:blur(8px);color:#fff;padding:6px 14px;border-radius:999px;border:1px solid rgba(255,255,255,0.15)">{{ $tag }}</span>
-                    @endforeach
+        <div class="reveal" style="display:grid;grid-template-columns:1fr 1fr;gap:clamp(48px,6vw,80px);align-items:stretch">
+
+            {{-- Left: store exterior + lady stacked --}}
+            <div style="display:flex;flex-direction:column;gap:12px">
+
+                {{-- Top: storefront exterior --}}
+                <div style="position:relative;border-radius:16px;overflow:hidden;box-shadow:0 16px 48px rgba(28,56,41,0.13);flex:1">
+                    <img src="/images/nhume-store-exterior.jpg"
+                         alt="Nhume Store exterior"
+                         style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center 30%;display:block">
+                    <div style="position:absolute;bottom:0;left:0;right:0;padding:16px;background:linear-gradient(to top,rgba(6,30,14,0.75) 0%,transparent 100%)">
+                        <div style="display:flex;gap:8px;flex-wrap:wrap">
+                            @foreach(['Drop off', 'Pick up', 'Returns'] as $tag)
+                            <span style="font-family:var(--font);font-size:10px;font-weight:700;letter-spacing:0.07em;text-transform:uppercase;color:#fff;padding:4px 12px;border-radius:999px;border:1px solid rgba(255,255,255,0.3)">{{ $tag }}</span>
+                            @endforeach
+                        </div>
+                    </div>
                 </div>
+
+                {{-- Bottom: parcel handoff --}}
+                <div style="position:relative;border-radius:16px;overflow:hidden;box-shadow:0 16px 48px rgba(28,56,41,0.13);flex:1">
+                    <img src="/images/nhume-store-lady.jpg"
+                         alt="Nhume Store — parcel handoff"
+                         style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center 20%;display:block">
+                </div>
+
             </div>
 
             {{-- Right: copy --}}
-            <div>
-                <p style="font-family:var(--font);font-size:11px;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:var(--green-mid);margin:0 0 16px">Nhume Store</p>
-                <h2 style="font-family:var(--head);font-size:clamp(28px,3.5vw,44px);font-weight:700;letter-spacing:-0.03em;line-height:1.1;color:var(--forest);margin:0 0 20px">Your packages.<br>Safe with us.<br>Ready for you.</h2>
-                <p style="font-family:var(--font);font-size:15px;color:var(--text-2);line-height:1.75;margin:0 0 32px;max-width:400px">Walk in, hand over your parcel, and we handle the rest. Every item is logged, tracked, and handed to a verified driver or rider heading to your destination.</p>
+            <div style="display:flex;flex-direction:column;justify-content:center">
+                <p style="font-family:var(--font);font-size:11px;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:var(--green-mid);margin:0 0 14px">Nhume Store</p>
+                <h2 style="font-family:var(--head);font-size:clamp(22px,2.2vw,28px);font-weight:700;letter-spacing:-0.03em;line-height:1.15;color:var(--forest);margin:0 0 18px">Your packages. Safe with us.<br>Ready for you.</h2>
+                <p style="font-family:var(--font);font-size:15px;color:var(--text-2);line-height:1.75;margin:0 0 32px">Walk in, hand over your parcel, and we handle the rest. Every item is logged, tracked, and handed to a verified driver or rider heading to your destination.</p>
 
-                <div style="display:flex;flex-direction:column;gap:14px;margin-bottom:36px">
+                <div style="display:flex;flex-direction:column;gap:0;margin-bottom:36px;border-top:1px solid var(--border)">
                     @foreach([
-                        ['Drop off', 'Bring your parcel in. We log it and keep it safe until pickup.', 'M20 7l-8-4-8 4m16 0v10l-8 4m0-14L4 17m8 4V11'],
-                        ['Pick up', 'Recipients collect from our store or we dispatch to their door.', 'M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6'],
-                        ['Live tracking', 'You and your recipient get a tracking link the moment we scan it in.', 'M9 20l-5.447-2.724A1 1 0 013 16.382V5.618a1 1 0 011.447-.894L9 7m0 13l6-3m-6 3V7m6 10l4.553 2.276A1 1 0 0021 18.382V7.618a1 1 0 00-.553-.894L15 4m0 13V4m0 0L9 7'],
-                    ] as [$title, $desc, $icon])
-                    <div style="display:flex;align-items:flex-start;gap:14px">
-                        <span style="width:36px;height:36px;border-radius:8px;background:var(--green-light);display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:1px">
-                            <svg width="16" height="16" fill="none" stroke="var(--green-mid)" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="{{ $icon }}"/></svg>
-                        </span>
+                        ['Drop off',      'Bring your parcel in. We log it and keep it safe until collection.'],
+                        ['Pick up',       'Recipients collect from our store or we dispatch to their door.'],
+                        ['Live tracking', 'You and your recipient get a tracking link the moment we scan it in.'],
+                    ] as [$title, $desc])
+                    <div style="display:flex;align-items:flex-start;gap:16px;padding:16px 0;border-bottom:1px solid var(--border)">
+                        <span style="width:6px;height:6px;border-radius:50%;background:var(--green);flex-shrink:0;margin-top:7px"></span>
                         <div>
-                            <p style="font-family:var(--head);font-size:14px;font-weight:700;color:var(--forest);margin:0 0 3px">{{ $title }}</p>
-                            <p style="font-family:var(--font);font-size:13.5px;color:var(--text-2);line-height:1.55;margin:0">{{ $desc }}</p>
+                            <p style="font-family:var(--head);font-size:13.5px;font-weight:700;color:var(--forest);margin:0 0 2px">{{ $title }}</p>
+                            <p style="font-family:var(--font);font-size:13px;color:var(--text-2);line-height:1.6;margin:0">{{ $desc }}</p>
                         </div>
                     </div>
                     @endforeach
@@ -2661,7 +2673,7 @@ body { font-family: var(--font); color: var(--text); background: #fff; -webkit-f
         </div>
     </div>
     <style>
-    @media (max-width: 768px) {
+    @media (max-width: 860px) {
         .reveal[style*="grid-template-columns:1fr 1fr"] { grid-template-columns: 1fr !important; }
     }
     </style>

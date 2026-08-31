@@ -59,13 +59,32 @@ class DashboardController extends Controller
         $recentOrders = Task::select(['id','order_number','status','pickup_address','dropoff_address','user_id','created_at'])
             ->with('user:id,name')
             ->latest()
-            ->limit(10)
-            ->get();
+            ->paginate(8)
+            ->withQueryString();
+
+        // 14-day daily order counts (oldest → newest), cached briefly.
+        $ordersTrend = Cache::remember('dashboard.orders_trend', 300, function () {
+            $counts = Task::where('created_at', '>=', now()->subDays(13)->startOfDay())
+                ->selectRaw('DATE(created_at) as d, COUNT(*) as c')
+                ->groupBy('d')
+                ->pluck('c', 'd');
+
+            return collect(range(13, 0))
+                ->map(fn ($back) => (int) ($counts[now()->subDays($back)->toDateString()] ?? 0))
+                ->all();
+        });
+
+        // Momentum: last 7 days vs the prior 7 days, as a signed percentage.
+        $recent7 = array_sum(array_slice($ordersTrend, 7, 7));
+        $prior7  = array_sum(array_slice($ordersTrend, 0, 7));
+        $ordersDelta = $prior7 > 0
+            ? (int) round((($recent7 - $prior7) / $prior7) * 100)
+            : ($recent7 > 0 ? 100 : 0);
 
         return compact(
             'totalOrders', 'totalDrivers', 'activeDrivers',
             'pendingReview', 'verifiedDrivers', 'reviewedDrivers',
-            'idSubmittedDrivers', 'recentOrders'
+            'idSubmittedDrivers', 'recentOrders', 'ordersTrend', 'ordersDelta'
         );
     }
 
