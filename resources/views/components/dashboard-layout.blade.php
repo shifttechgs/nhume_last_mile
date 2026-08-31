@@ -241,6 +241,8 @@
         .trust-manually      { background:#dbeafe; color:#1d4ed8; }
         .trust-id-submitted  { background:#fef3c7; color:#b45309; }
         .trust-unverified    { background:#f3f4f6; color:#6b7280; }
+        @keyframes spin { to { transform: rotate(360deg); } }
+        .form-spinner { animation: spin 0.7s linear infinite; flex-shrink: 0; }
     </style>
 </head>
 <body class="h-full font-sans antialiased" style="background:#F6F7F9;">

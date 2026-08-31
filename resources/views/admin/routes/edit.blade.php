@@ -17,7 +17,8 @@
     </div>
     @endif
 
-    <form method="POST" action="{{ route('admin.routes.update', $route) }}" class="space-y-5">
+    <form method="POST" action="{{ route('admin.routes.update', $route) }}" class="space-y-5"
+          x-data="{ loading: false }" @submit="loading = true">
         @csrf @method('PUT')
 
         <div style="background:#fff;border:1px solid #E9EAEC;border-radius:16px;padding:24px;" class="space-y-4">
@@ -75,11 +76,14 @@
             <a href="{{ route('admin.routes.index') }}"
                class="px-5 py-2.5 rounded-xl text-sm font-semibold text-gray-600 border border-gray-200 hover:bg-gray-50">Cancel</a>
             <button type="submit"
-                    class="px-6 py-2.5 rounded-xl text-sm font-semibold text-white"
+                    class="inline-flex items-center gap-2 px-6 py-2.5 rounded-xl text-sm font-semibold text-white"
                     style="background:#6bc630;box-shadow:0 4px 14px rgba(107,198,48,0.25);"
-                    onmouseover="this.style.background='#5aad28'"
+                    :style="loading ? 'opacity:0.65;cursor:not-allowed' : ''"
+                    :disabled="loading"
+                    onmouseover="if(!loading) this.style.background='#5aad28'"
                     onmouseout="this.style.background='#6bc630'">
-                Save changes
+                <svg x-show="loading" x-cloak class="form-spinner" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" viewBox="0 0 24 24"><path d="M21 12a9 9 0 1 1-6.219-8.56"/></svg>
+                <span x-text="loading ? 'Saving…' : 'Save changes'"></span>
             </button>
         </div>
     </form>

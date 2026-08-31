@@ -165,7 +165,8 @@
             {{-- Update status --}}
             <div style="background:#fff;border:1px solid #E9EAEC;border-radius:16px;padding:20px;">
                 <h2 class="text-sm font-semibold text-gray-800 mb-4">Update status</h2>
-                <form method="POST" action="{{ route('admin.orders.status', $order) }}" class="space-y-3">
+                <form method="POST" action="{{ route('admin.orders.status', $order) }}" class="space-y-3"
+                      x-data="{ loading: false }" @submit="loading = true">
                     @csrf @method('PATCH')
                     <div class="space-y-1.5">
                         @foreach(\App\Enums\TaskStatus::cases() as $s)
@@ -185,11 +186,14 @@
                         @endforeach
                     </div>
                     <button type="submit"
-                            class="w-full py-2.5 rounded-xl text-sm font-semibold text-white transition-all mt-1"
+                            class="w-full inline-flex items-center justify-center gap-2 py-2.5 rounded-xl text-sm font-semibold text-white transition-all mt-1"
                             style="background:#6bc630;box-shadow:0 4px 14px rgba(107,198,48,0.25);"
-                            onmouseover="this.style.background='#5aad28'"
+                            :style="loading ? 'opacity:0.65;cursor:not-allowed' : ''"
+                            :disabled="loading"
+                            onmouseover="if(!loading) this.style.background='#5aad28'"
                             onmouseout="this.style.background='#6bc630'">
-                        Save status
+                        <svg x-show="loading" x-cloak class="form-spinner" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" viewBox="0 0 24 24"><path d="M21 12a9 9 0 1 1-6.219-8.56"/></svg>
+                        <span x-text="loading ? 'Saving…' : 'Save status'"></span>
                     </button>
                 </form>
             </div>
@@ -209,7 +213,8 @@
                     </div>
                 </div>
                 @endif
-                <form method="POST" action="{{ route('admin.orders.assign', $order) }}" class="space-y-3">
+                <form method="POST" action="{{ route('admin.orders.assign', $order) }}" class="space-y-3"
+                      x-data="{ loading: false }" @submit="loading = true">
                     @csrf @method('PATCH')
                     <select name="assigned_driver_id"
                             class="w-full text-sm text-gray-700 rounded-xl border border-gray-200 px-3 py-2.5 focus:ring-1 focus:ring-green-400 focus:border-green-400"
@@ -224,8 +229,11 @@
                         @endforeach
                     </select>
                     <button type="submit"
-                            class="w-full py-2.5 rounded-xl text-sm font-semibold text-gray-700 border border-gray-200 hover:bg-gray-50 transition-colors">
-                        {{ $order->assignedDriver ? 'Reassign driver' : 'Assign driver' }}
+                            class="w-full inline-flex items-center justify-center gap-2 py-2.5 rounded-xl text-sm font-semibold text-gray-700 border border-gray-200 hover:bg-gray-50 transition-colors"
+                            :style="loading ? 'opacity:0.65;cursor:not-allowed' : ''"
+                            :disabled="loading">
+                        <svg x-show="loading" x-cloak class="form-spinner" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" viewBox="0 0 24 24"><path d="M21 12a9 9 0 1 1-6.219-8.56"/></svg>
+                        <span x-text="loading ? 'Saving…' : '{{ $order->assignedDriver ? 'Reassign driver' : 'Assign driver' }}'"></span>
                     </button>
                 </form>
             </div>

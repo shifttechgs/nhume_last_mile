@@ -162,7 +162,8 @@
                 <h2 class="text-sm font-semibold text-gray-800 mb-1">Trust tier</h2>
                 <p class="text-xs text-gray-400 mb-5">Updating this controls the badge shown to senders and which features the driver can access.</p>
 
-                <form method="POST" action="{{ route('admin.drivers.trust', $driver) }}" class="space-y-4">
+                <form method="POST" action="{{ route('admin.drivers.trust', $driver) }}" class="space-y-4"
+                      x-data="{ loading: false }" @submit="loading = true">
                     @csrf @method('PATCH')
 
                     {{-- Tier selector --}}
@@ -207,11 +208,14 @@
                     @endif
 
                     <button type="submit"
-                            class="w-full py-2.5 rounded-xl text-sm font-semibold text-white transition-all"
+                            class="w-full inline-flex items-center justify-center gap-2 py-2.5 rounded-xl text-sm font-semibold text-white transition-all"
                             style="background:#6bc630;box-shadow:0 4px 14px rgba(107,198,48,0.28);"
-                            onmouseover="this.style.background='#5aad28'"
+                            :style="loading ? 'opacity:0.65;cursor:not-allowed' : ''"
+                            :disabled="loading"
+                            onmouseover="if(!loading) this.style.background='#5aad28'"
                             onmouseout="this.style.background='#6bc630'">
-                        Save trust tier
+                        <svg x-show="loading" x-cloak class="form-spinner" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" viewBox="0 0 24 24"><path d="M21 12a9 9 0 1 1-6.219-8.56"/></svg>
+                        <span x-text="loading ? 'Saving…' : 'Save trust tier'"></span>
                     </button>
                 </form>
             </div>

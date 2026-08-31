@@ -15,7 +15,8 @@
         <p style="font-size:13.5px;color:var(--body);margin:0;line-height:1.6">Tell senders when you're travelling and how much space you have. They'll book directly onto your trip.</p>
     </div>
 
-    <form method="POST" action="{{ route('transporter.journeys.store') }}">
+    <form method="POST" action="{{ route('transporter.journeys.store') }}"
+          x-data="{ loading: false }" @submit="loading = true">
         @csrf
 
         <div style="display:flex;flex-direction:column;gap:20px">
@@ -112,10 +113,13 @@
             {{-- Submit --}}
             <div style="display:flex;align-items:center;gap:12px">
                 <button type="submit"
-                        style="display:inline-flex;align-items:center;gap:8px;padding:12px 24px;background:var(--acc-2);color:#fff;font-family:inherit;font-size:14px;font-weight:600;border:none;border-radius:8px;cursor:pointer;transition:background 0.15s"
-                        onmouseover="this.style.background='var(--acc)'" onmouseout="this.style.background='var(--acc-2)'">
-                    <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><polyline points="20,6 9,17 4,12"/></svg>
-                    Post journey
+                        style="display:inline-flex;align-items:center;gap:8px;padding:12px 24px;background:var(--acc-2);color:#fff;font-family:inherit;font-size:14px;font-weight:600;border:none;border-radius:8px;cursor:pointer;transition:background 0.15s;min-width:140px;justify-content:center"
+                        :style="loading ? 'opacity:0.65;cursor:not-allowed' : ''"
+                        :disabled="loading"
+                        onmouseover="if(!loading) this.style.background='var(--acc)'" onmouseout="this.style.background='var(--acc-2)'">
+                    <svg x-show="loading" x-cloak class="form-spinner" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" viewBox="0 0 24 24"><path d="M21 12a9 9 0 1 1-6.219-8.56"/></svg>
+                    <svg x-show="!loading" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><polyline points="20,6 9,17 4,12"/></svg>
+                    <span x-text="loading ? 'Posting…' : 'Post journey'"></span>
                 </button>
                 <a href="{{ route('transporter.journeys.index') }}"
                    style="font-size:13.5px;color:var(--body);text-decoration:none;font-weight:500">
