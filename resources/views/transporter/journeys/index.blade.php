@@ -1,9 +1,8 @@
 <x-dashboard-layout title="My Journeys">
 
 @php
-    use App\Models\Journey;
     $profileId = Auth::user()->transporterProfile?->id;
-    $counts = Journey::where('transporter_profile_id', $profileId)
+    $counts = \App\Models\Journey::where('transporter_profile_id', $profileId)
         ->selectRaw("
             COUNT(*) as total,
             COUNT(CASE WHEN status = 'scheduled'   THEN 1 END) as scheduled,
