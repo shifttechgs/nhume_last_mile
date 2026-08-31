@@ -35,8 +35,8 @@ php artisan key:generate --force
 echo "==> Discovering packages"
 php artisan package:discover --ansi
 
-echo "==> Running migrations"
-php artisan migrate --force
+echo "==> Running migrations and seeding demo data"
+php artisan migrate:fresh --force --seed
 
 echo "==> Linking storage"
 php artisan storage:link --force 2>/dev/null || true
