@@ -15,7 +15,7 @@
 
     {{-- Filter bar --}}
     <div class="lp-section">
-        <form method="GET" action="{{ route('journeys') }}">
+        <form method="GET" action="{{ route('journeys') }}" x-data="{ loading: false }" @submit="loading = true">
             <div class="lp-card" style="padding:20px 24px">
                 <div style="display:flex;align-items:flex-end;gap:12px;flex-wrap:wrap">
 
@@ -39,7 +39,17 @@
                     </div>
 
                     <div style="display:flex;gap:8px;align-items:center">
-                        <button type="submit" class="lp-btn">Search</button>
+                        <button type="submit" class="lp-btn" :disabled="loading"
+                                style="min-width:90px;justify-content:center;transition:opacity 0.15s"
+                                :style="loading ? 'opacity:0.7;cursor:not-allowed' : ''">
+                            <svg x-show="loading" x-cloak width="14" height="14" viewBox="0 0 24 24" fill="none"
+                                 stroke="currentColor" stroke-width="2.5" stroke-linecap="round"
+                                 style="animation:spin 0.7s linear infinite;flex-shrink:0">
+                                <path d="M21 12a9 9 0 1 1-6.219-8.56"/>
+                            </svg>
+                            <span x-show="!loading">Search</span>
+                            <span x-show="loading" x-cloak>Searching…</span>
+                        </button>
                         @if(request()->hasAny(['route_id','date']))
                             <a href="{{ route('journeys') }}" style="font-family:var(--font);font-size:13px;color:var(--text-2);text-decoration:none">Clear</a>
                         @endif
@@ -50,7 +60,64 @@
         </form>
     </div>
 
-    {{-- Results count + post CTA --}}
+    @if($journeys->isEmpty())
+
+    {{-- Empty state — single unified block, no separate CTA card --}}
+    <div class="lp-card" style="padding:64px 40px;text-align:center;margin-bottom:0">
+
+        {{-- Icon --}}
+        <div style="width:52px;height:52px;border-radius:12px;background:var(--green-light);display:flex;align-items:center;justify-content:center;margin:0 auto 20px">
+            <svg width="24" height="24" fill="none" stroke="var(--green-mid)" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24">
+                <polygon points="1,6 1,22 8,18 16,22 23,18 23,2 16,6 8,2"/>
+                <line x1="8" y1="2" x2="8" y2="18"/><line x1="16" y1="6" x2="16" y2="22"/>
+            </svg>
+        </div>
+
+        <p style="font-family:var(--head);font-size:17px;font-weight:700;color:var(--forest);margin:0 0 10px">
+            @if(request()->hasAny(['route_id','date']))
+                No journeys on that route yet
+            @else
+                No journeys available right now
+            @endif
+        </p>
+
+        <p style="font-family:var(--font);font-size:14px;color:var(--text-2);line-height:1.7;margin:0 auto 28px;max-width:380px">
+            @if(request()->hasAny(['route_id','date']))
+                Nobody has posted a trip matching those filters. Try a different route or date, or be the first to post this journey.
+            @else
+                Transporters post new journeys daily. Check back soon or sign up to get notified.
+            @endif
+        </p>
+
+        <div style="display:flex;align-items:center;justify-content:center;gap:10px;flex-wrap:wrap">
+            @if(request()->hasAny(['route_id','date']))
+                <a href="{{ route('journeys') }}" class="lp-btn-ghost">View all journeys</a>
+            @endif
+            @auth
+                @if(auth()->user()->role->value === 'transport_partner')
+                    <a href="{{ route('transporter.journeys.create') }}" class="lp-btn">Post this journey</a>
+                @else
+                    <a href="{{ route('partner') }}" class="lp-btn">Become a transporter</a>
+                @endif
+            @else
+                <a href="{{ route('register') }}" class="lp-btn">Get started</a>
+            @endauth
+        </div>
+
+        {{-- Divider + transporter note --}}
+        <div style="border-top:1px solid var(--border);margin:36px 0 0;padding-top:28px">
+            <p style="font-family:var(--font);font-size:13px;color:var(--text-2);margin:0;line-height:1.65">
+                Travelling this route yourself?
+                <a href="{{ route('partner') }}" style="color:var(--forest);font-weight:600;text-decoration:none">Post your journey</a>
+                and let senders contact you on WhatsApp.
+            </p>
+        </div>
+
+    </div>
+
+    @else
+
+    {{-- Results count + post CTA — only shown when there are results --}}
     <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:20px;flex-wrap:wrap;gap:10px">
         <p style="font-family:var(--font);font-size:14px;color:var(--text-2);margin:0">
             <strong style="color:var(--text)">{{ $journeys->total() }}</strong>
@@ -59,31 +126,10 @@
         </p>
         @auth
             @if(auth()->user()->role->value === 'transport_partner')
-            <a href="{{ route('transporter.journeys.create') }}" class="lp-btn">
-                + Post your journey
-            </a>
+            <a href="{{ route('transporter.journeys.create') }}" class="lp-btn">+ Post your journey</a>
             @endif
         @endauth
     </div>
-
-    @if($journeys->isEmpty())
-
-    {{-- Empty state --}}
-    <div class="lp-card" style="text-align:center;padding:56px 24px">
-        <p style="font-family:var(--head);font-size:16px;font-weight:700;color:var(--forest);margin:0 0 8px">No journeys found</p>
-        <p style="font-family:var(--font);font-size:14px;color:var(--text-2);margin:0 0 24px;max-width:360px;margin-left:auto;margin-right:auto;line-height:1.65">
-            @if(request()->hasAny(['route_id','date']))
-                No upcoming journeys match those filters. Try a different route or date.
-            @else
-                No journeys are available right now. Transporters post daily — check back soon.
-            @endif
-        </p>
-        @if(request()->hasAny(['route_id','date']))
-            <a href="{{ route('journeys') }}" class="lp-btn-ghost">Clear filters</a>
-        @endif
-    </div>
-
-    @else
 
     {{-- 4-column grid --}}
     <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-bottom:40px">
@@ -213,7 +259,8 @@
 
     @endif
 
-    {{-- Transporter CTA --}}
+    {{-- Transporter CTA — only shown when results exist; empty state has its own CTA --}}
+    @if($journeys->isNotEmpty())
     <div class="lp-section">
         <div class="lp-card" style="display:flex;align-items:center;justify-content:space-between;gap:24px;flex-wrap:wrap">
             <div>
@@ -235,6 +282,7 @@
             </div>
         </div>
     </div>
+    @endif
 
 </div>
 </div>
@@ -245,6 +293,7 @@
 .lp-input { accent-color: var(--forest); }
 .lp-input:focus-visible { outline: none; box-shadow: none; }
 select.lp-input { appearance: none; -webkit-appearance: none; }
+@keyframes spin { to { transform: rotate(360deg); } }
 
 @media (max-width: 1100px) {
     div[style*="grid-template-columns:repeat(4,1fr)"] { grid-template-columns: repeat(3,1fr) !important; }
