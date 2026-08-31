@@ -470,20 +470,20 @@
 
     @elseif($isDriver)
 
-    {{-- ── DRIVER STATS ──────────────────────────────────── --}}
     @php
-        $profile   = Auth::user()->transporterProfile;
-        $tier      = $profile?->trust_tier->value ?? 'unverified';
-        $badgeMap  = [
-            'verified'         => ['label' => 'Nhume Verified', 'class' => 'trust-verified'],
-            'manually_reviewed'=> ['label' => 'Nhume Reviewed', 'class' => 'trust-manually'],
-            'id_submitted'     => ['label' => 'ID Submitted',   'class' => 'trust-id-submitted'],
-            'unverified'       => ['label' => 'Unverified',     'class' => 'trust-unverified'],
+        $tier    = Auth::user()->transporterProfile?->trust_tier?->value ?? 'unverified';
+        $tierCfg = [
+            'verified'          => ['label'=>'Nhume Verified', 'bg'=>'#dcfce7','txt'=>'#15803d','dot'=>'#22c55e'],
+            'manually_reviewed' => ['label'=>'Nhume Reviewed', 'bg'=>'#dbeafe','txt'=>'#1d4ed8','dot'=>'#3b82f6'],
+            'id_submitted'      => ['label'=>'ID Submitted',   'bg'=>'#fef3c7','txt'=>'#b45309','dot'=>'#f59e0b'],
+            'unverified'        => ['label'=>'Unverified',     'bg'=>'#f3f4f6','txt'=>'#6b7280','dot'=>'#9ca3af'],
         ];
-        $badge = $badgeMap[$tier] ?? $badgeMap['unverified'];
+        $tc = $tierCfg[$tier] ?? $tierCfg['unverified'];
     @endphp
 
-    {{-- Trust tier banner --}}
+    <div class="ov space-y-5">
+
+    {{-- Trust banner --}}
     @if($tier !== 'verified')
     <div class="flex items-center gap-3 px-5 py-3.5 rounded-xl text-sm"
          style="background:#FFFBEB;border:1px solid #FDE68A;">
@@ -491,18 +491,26 @@
             <path d="M10.29 3.86 1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/>
             <line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/>
         </svg>
-        <span class="text-amber-800 font-medium">
-            Your account is <strong>{{ strtolower(str_replace('_', ' ', $tier)) }}</strong>. Complete verification to unlock all features.
-        </span>
+        <div class="flex-1">
+            <span class="text-amber-800 font-medium">
+                Your account is <strong>{{ $tc['label'] }}</strong>.
+                <a href="{{ route('partner') }}" class="underline ml-1">Complete verification →</a>
+            </span>
+        </div>
     </div>
     @endif
 
-    {{-- 4-stat grid --}}
+    {{-- 4-stat strip --}}
     <div class="grid grid-cols-2 lg:grid-cols-4 gap-4">
+
         <div class="stat-card">
             <div class="flex items-center justify-between mb-3">
                 <span class="text-xs font-semibold text-gray-400 uppercase tracking-wide">Journeys posted</span>
-                <span class="inline-flex items-center px-2 py-0.5 rounded-full text-[11px] font-semibold {{ $badge['class'] }}">{{ $badge['label'] }}</span>
+                <span class="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[11px] font-semibold"
+                      style="background:{{ $tc['bg'] }};color:{{ $tc['txt'] }};">
+                    <span class="w-1.5 h-1.5 rounded-full" style="background:{{ $tc['dot'] }};"></span>
+                    {{ $tc['label'] }}
+                </span>
             </div>
             <div class="text-3xl font-bold text-gray-900 tabular-nums">{{ $totalJourneys }}</div>
             <div class="text-xs text-gray-400 mt-1">{{ $upcomingJourneys }} upcoming</div>
@@ -512,7 +520,7 @@
             <div class="flex items-center justify-between mb-3">
                 <span class="text-xs font-semibold text-gray-400 uppercase tracking-wide">Assigned tasks</span>
                 <div class="w-8 h-8 rounded-lg flex items-center justify-center" style="background:#EDE9FE;">
-                    <svg width="15" height="15" fill="none" stroke="#7c3aed" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24">
+                    <svg width="14" height="14" fill="none" stroke="#7c3aed" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24">
                         <path d="M9 5H7a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2h-2"/><rect x="9" y="3" width="6" height="4" rx="2"/>
                     </svg>
                 </div>
@@ -525,7 +533,7 @@
             <div class="flex items-center justify-between mb-3">
                 <span class="text-xs font-semibold text-gray-400 uppercase tracking-wide">Completed</span>
                 <div class="w-8 h-8 rounded-lg flex items-center justify-center" style="background:#DCFCE7;">
-                    <svg width="15" height="15" fill="none" stroke="#15803d" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24">
+                    <svg width="14" height="14" fill="none" stroke="#15803d" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24">
                         <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22,4 12,14.01 9,11.01"/>
                     </svg>
                 </div>
@@ -538,7 +546,7 @@
             <div class="flex items-center justify-between mb-3">
                 <span class="text-xs font-semibold text-gray-400 uppercase tracking-wide">Earnings</span>
                 <div class="w-8 h-8 rounded-lg flex items-center justify-center" style="background:#F0FDE4;">
-                    <svg width="15" height="15" fill="none" stroke="#6bc630" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24">
+                    <svg width="14" height="14" fill="none" stroke="#6bc630" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24">
                         <line x1="12" y1="1" x2="12" y2="23"/>
                         <path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/>
                     </svg>
@@ -547,115 +555,161 @@
             <div class="text-3xl font-bold text-gray-900 tabular-nums">—</div>
             <div class="text-xs text-gray-400 mt-1">Coming soon</div>
         </div>
+
     </div>
 
-    {{-- Two-column: journeys + assigned tasks --}}
-    <div style="display:grid;grid-template-columns:1fr 1fr;gap:20px">
+    {{-- Main grid: journeys (2/3) + sidebar (1/3) --}}
+    <div class="grid grid-cols-1 lg:grid-cols-3 gap-5">
 
-        {{-- My journeys --}}
-        <div class="d-card" style="padding:0;overflow:hidden">
-            <div style="display:flex;align-items:center;justify-content:space-between;padding:18px 20px;border-bottom:1px solid var(--line)">
-                <span style="font-size:13px;font-weight:700;color:var(--ink)">My Journeys</span>
-                <a href="{{ route('transporter.journeys.create') }}"
-                   style="display:inline-flex;align-items:center;gap:5px;font-size:12px;font-weight:600;color:var(--acc-2);text-decoration:none">
-                    <svg width="11" height="11" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
-                    Post journey
-                </a>
+        {{-- My journeys — 2/3 --}}
+        <div class="lg:col-span-2 flex flex-col">
+            <div class="d-card" style="flex:1;display:flex;flex-direction:column;padding:0;overflow:hidden;">
+                <div class="d-card-head">
+                    <div class="d-h">My Journeys</div>
+                    <a href="{{ route('transporter.journeys.create') }}" class="d-link">
+                        + Post journey
+                    </a>
+                </div>
+
+                @if($recentJourneys->isEmpty())
+                <div class="flex flex-col items-center justify-center text-center px-6 py-14 flex-1">
+                    <div class="w-12 h-12 rounded-xl flex items-center justify-center mb-4" style="background:#F0FDE4;">
+                        <svg width="22" height="22" fill="none" stroke="#6bc630" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24">
+                            <polygon points="1,6 1,22 8,18 16,22 23,18 23,2 16,6 8,2"/>
+                            <line x1="8" y1="2" x2="8" y2="18"/><line x1="16" y1="6" x2="16" y2="22"/>
+                        </svg>
+                    </div>
+                    <p class="text-sm font-semibold text-gray-700 mb-1">No journeys posted yet</p>
+                    <p class="text-xs text-gray-400 mb-5 max-w-xs leading-relaxed">Post your first trip and senders on the marketplace can WhatsApp you to book space.</p>
+                    <a href="{{ route('transporter.journeys.create') }}"
+                       class="inline-flex items-center gap-1.5 px-4 py-2 rounded-xl text-xs font-semibold text-white"
+                       style="background:#6bc630;">
+                        <svg width="11" height="11" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+                        Post your first journey
+                    </a>
+                </div>
+                @else
+
+                <div class="overflow-x-auto flex-1">
+                    <table class="w-full text-sm">
+                        <thead>
+                            <tr style="border-bottom:1px solid #F0F1F0;">
+                                <th class="text-left px-6 py-3 text-xs font-semibold text-gray-400 uppercase tracking-wide">Route</th>
+                                <th class="text-left px-6 py-3 text-xs font-semibold text-gray-400 uppercase tracking-wide hidden sm:table-cell">Departs</th>
+                                <th class="text-left px-6 py-3 text-xs font-semibold text-gray-400 uppercase tracking-wide">Status</th>
+                            </tr>
+                        </thead>
+                        <tbody class="divide-y divide-gray-50">
+                            @foreach($recentJourneys as $j)
+                            @php
+                                $sc = match($j->status->value) {
+                                    'scheduled'   => ['bg'=>'#f0fde4','txt'=>'#15803d','dot'=>'#6bc630', 'label'=>'Scheduled'],
+                                    'in_progress' => ['bg'=>'#fef3c7','txt'=>'#d97706','dot'=>'#f59e0b', 'label'=>'In Progress'],
+                                    'completed'   => ['bg'=>'#dbeafe','txt'=>'#1d4ed8','dot'=>'#3b82f6', 'label'=>'Completed'],
+                                    'cancelled'   => ['bg'=>'#fee2e2','txt'=>'#dc2626','dot'=>'#ef4444', 'label'=>'Cancelled'],
+                                    default       => ['bg'=>'#f3f4f6','txt'=>'#6b7280','dot'=>'#9ca3af', 'label'=>'Draft'],
+                                };
+                            @endphp
+                            <tr class="hover:bg-gray-50/60 transition-colors">
+                                <td class="px-6 py-3.5">
+                                    <div class="font-semibold text-gray-800 text-sm">
+                                        {{ $j->route?->origin_city }}
+                                        <span class="text-green-500 mx-1">→</span>
+                                        {{ $j->route?->destination_city }}
+                                    </div>
+                                </td>
+                                <td class="px-6 py-3.5 hidden sm:table-cell">
+                                    <div class="text-sm text-gray-700">{{ $j->departs_at->format('d M Y') }}</div>
+                                    <div class="text-xs text-gray-400 mt-0.5">{{ $j->departs_at->format('H:i') }}</div>
+                                </td>
+                                <td class="px-6 py-3.5">
+                                    <span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-[11px] font-semibold"
+                                          style="background:{{ $sc['bg'] }};color:{{ $sc['txt'] }};">
+                                        <span class="w-1.5 h-1.5 rounded-full flex-shrink-0" style="background:{{ $sc['dot'] }};"></span>
+                                        {{ $sc['label'] }}
+                                    </span>
+                                </td>
+                            </tr>
+                            @endforeach
+                        </tbody>
+                    </table>
+                </div>
+                <div class="px-6 py-3.5" style="border-top:1px solid #F0F1F0;">
+                    <a href="{{ route('transporter.journeys.index') }}" class="d-link">View all journeys →</a>
+                </div>
+
+                @endif
             </div>
-            @if($recentJourneys->isEmpty())
-            <div style="padding:40px 20px;text-align:center">
-                <p style="font-size:13px;color:var(--muted);margin:0 0 14px">No journeys posted yet.</p>
-                <a href="{{ route('transporter.journeys.create') }}"
-                   style="font-size:13px;font-weight:600;color:var(--acc-2);text-decoration:none">Post your first trip →</a>
-            </div>
-            @else
-            <div>
-                @foreach($recentJourneys as $j)
-                @php
-                    $sc = match($j->status->value) {
-                        'scheduled'   => ['bg'=>'#F0FDE4','txt'=>'#15803d','label'=>'Scheduled'],
-                        'in_progress' => ['bg'=>'#FEF3C7','txt'=>'#d97706','label'=>'In Progress'],
-                        'completed'   => ['bg'=>'#F3F4F6','txt'=>'#6b7280','label'=>'Completed'],
-                        'cancelled'   => ['bg'=>'#FEF2F2','txt'=>'#dc2626','label'=>'Cancelled'],
-                        default       => ['bg'=>'#F9FAFB','txt'=>'#9ca3af','label'=>'Draft'],
-                    };
-                @endphp
-                <div style="display:flex;align-items:center;justify-content:space-between;padding:13px 20px;border-bottom:1px solid var(--line);gap:12px">
-                    <div style="flex:1;min-width:0">
-                        <div style="font-size:13px;font-weight:600;color:var(--ink);white-space:nowrap;overflow:hidden;text-overflow:ellipsis">
-                            {{ $j->route?->origin_city }} → {{ $j->route?->destination_city }}
+        </div>
+
+        {{-- Sidebar: tasks + quick actions --}}
+        <div class="space-y-5">
+
+            {{-- Assigned tasks --}}
+            <div class="d-card" style="padding:0;overflow:hidden;">
+                <div class="d-card-head">
+                    <div class="d-h">Assigned Tasks</div>
+                </div>
+                @if($recentOrders->isEmpty())
+                <div class="px-6 py-10 text-center">
+                    <p class="text-sm text-gray-400 leading-relaxed">No tasks yet. Tasks appear here when an admin assigns an order to you.</p>
+                </div>
+                @else
+                <div class="divide-y divide-gray-50">
+                    @foreach($recentOrders as $task)
+                    @php
+                        $ts = match($task->status->value) {
+                            'assigned'    => ['bg'=>'#dbeafe','txt'=>'#1d4ed8','dot'=>'#3b82f6','label'=>'Assigned'],
+                            'in_progress' => ['bg'=>'#fef3c7','txt'=>'#d97706','dot'=>'#f59e0b','label'=>'In Progress'],
+                            'delivered'   => ['bg'=>'#dcfce7','txt'=>'#15803d','dot'=>'#22c55e','label'=>'Delivered'],
+                            'cancelled'   => ['bg'=>'#fee2e2','txt'=>'#dc2626','dot'=>'#ef4444','label'=>'Cancelled'],
+                            default       => ['bg'=>'#f3f4f6','txt'=>'#6b7280','dot'=>'#9ca3af','label'=>ucfirst($task->status->value)],
+                        };
+                    @endphp
+                    <div class="flex items-center justify-between px-5 py-3.5 gap-3 hover:bg-gray-50/60 transition-colors">
+                        <div class="min-w-0">
+                            <div class="text-sm font-semibold text-gray-800">#{{ $task->order_number }}</div>
+                            <div class="text-xs text-gray-400 mt-0.5 truncate">{{ $task->pickup_address }}</div>
                         </div>
-                        <div style="font-size:11.5px;color:var(--muted);margin-top:2px">{{ $j->departs_at->format('d M Y · H:i') }}</div>
+                        <span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-[11px] font-semibold flex-shrink-0"
+                              style="background:{{ $ts['bg'] }};color:{{ $ts['txt'] }};">
+                            <span class="w-1.5 h-1.5 rounded-full" style="background:{{ $ts['dot'] }};"></span>
+                            {{ $ts['label'] }}
+                        </span>
                     </div>
-                    <span style="padding:3px 9px;border-radius:99px;font-size:10.5px;font-weight:700;background:{{ $sc['bg'] }};color:{{ $sc['txt'] }};white-space:nowrap;flex-shrink:0">{{ $sc['label'] }}</span>
+                    @endforeach
                 </div>
-                @endforeach
-                <div style="padding:12px 20px;border-top:1px solid var(--line)">
-                    <a href="{{ route('transporter.journeys.index') }}" style="font-size:12.5px;font-weight:600;color:var(--acc-2);text-decoration:none">View all journeys →</a>
-                </div>
+                @endif
             </div>
-            @endif
-        </div>
 
-        {{-- Assigned tasks --}}
-        <div class="d-card" style="padding:0;overflow:hidden">
-            <div style="padding:18px 20px;border-bottom:1px solid var(--line)">
-                <span style="font-size:13px;font-weight:700;color:var(--ink)">Assigned Tasks</span>
-            </div>
-            @if($recentOrders->isEmpty())
-            <div style="padding:40px 20px;text-align:center">
-                <p style="font-size:13px;color:var(--muted);margin:0">No tasks assigned yet. They'll appear here once an admin assigns an order to you.</p>
-            </div>
-            @else
-            <div>
-                @foreach($recentOrders as $task)
-                @php
-                    $ts = match($task->status->value) {
-                        'assigned'    => ['bg'=>'#DBEAFE','txt'=>'#1d4ed8','label'=>'Assigned'],
-                        'in_progress' => ['bg'=>'#FEF3C7','txt'=>'#d97706','label'=>'In Progress'],
-                        'delivered'   => ['bg'=>'#DCFCE7','txt'=>'#15803d','label'=>'Delivered'],
-                        'cancelled'   => ['bg'=>'#FEF2F2','txt'=>'#dc2626','label'=>'Cancelled'],
-                        default       => ['bg'=>'#F3F4F6','txt'=>'#6b7280','label'=>ucfirst($task->status->value)],
-                    };
-                @endphp
-                <div style="display:flex;align-items:center;justify-content:space-between;padding:13px 20px;border-bottom:1px solid var(--line);gap:12px">
-                    <div style="flex:1;min-width:0">
-                        <div style="font-size:13px;font-weight:600;color:var(--ink)">#{{ $task->order_number }}</div>
-                        <div style="font-size:11.5px;color:var(--muted);margin-top:2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">{{ $task->pickup_address }}</div>
-                    </div>
-                    <span style="padding:3px 9px;border-radius:99px;font-size:10.5px;font-weight:700;background:{{ $ts['bg'] }};color:{{ $ts['txt'] }};white-space:nowrap;flex-shrink:0">{{ $ts['label'] }}</span>
+            {{-- Quick actions --}}
+            <div class="d-card">
+                <div class="text-xs font-semibold text-gray-400 uppercase tracking-wide mb-3">Quick actions</div>
+                <div class="space-y-1">
+                    <a href="{{ route('transporter.journeys.create') }}" class="qa-row">
+                        <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><polygon points="1,6 1,22 8,18 16,22 23,18 23,2 16,6 8,2"/><line x1="8" y1="2" x2="8" y2="18"/><line x1="16" y1="6" x2="16" y2="22"/></svg>
+                        Post a journey
+                    </a>
+                    <a href="{{ route('transporter.journeys.index') }}" class="qa-row">
+                        <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><line x1="8" y1="6" x2="21" y2="6"/><line x1="8" y1="12" x2="21" y2="12"/><line x1="8" y1="18" x2="21" y2="18"/><line x1="3" y1="6" x2="3.01" y2="6"/><line x1="3" y1="12" x2="3.01" y2="12"/><line x1="3" y1="18" x2="3.01" y2="18"/></svg>
+                        All my journeys
+                    </a>
+                    <a href="{{ route('journeys') }}" class="qa-row">
+                        <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+                        Browse marketplace
+                    </a>
+                    <a href="{{ route('profile.edit') }}" class="qa-row">
+                        <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+                        Edit profile
+                    </a>
                 </div>
-                @endforeach
             </div>
-            @endif
+
         </div>
 
     </div>
 
-    {{-- Quick actions --}}
-    <div class="d-card">
-        <p style="font-size:12px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:0.07em;margin:0 0 14px">Quick actions</p>
-        <div style="display:flex;gap:10px;flex-wrap:wrap">
-            <a href="{{ route('transporter.journeys.create') }}" class="qa-row">
-                <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><polygon points="1,6 1,22 8,18 16,22 23,18 23,2 16,6 8,2"/><line x1="8" y1="2" x2="8" y2="18"/><line x1="16" y1="6" x2="16" y2="22"/></svg>
-                Post a journey
-            </a>
-            <a href="{{ route('transporter.journeys.index') }}" class="qa-row">
-                <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><line x1="8" y1="6" x2="21" y2="6"/><line x1="8" y1="12" x2="21" y2="12"/><line x1="8" y1="18" x2="21" y2="18"/><line x1="3" y1="6" x2="3.01" y2="6"/><line x1="3" y1="12" x2="3.01" y2="12"/><line x1="3" y1="18" x2="3.01" y2="18"/></svg>
-                All my journeys
-            </a>
-            <a href="{{ route('profile.edit') }}" class="qa-row">
-                <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
-                Edit profile
-            </a>
-        </div>
-    </div>
-
-    <style>
-    @media(max-width:640px){
-        div[style*="grid-template-columns:1fr 1fr"]{grid-template-columns:1fr!important}
-    }
-    </style>
+    </div>{{-- end .ov --}}
 
     @endif
 
