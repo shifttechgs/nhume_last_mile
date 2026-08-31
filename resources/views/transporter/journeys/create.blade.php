@@ -204,7 +204,7 @@
                         <p class="text-xs font-semibold text-gray-500 uppercase tracking-wide">Marketplace preview</p>
                         <p class="text-xs text-gray-400 mt-0.5">How senders will see your journey</p>
                     </div>
-                    <div class="px-5 py-5">
+                    <div class="px-5 pt-5 pb-6">
 
                         {{-- Route --}}
                         <p class="text-sm font-bold text-gray-900 leading-snug mb-1"
