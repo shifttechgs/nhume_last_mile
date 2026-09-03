@@ -1429,7 +1429,7 @@ body { font-family: var(--font); color: var(--text); background: #fff; -webkit-f
     gap: clamp(32px,5vw,72px);
     align-items: center;
 }
-.hero-cine-copy { min-width: 0; margin-top: clamp(28px,6vh,68px); }
+.hero-cine-copy { min-width: 0; }
 .hero-cine-eyebrow {
     display: inline-block;
     font-family: var(--font); font-size: 12px; font-weight: 700;
@@ -1453,7 +1453,7 @@ body { font-family: var(--font); color: var(--text); background: #fff; -webkit-f
 }
 
 /* ── Hero form card (right) ── */
-.hero-cine-aside { display: flex; justify-content: flex-end; margin-bottom: clamp(28px,6vh,68px); }
+.hero-cine-aside { display: flex; justify-content: flex-end; }
 .hero-form-card {
     width: 100%;
     background: #fff;
@@ -1493,8 +1493,7 @@ body { font-family: var(--font); color: var(--text); background: #fff; -webkit-f
 .hfc-track:hover { color: var(--forest); }
 @media (max-width: 900px) {
     .hero-cine-inner { grid-template-columns: 1fr; gap: 30px; }
-    .hero-cine-copy { margin-top: 0; }
-    .hero-cine-aside { justify-content: stretch; margin-bottom: 0; }
+    .hero-cine-aside { justify-content: stretch; }
     .hero-form-card { max-width: 460px; }
 }
 .hero-cine-cta { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; margin-bottom: 30px; }
