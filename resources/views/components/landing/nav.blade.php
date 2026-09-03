@@ -223,8 +223,8 @@
 
         {{-- Logo --}}
         <a href="/" class="nav-logo" aria-label="Nhume home">
-            <img src="/images/nhume_logo_dark_bg.png" alt="Nhume" class="logo-light" style="width:120px;height:auto;">
-            <img src="/images/nhume_logo_v4.png"      alt="Nhume" class="logo-dark"  style="width:120px;height:auto;">
+            <img src="/images/nhume_logo_dark_bg.png" alt="Nhume" class="logo-light" style="width:150px;height:auto;">
+            <img src="/images/nhume_logo_v4.png"      alt="Nhume" class="logo-dark"  style="width:150px;height:auto;">
         </a>
 
         {{-- Centered links (desktop) --}}
