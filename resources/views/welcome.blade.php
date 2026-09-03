@@ -1391,6 +1391,100 @@ body { font-family: var(--font); color: var(--text); background: #fff; -webkit-f
     .hero-trust-chips { gap: 12px 8px; }
 }
 
+/* ══════════════════════════════════════════════
+   CINEMATIC HERO — full-bleed rider photo, graded
+══════════════════════════════════════════════ */
+.hero-cine {
+    position: relative;
+    overflow: hidden;
+    border-radius: 10px;
+    min-height: 92svh;
+    display: flex;
+    align-items: center;
+    isolation: isolate;
+}
+.hero-cine-media {
+    position: absolute; inset: 0;
+    width: 100%; height: 100%;
+    object-fit: cover;
+    object-position: 66% center;
+    z-index: -2;
+}
+.hero-cine-scrim {
+    position: absolute; inset: 0;
+    z-index: -1;
+    background:
+        linear-gradient(90deg, rgba(6,46,20,0.95) 0%, rgba(6,46,20,0.82) 30%, rgba(6,46,20,0.32) 58%, rgba(6,46,20,0) 80%),
+        linear-gradient(0deg, rgba(6,46,20,0.58) 0%, rgba(6,46,20,0) 44%),
+        linear-gradient(0deg, rgba(28,56,41,0.26), rgba(28,56,41,0.26));
+}
+.hero-cine-inner {
+    position: relative;
+    max-width: 1240px;
+    width: 100%;
+    margin: 0 auto;
+    padding: clamp(150px,21vh,230px) clamp(24px,5vw,64px) clamp(56px,8vh,96px);
+}
+.hero-cine-eyebrow {
+    display: inline-flex; align-items: center; gap: 8px;
+    font-family: var(--font); font-size: 12.5px; font-weight: 600;
+    letter-spacing: 0.02em; color: #c3f2a2;
+    background: rgba(107,198,48,0.12);
+    border: 1px solid rgba(107,198,48,0.28);
+    padding: 7px 15px; border-radius: 999px;
+    margin-bottom: 24px;
+}
+.hcw-dot {
+    width: 7px; height: 7px; border-radius: 50%; background: #6bc630;
+    animation: hcwpulse 2s infinite;
+}
+@keyframes hcwpulse {
+    0%   { box-shadow: 0 0 0 0 rgba(107,198,48,0.6); }
+    70%  { box-shadow: 0 0 0 8px rgba(107,198,48,0); }
+    100% { box-shadow: 0 0 0 0 rgba(107,198,48,0); }
+}
+.hero-cine-h1 {
+    font-family: var(--head);
+    font-size: clamp(38px,5.4vw,60px);
+    font-weight: 800; letter-spacing: -0.04em; line-height: 1.05;
+    color: #fff; margin: 0 0 22px; max-width: 1040px;
+    text-shadow: 0 2px 30px rgba(6,46,20,0.35);
+}
+.hero-cine-accent { color: #8ed64a; }
+.hero-cine-sub {
+    font-family: var(--font);
+    font-size: clamp(16px,1.5vw,19px);
+    color: rgba(255,255,255,0.74); line-height: 1.6;
+    max-width: 500px; margin: 0 0 36px;
+}
+.hero-cine-cta { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; margin-bottom: 30px; }
+.hero-cta-ghost {
+    display: inline-flex; align-items: center; gap: 9px;
+    font-family: var(--font); font-size: 15.5px; font-weight: 600;
+    color: #fff; background: rgba(255,255,255,0.08);
+    border: 1.5px solid rgba(255,255,255,0.32);
+    border-radius: 14px; padding: 15px 30px;
+    text-decoration: none; cursor: pointer;
+    transition: background 0.18s, border-color 0.18s, transform 0.18s;
+    backdrop-filter: blur(4px); -webkit-backdrop-filter: blur(4px);
+}
+.hero-cta-ghost:hover { background: rgba(255,255,255,0.16); border-color: rgba(255,255,255,0.55); transform: translateY(-1px); }
+.hero-cine-trust { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; }
+.hct-item { display: inline-flex; align-items: center; gap: 7px; font-family: var(--font); font-size: 13.5px; font-weight: 500; color: rgba(255,255,255,0.85); }
+.hct-item svg { color: #8ed64a; flex-shrink: 0; }
+.hct-sep { width: 4px; height: 4px; border-radius: 50%; background: rgba(255,255,255,0.32); flex-shrink: 0; }
+@media (max-width: 760px) {
+    .hero-cine { min-height: 86svh; }
+    .hero-cine-media { object-position: 60% center; }
+    .hero-cine-scrim {
+        background:
+            linear-gradient(0deg, rgba(6,46,20,0.96) 0%, rgba(6,46,20,0.62) 46%, rgba(6,46,20,0.38) 100%),
+            linear-gradient(0deg, rgba(28,56,41,0.22), rgba(28,56,41,0.22));
+    }
+    .hero-cine-inner { padding-top: clamp(120px,15vh,160px); }
+}
+@media (prefers-reduced-motion: reduce) { .hcw-dot { animation: none; } }
+
 /* ══ Hero tabbed form ══ */
 .htf-wrap {
     width: 100%;
@@ -2081,88 +2175,63 @@ body { font-family: var(--font); color: var(--text); background: #fff; -webkit-f
 {{-- ══════════════════════════════════════════════════
      NAV — floating pill (Bobgo pattern)
 ══════════════════════════════════════════════════ --}}
-<x-landing.nav />
+<x-landing.nav :frosted="true" />
 
 
 {{-- ══════════════════════════════════════════════════
      HERO — two-column: copy left, form card right
 ══════════════════════════════════════════════════ --}}
 @php $cities = ['Harare','Bulawayo','Mutare','Gweru','Victoria Falls']; @endphp
-<div style="background:#fff;padding:clamp(16px,2vw,24px)">
-<section style="position:relative;overflow:hidden;background:var(--shade);display:flex;flex-direction:column;min-height:82svh;border-radius:8px;">
+<div style="background:#fff;padding:clamp(12px,1.6vw,20px)">
+<section class="hero-cine">
 
+    {{-- Full-bleed rider photo, graded toward the brand --}}
+    <img class="hero-cine-media" src="/images/nhume-rider-go.jpg"
+         alt="A Nhume GO rider delivering a parcel across Harare"
+         fetchpriority="high">
+    <span class="hero-cine-scrim" aria-hidden="true"></span>
 
-    <div class="mx-auto px-6 sm:px-8" style="position:relative;z-index:2;max-width:1240px;margin-left:auto;margin-right:auto;flex:1;display:flex;flex-direction:column;align-items:center;width:100%;">
-        <div style="flex:1;display:flex;flex-direction:column;align-items:center;padding-top:clamp(140px,17vh,190px);padding-bottom:0;">
+    {{-- Overlaid editorial copy --}}
+    <div class="hero-cine-inner">
+        <span class="hero-cine-eyebrow reveal">
+            <span class="hcw-dot"></span> Live across Harare · intercity Zimbabwe
+        </span>
 
-            {{-- ── Centered copy ── --}}
-            <div class="reveal" style="width:100%;max-width:1140px;margin:0 auto;text-align:center;">
-                <h1 style="font-family:var(--head);font-size:clamp(36px,5.4vw,64px);font-weight:800;letter-spacing:-0.04em;line-height:1.06;color:var(--forest);margin:0 0 24px;text-align:center;">
-                    <span class="h1-nowrap">Same-day errands and deliveries</span><br>
-                    <span class="h1-nowrap" style="background:linear-gradient(130deg,var(--green-mid) 0%,var(--green) 55%,#8ed64a 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;">across Harare. Intercity too.</span>
-                </h1>
+        <h1 class="hero-cine-h1 reveal">
+            <span class="h1-nowrap">Same-day errands and deliveries</span><br>
+            <span class="hero-cine-accent h1-nowrap">across Harare. Intercity too.</span>
+        </h1>
 
-                <p style="font-family:var(--font);font-size:19px;color:#5f6560;line-height:1.65;margin:0 auto 36px;max-width:520px;">
-                    Book in under a minute. Real riders in your suburb, real drivers on the road. From $3.
-                </p>
+        <p class="hero-cine-sub reveal">
+            Book in under a minute. Real riders in your suburb, real drivers on the road. From $3.
+        </p>
 
-                {{-- Hero CTAs ── --}}
-                <div class="hero-cta-wrap">
-                    <div class="hero-cta-btns">
-                        <a href="{{ route('send') }}" class="hero-cta-primary">
-                            Send Parcel
-                            <svg width="15" height="15" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"/></svg>
-                        </a>
-                        <button type="button" @click="trackOpen = true; $nextTick(() => $refs.trackInput?.focus())" class="hero-cta-secondary">
-                            <svg width="15" height="15" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
-                            Track a parcel
-                        </button>
-                    </div>
+        <div class="hero-cine-cta reveal">
+            <a href="{{ route('send') }}" class="hero-cta-primary">
+                Send a parcel
+                <svg width="15" height="15" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"/></svg>
+            </a>
+            <button type="button" @click="trackOpen = true; $nextTick(() => $refs.trackInput?.focus())" class="hero-cta-ghost">
+                <svg width="15" height="15" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
+                Track a parcel
+            </button>
+        </div>
 
-                    {{-- Outcome trust chips ── --}}
-                    <div class="hero-trust-chips">
-                        <span class="hero-chip">
-                            <svg width="14" height="14" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"/></svg>
-                            From $3 intercity
-                        </span>
-                        <span class="hero-chip-dot"></span>
-                        <span class="hero-chip">
-                            <svg width="14" height="14" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"/></svg>
-                            Same-day delivery
-                        </span>
-                        <span class="hero-chip-dot"></span>
-                        <span class="hero-chip">
-                            <svg width="14" height="14" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"/></svg>
-                            Tracked live
-                        </span>
-                    </div>
-
-                </div>
-            </div>
-
-            {{-- ── Hero photo: a real Nhume GO rider ── --}}
-            <div class="hero-scene reveal">
-                <div class="hero-photo-wrap">
-                    <div class="hero-photo">
-                        <img src="/images/nhume-rider-go.jpg"
-                             alt="A Nhume GO rider delivering a parcel across Harare"
-                             fetchpriority="high">
-                    </div>
-
-                    {{-- live status accent card overlapping the corner --}}
-                    <div class="hero-accent">
-                        <span class="sc-tag">In transit</span>
-                        <div class="sc-row" style="margin-top:11px;gap:9px;">
-                            <span class="sc-photo-avatar"><img src="/images/driver-2.jpg" alt="" style="object-position:26% 42%"></span>
-                            <div>
-                                <p class="sc-strong">NHM-4821</p>
-                                <p class="sc-sub">Harare → Bulawayo</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
+        <div class="hero-cine-trust reveal">
+            <span class="hct-item">
+                <svg width="14" height="14" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"/></svg>
+                From $3 intercity
+            </span>
+            <span class="hct-sep"></span>
+            <span class="hct-item">
+                <svg width="14" height="14" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"/></svg>
+                Same-day delivery
+            </span>
+            <span class="hct-sep"></span>
+            <span class="hct-item">
+                <svg width="14" height="14" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"/></svg>
+                Tracked live
+            </span>
         </div>
     </div>
 
