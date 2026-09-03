@@ -1678,14 +1678,63 @@ body { font-family: var(--font); color: var(--text); background: #fff; -webkit-f
 .hero-scene {
     position: relative;
     width: 100%;
-    max-width: 1040px;
-    margin: auto auto 0;
-    flex: 1 1 auto;
-    min-height: 200px;
+    max-width: 960px;
+    margin: clamp(20px,3vh,44px) auto 0;
+    flex: 0 0 auto;
     z-index: 0;
-    opacity: 1;
-    transition: opacity 0.3s ease;
+    display: flex;
+    justify-content: center;
 }
+
+/* ── Single-photo hero — a real Nhume GO rider ── */
+.hero-photo-wrap {
+    position: relative;
+    width: 100%;
+    max-width: 920px;
+}
+.hero-photo-wrap::before {
+    content: "";
+    position: absolute;
+    inset: -6% -4% -10%;
+    background: radial-gradient(58% 58% at 50% 46%, rgba(107,198,48,0.20), transparent 72%);
+    z-index: 0;
+    pointer-events: none;
+}
+.hero-photo {
+    position: relative;
+    z-index: 1;
+    aspect-ratio: 16 / 9;
+    border-radius: 22px;
+    overflow: hidden;
+    box-shadow: 0 44px 84px -34px rgba(6,46,20,0.38),
+                0 14px 32px -20px rgba(6,46,20,0.22);
+    border: 1px solid rgba(255,255,255,0.6);
+}
+.hero-photo img {
+    width: 100%; height: 100%;
+    object-fit: cover;
+    object-position: center;
+    display: block;
+}
+.hero-accent {
+    position: absolute;
+    z-index: 2;
+    left: -20px; bottom: 28px;
+    background: #fdfcfb;
+    border: 1px solid #edece7;
+    border-radius: 15px;
+    box-shadow: 0 26px 50px -22px rgba(6,46,20,0.30),
+                0 8px 18px -12px rgba(6,46,20,0.16);
+    padding: 13px 15px;
+    width: max-content;
+    max-width: 220px;
+    animation: floatA 7.5s cubic-bezier(0.45,0,0.55,1) infinite;
+}
+@media (max-width: 640px) {
+    .hero-photo { aspect-ratio: 4 / 3; border-radius: 16px; }
+    .hero-accent { left: 8px; bottom: 10px; transform: scale(0.88); transform-origin: left bottom; }
+}
+@media (max-width: 380px) { .hero-accent { display: none; } }
 .cta-scene, .cta-scene:hover { opacity: 0.45; }
 .cta-scene .scene-card { opacity: 0.85; }
 /* form card sits above the scene */
@@ -1879,7 +1928,7 @@ body { font-family: var(--font); color: var(--text); background: #fff; -webkit-f
     .scene-van { width: clamp(180px, 46vw, 260px); }
 }
 @media (prefers-reduced-motion: reduce) {
-    .scene-van, .scene-card, .scene-pin-pulse, .scene-sparkle { animation: none; }
+    .scene-van, .scene-card, .scene-pin-pulse, .scene-sparkle, .hero-accent { animation: none; }
     .scene-van { transform: translate(-50%, -50%); }
 }
 
@@ -2044,7 +2093,7 @@ body { font-family: var(--font); color: var(--text); background: #fff; -webkit-f
 
 
     <div class="mx-auto px-6 sm:px-8" style="position:relative;z-index:2;max-width:1240px;margin-left:auto;margin-right:auto;flex:1;display:flex;flex-direction:column;align-items:center;width:100%;">
-        <div style="flex:1;display:flex;flex-direction:column;align-items:center;padding-top:clamp(200px,26vh,280px);padding-bottom:0;">
+        <div style="flex:1;display:flex;flex-direction:column;align-items:center;padding-top:clamp(140px,17vh,190px);padding-bottom:0;">
 
             {{-- ── Centered copy ── --}}
             <div class="reveal" style="width:100%;max-width:1140px;margin:0 auto;text-align:center;">
@@ -2091,53 +2140,27 @@ body { font-family: var(--font); color: var(--text); background: #fff; -webkit-f
                 </div>
             </div>
 
-            {{-- ── Floating scene: van, route & live cards ── --}}
-            <div class="hero-scene reveal" aria-hidden="true">
-
-                {{-- card: driver status (top-left) --}}
-                <div class="scene-card sc-status">
-                    <div class="sc-row" style="margin-bottom:11px;">
-                        <span class="sc-ic"><svg width="15" height="15" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 7l-8-4-8 4m16 0v10l-8 4m0-14L4 17m8 4V11"/></svg></span>
-                        <span class="sc-title">Driver status</span>
+            {{-- ── Hero photo: a real Nhume GO rider ── --}}
+            <div class="hero-scene reveal">
+                <div class="hero-photo-wrap">
+                    <div class="hero-photo">
+                        <img src="/images/nhume-rider-go.jpg"
+                             alt="A Nhume GO rider delivering a parcel across Harare"
+                             fetchpriority="high">
                     </div>
-                    <span class="sc-tag">In transit</span>
-                    <div class="sc-row" style="margin-top:12px;gap:9px;">
-                        <span class="sc-photo-avatar"><img src="/images/driver-2.jpg" alt="" style="object-position:26% 42%"></span>
-                        <div>
-                            <p class="sc-strong">NHM-4821</p>
-                            <p class="sc-sub">Harare → Bulawayo</p>
+
+                    {{-- live status accent card overlapping the corner --}}
+                    <div class="hero-accent">
+                        <span class="sc-tag">In transit</span>
+                        <div class="sc-row" style="margin-top:11px;gap:9px;">
+                            <span class="sc-photo-avatar"><img src="/images/driver-2.jpg" alt="" style="object-position:26% 42%"></span>
+                            <div>
+                                <p class="sc-strong">NHM-4821</p>
+                                <p class="sc-sub">Harare → Bulawayo</p>
+                            </div>
                         </div>
                     </div>
                 </div>
-
-                {{-- card: create shipment (bottom-left) --}}
-                <div class="scene-card sc-order">
-                    <span class="sc-avatar" style="background:var(--green)"><svg width="15" height="15" fill="none" stroke="var(--forest-deep)" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M12 5v14m-7-7h14"/></svg></span>
-                    <div>
-                        <p class="sc-strong">Create a shipment</p>
-                        <p class="sc-sub">60 seconds · no account</p>
-                    </div>
-                </div>
-
-                {{-- card: reviewed driver (right) — photo card --}}
-                <div class="scene-card sc-driver sc-photo">
-                    <img class="sc-photo-img" src="/images/driver-1.jpg" alt="Nhume driver on the road" style="object-position:42% 16%">
-                    <span class="sc-photo-tag">
-                        <svg width="11" height="11" fill="none" stroke="var(--green-mid)" viewBox="0 0 24 24" style="flex-shrink:0"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/></svg>
-                        Tendai Moyo
-                    </span>
-                </div>
-
-                {{-- card: pickup (bottom-right) --}}
-                <div class="scene-card sc-pickup">
-                    <div class="sc-row" style="justify-content:space-between;margin-bottom:9px;">
-                        <span class="sc-title">Pickup</span>
-                        <svg width="15" height="15" fill="none" stroke="#9aa096" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 17L17 7M7 7h10v10"/></svg>
-                    </div>
-                    <p class="sc-strong">Msasa Depot</p>
-                    <p class="sc-sub">Cnr Mutare Rd · Harare</p>
-                </div>
-
             </div>
 
         </div>
