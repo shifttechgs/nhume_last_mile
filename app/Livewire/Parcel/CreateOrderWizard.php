@@ -55,6 +55,10 @@ final class CreateOrderWizard extends Component
     public function mount(): void
     {
         $this->scheduled_at = now()->addHour()->format('Y-m-d\TH:i');
+
+        // Prefill addresses from the homepage quote-starter (low-friction entry)
+        $this->pickup_address  = trim((string) request('pickup', ''));
+        $this->dropoff_address = trim((string) request('dropoff', ''));
     }
 
     #[Computed(persist: true)]
