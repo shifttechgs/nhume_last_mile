@@ -12,11 +12,9 @@
     transition: background 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
 }
 .nav-outer.is-scrolled {
-    background: rgba(255,255,255,0.97);
+    background: #fff;
     border-bottom: 1px solid #e5e9e3;
     box-shadow: 0 2px 20px rgba(28,56,41,0.08);
-    backdrop-filter: blur(12px);
-    -webkit-backdrop-filter: blur(12px);
 }
 .nav-bar {
     max-width: 1360px;
