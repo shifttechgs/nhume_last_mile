@@ -53,14 +53,14 @@
     text-decoration: none; white-space: nowrap;
     cursor: pointer; border: none; background: transparent;
 }
-.nav-link:hover { color: #fff; background: rgba(255,255,255,0.1); }
+.nav-link:hover { color: #fff; }
 .nav-link.active { color: #fff; }
 /* Light hero (welcome page — no dark-hero class) */
 .nav-outer:not(.dark-hero) .nav-link { color: #374151; }
-.nav-outer:not(.dark-hero) .nav-link:hover { color: #1C3829; background: #f4f6f3; }
+.nav-outer:not(.dark-hero) .nav-link:hover { color: #1C3829; }
 /* Always dark when scrolled */
 .nav-outer.is-scrolled .nav-link { color: #374151; }
-.nav-outer.is-scrolled .nav-link:hover { color: #1C3829; background: #f4f6f3; }
+.nav-outer.is-scrolled .nav-link:hover { color: #1C3829; }
 .nav-outer.is-scrolled .nav-link.active { color: #1C3829; }
 
 /* Logo: light variant on dark hero, dark variant always scrolled or light hero */
@@ -80,11 +80,11 @@
     transition: color 0.2s, background 0.2s;
     white-space: nowrap;
 }
-.nav-login:hover { color: #fff; background: rgba(255,255,255,0.1); }
+.nav-login:hover { color: #fff; }
 .nav-outer:not(.dark-hero) .nav-login { color: #374151; }
-.nav-outer:not(.dark-hero) .nav-login:hover { color: #1C3829; background: #f4f6f3; }
+.nav-outer:not(.dark-hero) .nav-login:hover { color: #1C3829; }
 .nav-outer.is-scrolled .nav-login { color: #374151; }
-.nav-outer.is-scrolled .nav-login:hover { color: #1C3829; background: #f4f6f3; }
+.nav-outer.is-scrolled .nav-login:hover { color: #1C3829; }
 
 /* ── Pill buttons — white outline on dark hero, green outline scrolled ── */
 .btn-nav-outline {
