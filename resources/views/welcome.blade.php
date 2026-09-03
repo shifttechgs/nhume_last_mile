@@ -972,25 +972,14 @@ body { font-family: var(--font); color: var(--text); background: #fff; -webkit-f
 
 /* centered links group */
 .nav-center {
-    position: absolute;
-    left: 50%;
-    transform: translateX(-50%);
     display: flex;
     align-items: center;
     gap: 2px;
-    pointer-events: all;
-    background: rgba(255,255,255,0.88);
-    border: 1px solid rgba(0,0,0,0.07);
-    border-radius: 8px;
-    padding: 6px;
-    backdrop-filter: blur(12px);
-    -webkit-backdrop-filter: blur(12px);
 }
 .nav-right {
     display: flex;
     align-items: center;
     gap: 8px;
-    pointer-events: all;
 }
 
 /* Nav link (pill on hover) */
