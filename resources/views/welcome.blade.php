@@ -2091,56 +2091,75 @@ body { font-family: var(--font); color: var(--text); background: #fff; -webkit-f
             {{-- ── Floating scene: van, route & live cards ── --}}
             <div class="hero-scene reveal" aria-hidden="true">
 
-                {{-- faint dotted world map backdrop (like the reference) --}}
-                <svg class="scene-globe" viewBox="0 0 1000 500" fill="none" preserveAspectRatio="xMidYMid meet">
+                {{-- ══ Zimbabwe corridor map — real cities, real routes ══ --}}
+                <svg class="scene-globe scene-zw" viewBox="0 0 1000 560" fill="none" preserveAspectRatio="xMidYMid meet">
                     <defs>
                         <pattern id="mapDots" width="13" height="13" patternUnits="userSpaceOnUse">
-                            <circle cx="2" cy="2" r="1.7" fill="rgba(28,56,41,0.17)"/>
+                            <circle cx="2" cy="2" r="1.7" fill="rgba(28,56,41,0.14)"/>
                         </pattern>
+                        <linearGradient id="zwFill" x1="0" y1="0" x2="0" y2="1">
+                            <stop offset="0" stop-color="#6bc630" stop-opacity="0.10"/>
+                            <stop offset="1" stop-color="#6bc630" stop-opacity="0.03"/>
+                        </linearGradient>
                     </defs>
-                    <g fill="url(#mapDots)">
-                        {{-- North America --}}
-                        <path d="M120 90 C100 120 105 150 130 165 C120 200 155 220 185 205 C200 235 235 235 250 210 C270 215 285 190 275 165 C295 150 295 120 270 108 C260 85 225 78 200 88 C175 78 140 78 120 90 Z"/>
-                        {{-- South America --}}
-                        <path d="M300 250 C280 260 275 290 290 320 C292 360 312 408 332 406 C354 400 350 360 342 330 C352 300 345 270 328 258 C320 250 310 249 300 250 Z"/>
-                        {{-- Europe --}}
-                        <path d="M500 105 C486 110 484 128 496 140 C491 158 513 164 530 157 C548 161 560 146 552 130 C561 115 548 100 528 103 C518 98 508 101 500 105 Z"/>
-                        {{-- Africa --}}
-                        <path d="M520 180 C500 195 500 228 515 256 C515 300 535 352 560 356 C584 351 598 314 590 282 C608 252 603 210 580 194 C560 178 538 174 520 180 Z"/>
-                        {{-- Asia --}}
-                        <path d="M620 85 C596 93 591 122 611 143 C601 176 640 204 685 199 C734 208 798 194 843 172 C876 156 880 120 850 103 C814 82 746 76 696 80 C671 78 646 79 620 85 Z"/>
-                        {{-- Australia --}}
-                        <path d="M792 335 C772 345 774 372 794 388 C817 402 853 400 873 385 C889 371 884 346 863 337 C839 328 812 328 792 335 Z"/>
+
+                    {{-- Country shape: soft fill + dotted texture + outline --}}
+                    @php
+                        $zw = 'M 160 195 C 230 138 350 122 440 122 C 540 122 640 132 730 158 C 786 174 828 210 848 268 C 862 312 852 350 838 372 C 806 412 740 428 690 442 C 636 460 606 478 580 500 C 548 474 470 440 410 428 C 330 412 236 402 190 358 C 150 322 140 268 150 232 C 154 216 152 204 160 195 Z';
+                    @endphp
+                    <path d="{{ $zw }}" fill="url(#zwFill)"/>
+                    <path d="{{ $zw }}" fill="url(#mapDots)"/>
+                    <path d="{{ $zw }}" fill="none" stroke="rgba(28,56,41,0.18)" stroke-width="2" stroke-linejoin="round"/>
+
+                    {{-- Secondary corridors (faint) --}}
+                    <g stroke="var(--green)" stroke-width="2.4" fill="none" stroke-linecap="round" opacity="0.35">
+                        <path d="M678 211 C 730 232 780 258 828 283"/>                {{-- Harare → Mutare --}}
+                        <path d="M678 211 C 672 260 664 310 657 352"/>                {{-- Harare → Masvingo --}}
+                        <path d="M447 358 C 360 320 260 262 189 217"/>                {{-- Bulawayo → Vic Falls --}}
+                    </g>
+
+                    {{-- Primary corridor: Harare → Gweru → Bulawayo (animated flow) --}}
+                    <path id="corridorMain" d="M678 211 C 640 258 600 288 563 313 C 520 342 484 350 447 358"
+                          stroke="var(--green)" stroke-width="3" fill="none" stroke-linecap="round"
+                          stroke-dasharray="2 11" opacity="0.95">
+                        <animate attributeName="stroke-dashoffset" values="0;-52" dur="2.4s" repeatCount="indefinite"/>
+                    </path>
+
+                    {{-- Travelling vehicle marker along the primary corridor --}}
+                    <g>
+                        <circle r="9" fill="var(--green)" opacity="0.25"/>
+                        <circle r="4.5" fill="var(--green)"/>
+                        <animateMotion dur="4.5s" repeatCount="indefinite" rotate="auto">
+                            <mpath href="#corridorMain"/>
+                        </animateMotion>
+                    </g>
+
+                    {{-- City nodes --}}
+                    <g>
+                        {{-- Secondary cities --}}
+                        @foreach([
+                            [189,217,'Victoria Falls','end',175,213],
+                            [828,283,'Mutare','end',814,278],
+                            [563,313,'Gweru','middle',563,332],
+                            [657,352,'Masvingo','start',670,368],
+                        ] as [$cx,$cy,$name,$anchor,$lx,$ly])
+                        <circle cx="{{ $cx }}" cy="{{ $cy }}" r="5" fill="#fff" stroke="var(--forest)" stroke-width="2.5"/>
+                        <text x="{{ $lx }}" y="{{ $ly }}" text-anchor="{{ $anchor }}"
+                              font-family="'DM Sans',sans-serif" font-size="15" font-weight="600" fill="rgba(28,56,41,0.75)">{{ $name }}</text>
+                        @endforeach
+
+                        {{-- Bulawayo (corridor endpoint) --}}
+                        <circle cx="447" cy="358" r="7" fill="var(--green)"/>
+                        <circle cx="447" cy="358" r="13" fill="var(--green)" opacity="0.18"/>
+                        <text x="447" y="382" text-anchor="middle" font-family="'DM Sans',sans-serif" font-size="16" font-weight="700" fill="var(--forest)">Bulawayo</text>
+
+                        {{-- Harare (hub) --}}
+                        <circle cx="678" cy="211" r="18" fill="var(--green)" opacity="0.14"/>
+                        <circle cx="678" cy="211" r="9" fill="var(--green)"/>
+                        <circle cx="678" cy="211" r="3.5" fill="#fff"/>
+                        <text x="694" y="206" text-anchor="start" font-family="'DM Sans',sans-serif" font-size="17" font-weight="700" fill="var(--forest)">Harare</text>
                     </g>
                 </svg>
-
-                {{-- one dotted route: Driver status → Msasa Depot (road-like) --}}
-                <svg class="scene-route" viewBox="0 0 1000 380" fill="none" preserveAspectRatio="none">
-                    <circle cx="132" cy="120" r="5.5" fill="var(--green)"/>
-                    <path d="M132 120 C 300 170, 300 244, 480 257 C 640 268, 660 293, 792 305"
-                          stroke="var(--green)" stroke-width="2.4" stroke-dasharray="1.5 12" stroke-linecap="round" opacity="0.9"/>
-                </svg>
-
-                {{-- delivery van --}}
-                <svg class="scene-van" viewBox="0 0 240 150" fill="none">
-                    <ellipse cx="118" cy="128" rx="98" ry="9" fill="rgba(28,56,41,0.08)"/>
-                    <rect x="22" y="34" width="118" height="66" rx="10" fill="#fff" stroke="var(--forest)" stroke-width="3.5"/>
-                    <path d="M140 34 H176 L206 66 V100 H140 Z" fill="#fff" stroke="var(--forest)" stroke-width="3.5" stroke-linejoin="round"/>
-                    <path d="M150 46 H172 L191 64 H150 Z" fill="var(--green-light)" stroke="var(--forest)" stroke-width="2.5" stroke-linejoin="round"/>
-                    <path d="M84 36 V98" stroke="var(--forest)" stroke-width="2.5"/>
-                    <path d="M28 82 H132" stroke="var(--green)" stroke-width="6" stroke-linecap="round"/>
-                    <circle cx="200" cy="86" r="4" fill="var(--green)"/>
-                    <circle cx="62" cy="100" r="18" fill="#fff" stroke="var(--forest)" stroke-width="3.5"/>
-                    <circle cx="62" cy="100" r="6.5" fill="var(--forest)"/>
-                    <circle cx="176" cy="100" r="18" fill="#fff" stroke="var(--forest)" stroke-width="3.5"/>
-                    <circle cx="176" cy="100" r="6.5" fill="var(--forest)"/>
-                </svg>
-
-                {{-- destination marker near Msasa Depot (route end) --}}
-                <div class="scene-pin scene-pin-depot">
-                    <span class="scene-pin-pulse"></span>
-                    <svg width="30" height="30" viewBox="0 0 24 24" fill="var(--forest)"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5a2.5 2.5 0 110-5 2.5 2.5 0 010 5z"/></svg>
-                </div>
 
                 {{-- twinkle sparkles (human touch) --}}
                 <span class="scene-sparkle sparkle-a"><svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2 C 12.5 8, 16 11.5, 22 12 C 16 12.5, 12.5 16, 12 22 C 11.5 16, 8 12.5, 2 12 C 8 11.5, 11.5 8, 12 2 Z"/></svg></span>
