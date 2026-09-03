@@ -48,10 +48,9 @@
     font-size: 15.5px; font-weight: 500;
     color: rgba(255,255,255,0.82);
     padding: 9px 15px;
-    border-radius: 6px;
-    transition: color 0.2s, background 0.2s;
+    transition: color 0.2s;
     text-decoration: none; white-space: nowrap;
-    cursor: pointer; border: none; background: transparent;
+    cursor: pointer; border: none; background: none;
 }
 .nav-link:hover { color: #fff; }
 .nav-link.active { color: #fff; }
@@ -76,9 +75,9 @@
     color: rgba(255,255,255,0.8);
     text-decoration: none;
     padding: 9px 14px;
-    border-radius: 6px;
-    transition: color 0.2s, background 0.2s;
+    transition: color 0.2s;
     white-space: nowrap;
+    background: none; border: none; cursor: pointer;
 }
 .nav-login:hover { color: #fff; }
 .nav-outer:not(.dark-hero) .nav-login { color: #374151; }
