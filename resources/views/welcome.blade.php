@@ -1743,8 +1743,8 @@ body { font-family: var(--font); color: var(--text); background: #fff; -webkit-f
     border: 1px solid #edece7;
     border-radius: 15px;
     /* soft, diffuse shadow — resting on light rather than punching out */
-    box-shadow: 0 26px 52px -18px rgba(28,56,41,0.13),
-                0 10px 24px -14px rgba(28,56,41,0.08);
+    box-shadow: 0 30px 60px -22px rgba(28,56,41,0.09),
+                0 12px 28px -18px rgba(28,56,41,0.05);
     padding: 13px 15px;
     padding-bottom: 0;
     opacity: 1;
