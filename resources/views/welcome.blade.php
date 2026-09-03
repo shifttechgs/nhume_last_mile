@@ -2047,10 +2047,10 @@ body { font-family: var(--font); color: var(--text); background: #fff; -webkit-f
         <div style="flex:1;display:flex;flex-direction:column;align-items:center;padding-top:clamp(200px,26vh,280px);padding-bottom:0;">
 
             {{-- ── Centered copy ── --}}
-            <div class="reveal" style="width:100%;max-width:860px;margin:0 auto;text-align:center;">
-                <h1 style="font-family:var(--head);font-size:clamp(40px,5.6vw,72px);font-weight:800;letter-spacing:-0.04em;line-height:1.04;color:var(--forest);margin:0 0 24px;text-align:center;">
+            <div class="reveal" style="width:100%;max-width:1040px;margin:0 auto;text-align:center;">
+                <h1 style="font-family:var(--head);font-size:clamp(34px,5vw,60px);font-weight:800;letter-spacing:-0.035em;line-height:1.06;color:var(--forest);margin:0 0 24px;text-align:center;">
                     <span class="h1-nowrap">Same-day errands and deliveries</span><br>
-                    <span style="background:linear-gradient(130deg,var(--green-mid) 0%,var(--green) 55%,#8ed64a 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;">across Harare. Intercity too.</span>
+                    <span class="h1-nowrap" style="background:linear-gradient(130deg,var(--green-mid) 0%,var(--green) 55%,#8ed64a 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;">across Harare. Intercity too.</span>
                 </h1>
 
                 <p style="font-family:var(--font);font-size:19px;color:#5f6560;line-height:1.65;margin:0 auto 36px;max-width:520px;">
