@@ -48,9 +48,9 @@
 .nav-link {
     display: inline-flex; align-items: center; gap: 4px;
     font-family: 'DM Sans', system-ui, sans-serif;
-    font-size: 14px; font-weight: 500;
+    font-size: 15.5px; font-weight: 500;
     color: rgba(255,255,255,0.82);
-    padding: 8px 14px;
+    padding: 9px 15px;
     border-radius: 6px;
     transition: color 0.2s, background 0.2s;
     text-decoration: none; white-space: nowrap;
@@ -75,10 +75,10 @@
 /* ── Login link ── */
 .nav-login {
     font-family: 'DM Sans', system-ui, sans-serif;
-    font-size: 14px; font-weight: 500;
+    font-size: 15.5px; font-weight: 500;
     color: rgba(255,255,255,0.8);
     text-decoration: none;
-    padding: 8px 12px;
+    padding: 9px 14px;
     border-radius: 6px;
     transition: color 0.2s, background 0.2s;
     white-space: nowrap;
@@ -93,9 +93,9 @@
 .btn-nav-outline {
     display: inline-flex; align-items: center; gap: 6px;
     font-family: 'DM Sans', system-ui, sans-serif;
-    font-size: 14px; font-weight: 600;
+    font-size: 15px; font-weight: 600;
     color: #fff;
-    padding: 9px 20px;
+    padding: 10px 22px;
     border-radius: 9999px;
     border: 1.5px solid rgba(255,255,255,0.6);
     background: transparent;
@@ -112,9 +112,9 @@
 .btn-nav-fill {
     display: inline-flex; align-items: center; gap: 7px;
     font-family: 'DM Sans', system-ui, sans-serif;
-    font-size: 14px; font-weight: 600;
+    font-size: 15px; font-weight: 600;
     color: #fff;
-    padding: 9px 22px;
+    padding: 10px 24px;
     border-radius: 9999px; border: none;
     background: #6bc630;
     text-decoration: none;
