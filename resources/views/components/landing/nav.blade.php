@@ -1,17 +1,22 @@
 @props(['frosted' => false])
 <style>
-/* ── Flat full-width nav — BobGo-style ── */
+/* ═══════════════════════════════════════════
+   NAV — transparent on hero, solid on scroll
+═══════════════════════════════════════════ */
 .nav-outer {
     position: fixed;
     top: 0; left: 0; right: 0;
     z-index: 100;
-    background: #fff;
-    border-bottom: 1px solid #f0f2ef;
-    transition: box-shadow 0.25s ease, border-color 0.25s ease;
+    background: transparent;
+    border-bottom: 1px solid transparent;
+    transition: background 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
 }
 .nav-outer.is-scrolled {
-    box-shadow: 0 2px 16px rgba(28,56,41,0.08);
-    border-bottom-color: #e5e9e3;
+    background: rgba(255,255,255,0.97);
+    border-bottom: 1px solid #e5e9e3;
+    box-shadow: 0 2px 20px rgba(28,56,41,0.08);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
 }
 .nav-bar {
     max-width: 1360px;
@@ -24,61 +29,79 @@
 }
 .nav-logo { display: flex; align-items: center; text-decoration: none; flex-shrink: 0; }
 
-/* ── Center links — no pill container ── */
+/* ── Center links ── */
 .nav-center {
     position: absolute;
     left: 50%; transform: translateX(-50%);
     display: flex; align-items: center; gap: 2px;
-    background: none; border: none; border-radius: 0; padding: 0;
-    backdrop-filter: none;
+    background: none; border: none; padding: 0;
 }
 .nav-right { display: flex; align-items: center; gap: 8px; }
+
+/* ── Nav links — light on dark hero, dark when scrolled ── */
 .nav-link {
     display: inline-flex; align-items: center; gap: 4px;
     font-family: 'DM Sans', system-ui, sans-serif;
     font-size: 14px; font-weight: 500;
-    color: #374151;
+    color: rgba(255,255,255,0.82);
     padding: 8px 14px;
     border-radius: 6px;
-    transition: color 0.15s, background 0.15s;
+    transition: color 0.2s, background 0.2s;
     text-decoration: none; white-space: nowrap;
     cursor: pointer; border: none; background: transparent;
 }
-.nav-link:hover { color: #1C3829; background: #f4f6f3; }
-.nav-link.active { color: #1C3829; font-weight: 600; }
+.nav-link:hover { color: #fff; background: rgba(255,255,255,0.1); }
+.nav-link.active { color: #fff; }
+/* Light hero (welcome page — no dark-hero class) */
+.nav-outer:not(.dark-hero) .nav-link { color: #374151; }
+.nav-outer:not(.dark-hero) .nav-link:hover { color: #1C3829; background: #f4f6f3; }
+/* Always dark when scrolled */
+.nav-outer.is-scrolled .nav-link { color: #374151; }
+.nav-outer.is-scrolled .nav-link:hover { color: #1C3829; background: #f4f6f3; }
+.nav-outer.is-scrolled .nav-link.active { color: #1C3829; }
 
-/* Logo swap not needed on flat nav — both logos same visibility */
+/* Logo: light variant on dark hero, dark variant always scrolled or light hero */
 .logo-light { display: none; }
 .logo-dark  { display: block; }
+.nav-outer.dark-hero:not(.is-scrolled) .logo-light { display: block; }
+.nav-outer.dark-hero:not(.is-scrolled) .logo-dark  { display: none; }
 
 /* ── Login link ── */
 .nav-login {
     font-family: 'DM Sans', system-ui, sans-serif;
     font-size: 14px; font-weight: 500;
-    color: #374151;
+    color: rgba(255,255,255,0.8);
     text-decoration: none;
     padding: 8px 12px;
     border-radius: 6px;
-    transition: color 0.15s, background 0.15s;
+    transition: color 0.2s, background 0.2s;
     white-space: nowrap;
 }
-.nav-login:hover { color: #1C3829; background: #f4f6f3; }
+.nav-login:hover { color: #fff; background: rgba(255,255,255,0.1); }
+.nav-outer:not(.dark-hero) .nav-login { color: #374151; }
+.nav-outer:not(.dark-hero) .nav-login:hover { color: #1C3829; background: #f4f6f3; }
+.nav-outer.is-scrolled .nav-login { color: #374151; }
+.nav-outer.is-scrolled .nav-login:hover { color: #1C3829; background: #f4f6f3; }
 
-/* ── Pill buttons ── */
+/* ── Pill buttons — white outline on dark hero, green outline scrolled ── */
 .btn-nav-outline {
     display: inline-flex; align-items: center; gap: 6px;
     font-family: 'DM Sans', system-ui, sans-serif;
     font-size: 14px; font-weight: 600;
-    color: #1C3829;
+    color: #fff;
     padding: 9px 20px;
     border-radius: 9999px;
-    border: 1.5px solid #6bc630;
+    border: 1.5px solid rgba(255,255,255,0.6);
     background: transparent;
     text-decoration: none;
-    transition: background 0.15s;
+    transition: border-color 0.2s, color 0.2s, background 0.2s;
     white-space: nowrap; cursor: pointer;
 }
-.btn-nav-outline:hover { background: #f0fde4; }
+.btn-nav-outline:hover { border-color: #fff; background: rgba(255,255,255,0.08); }
+.nav-outer:not(.dark-hero) .btn-nav-outline { color: #1C3829; border-color: #6bc630; }
+.nav-outer:not(.dark-hero) .btn-nav-outline:hover { background: #f0fde4; }
+.nav-outer.is-scrolled .btn-nav-outline { color: #1C3829; border-color: #6bc630; }
+.nav-outer.is-scrolled .btn-nav-outline:hover { background: #f0fde4; }
 
 .btn-nav-fill {
     display: inline-flex; align-items: center; gap: 7px;
@@ -110,12 +133,10 @@
 }
 .nav-dropdown a {
     display: flex; align-items: center; gap: 10px;
-    padding: 10px 12px;
-    border-radius: 6px;
+    padding: 10px 12px; border-radius: 6px;
     font-family: 'DM Sans', system-ui, sans-serif;
     font-size: 13.5px; font-weight: 500;
-    color: #374151;
-    text-decoration: none;
+    color: #374151; text-decoration: none;
     transition: background 0.12s, color 0.12s;
 }
 .nav-dropdown a:hover { background: #f4f6f3; color: #1C3829; }
@@ -129,29 +150,33 @@
 /* ── Mobile ── */
 .nav-mobile-dropdown {
     position: fixed;
-    top: 72px; left: 0; right: 0; z-index: 99;
+    top: 68px; left: 0; right: 0; z-index: 99;
     background: #fff;
     border-top: 1px solid #f0f2ef;
     box-shadow: 0 12px 36px rgba(28,56,41,0.1);
     padding: 12px 20px 20px;
-    max-height: calc(100vh - 72px);
+    max-height: calc(100vh - 68px);
     overflow-y: auto;
 }
 .nav-mobile-btn {
     display: flex; align-items: center; justify-content: center;
-    width: 40px; height: 40px;
-    border-radius: 8px;
+    width: 40px; height: 40px; border-radius: 8px;
+    background: rgba(255,255,255,0.15);
+    border: 1px solid rgba(255,255,255,0.25);
+    color: #fff; cursor: pointer;
+    transition: background 0.15s;
+}
+.nav-outer:not(.dark-hero) .nav-mobile-btn,
+.nav-outer.is-scrolled .nav-mobile-btn {
     background: #f4f6f3;
     border: none;
     color: #1C3829;
-    cursor: pointer;
 }
 .mobile-section-label {
     font-family: 'DM Sans', system-ui, sans-serif;
     font-size: 10px; font-weight: 700;
     letter-spacing: 0.1em; text-transform: uppercase;
-    color: #9ca3af;
-    padding: 10px 4px 4px;
+    color: #9ca3af; padding: 10px 4px 4px;
 }
 .nav-desktop { display: none; }
 @media (min-width: 1024px) {
@@ -175,12 +200,14 @@
 })();
 </script>
 
-<div id="site-nav" x-data="{ open: false, dd: '' }" class="nav-outer">
+<div id="site-nav" x-data="{ open: false, dd: '' }"
+     class="nav-outer{{ $frosted ? ' dark-hero' : '' }}">
     <div class="nav-bar">
 
         {{-- Logo --}}
         <a href="/" class="nav-logo" aria-label="Nhume home">
-            <img src="/images/nhume_logo_v4.png" alt="Nhume" style="width:120px;height:auto;">
+            <img src="/images/nhume_logo_dark_bg.png" alt="Nhume" class="logo-light" style="width:120px;height:auto;">
+            <img src="/images/nhume_logo_v4.png"      alt="Nhume" class="logo-dark"  style="width:120px;height:auto;">
         </a>
 
         {{-- Centered links (desktop) --}}

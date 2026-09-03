@@ -2037,11 +2037,11 @@ body { font-family: var(--font); color: var(--text); background: #fff; -webkit-f
 ══════════════════════════════════════════════════ --}}
 @php $cities = ['Harare','Bulawayo','Mutare','Gweru','Victoria Falls']; @endphp
 <div style="background:#fff;padding:clamp(16px,2vw,24px)">
-<section style="position:relative;overflow:hidden;background:var(--shade);display:flex;flex-direction:column;min-height:82svh;border-radius:8px;margin-top:68px;">
+<section style="position:relative;overflow:hidden;background:var(--shade);display:flex;flex-direction:column;min-height:82svh;border-radius:8px;">
 
 
     <div class="mx-auto px-6 sm:px-8" style="position:relative;z-index:2;max-width:1180px;margin-left:auto;margin-right:auto;flex:1;display:flex;flex-direction:column;align-items:center;width:100%;">
-        <div style="flex:1;display:flex;flex-direction:column;align-items:center;padding-top:clamp(110px,14vh,160px);padding-bottom:0;">
+        <div style="flex:1;display:flex;flex-direction:column;align-items:center;padding-top:clamp(130px,16vh,180px);padding-bottom:0;">
 
             {{-- ── Centered copy ── --}}
             <div class="reveal" style="width:100%;max-width:860px;margin:0 auto;text-align:center;">
