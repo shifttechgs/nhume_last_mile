@@ -1438,6 +1438,7 @@ body { font-family: var(--font); color: var(--text); background: #fff; -webkit-f
     font-weight: 800; letter-spacing: -0.04em; line-height: 1.05;
     color: #fff; margin: 0 0 22px; max-width: 1040px;
 }
+.hero-cine-accent { color: #8ed64a; }
 .hero-cine-sub {
     font-family: var(--font);
     font-size: clamp(16px,1.5vw,19px);
@@ -2198,7 +2199,7 @@ body { font-family: var(--font); color: var(--text); background: #fff; -webkit-f
 
         <h1 class="hero-cine-h1 reveal">
             <span class="h1-nowrap">Same-day errands and deliveries</span><br>
-            <span class="h1-nowrap">across Harare. Intercity too.</span>
+            <span class="h1-nowrap hero-cine-accent">across Harare. Intercity too.</span>
         </h1>
 
         <p class="hero-cine-sub reveal">
