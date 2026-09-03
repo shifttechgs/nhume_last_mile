@@ -2043,12 +2043,12 @@ body { font-family: var(--font); color: var(--text); background: #fff; -webkit-f
 <section style="position:relative;overflow:hidden;background:var(--shade);display:flex;flex-direction:column;min-height:82svh;border-radius:8px;">
 
 
-    <div class="mx-auto px-6 sm:px-8" style="position:relative;z-index:2;max-width:1180px;margin-left:auto;margin-right:auto;flex:1;display:flex;flex-direction:column;align-items:center;width:100%;">
+    <div class="mx-auto px-6 sm:px-8" style="position:relative;z-index:2;max-width:1240px;margin-left:auto;margin-right:auto;flex:1;display:flex;flex-direction:column;align-items:center;width:100%;">
         <div style="flex:1;display:flex;flex-direction:column;align-items:center;padding-top:clamp(200px,26vh,280px);padding-bottom:0;">
 
             {{-- ── Centered copy ── --}}
-            <div class="reveal" style="width:100%;max-width:1040px;margin:0 auto;text-align:center;">
-                <h1 style="font-family:var(--head);font-size:clamp(34px,5vw,60px);font-weight:800;letter-spacing:-0.035em;line-height:1.06;color:var(--forest);margin:0 0 24px;text-align:center;">
+            <div class="reveal" style="width:100%;max-width:1140px;margin:0 auto;text-align:center;">
+                <h1 style="font-family:var(--head);font-size:clamp(36px,5.4vw,64px);font-weight:800;letter-spacing:-0.04em;line-height:1.06;color:var(--forest);margin:0 0 24px;text-align:center;">
                     <span class="h1-nowrap">Same-day errands and deliveries</span><br>
                     <span class="h1-nowrap" style="background:linear-gradient(130deg,var(--green-mid) 0%,var(--green) 55%,#8ed64a 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;">across Harare. Intercity too.</span>
                 </h1>
