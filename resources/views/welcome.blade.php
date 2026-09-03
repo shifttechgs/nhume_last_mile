@@ -1437,16 +1437,29 @@ body { font-family: var(--font); color: var(--text); background: #fff; -webkit-f
     font-size: clamp(38px,5.4vw,60px);
     font-weight: 800; letter-spacing: -0.04em; line-height: 1.05;
     color: #fff; margin: 0 0 22px; max-width: 1040px;
-    text-shadow: 0 2px 30px rgba(6,46,20,0.35);
 }
-.hero-cine-accent { color: #8ed64a; }
 .hero-cine-sub {
     font-family: var(--font);
     font-size: clamp(16px,1.5vw,19px);
     color: rgba(255,255,255,0.74); line-height: 1.6;
-    max-width: 500px; margin: 0 0 36px;
+    max-width: 500px; margin: 0 0 34px;
 }
-.hero-cine-cta { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; margin-bottom: 30px; }
+.hero-cine-cta { display: flex; align-items: center; gap: 26px; flex-wrap: wrap; margin-bottom: 30px; }
+.hero-cine-textlink {
+    display: inline-flex; align-items: center; gap: 7px;
+    font-family: var(--font); font-size: 15.5px; font-weight: 600;
+    color: #fff; background: none; border: none; cursor: pointer;
+    padding: 0; text-decoration: none;
+    border-bottom: 1.5px solid rgba(255,255,255,0.35);
+    padding-bottom: 3px;
+    transition: border-color 0.18s;
+}
+.hero-cine-textlink:hover { border-color: #fff; }
+.hero-cine-served {
+    font-family: var(--font); font-size: 14px; font-weight: 500;
+    color: rgba(255,255,255,0.6); margin: 0;
+}
+.hero-cine-served strong { color: rgba(255,255,255,0.9); font-weight: 600; }
 .hero-cta-ghost {
     display: inline-flex; align-items: center; gap: 9px;
     font-family: var(--font); font-size: 15.5px; font-weight: 600;
@@ -2185,11 +2198,11 @@ body { font-family: var(--font); color: var(--text); background: #fff; -webkit-f
 
         <h1 class="hero-cine-h1 reveal">
             <span class="h1-nowrap">Same-day errands and deliveries</span><br>
-            <span class="hero-cine-accent h1-nowrap">across Harare. Intercity too.</span>
+            <span class="h1-nowrap">across Harare. Intercity too.</span>
         </h1>
 
         <p class="hero-cine-sub reveal">
-            Book in under a minute. Real riders in your suburb, real drivers on the road. From $3.
+            Real riders in your suburb, real drivers on the road. Book in under a minute — from $3.
         </p>
 
         <div class="hero-cine-cta reveal">
@@ -2197,28 +2210,14 @@ body { font-family: var(--font); color: var(--text); background: #fff; -webkit-f
                 Send a parcel
                 <svg width="15" height="15" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"/></svg>
             </a>
-            <button type="button" @click="trackOpen = true; $nextTick(() => $refs.trackInput?.focus())" class="hero-cta-ghost">
-                <svg width="15" height="15" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
+            <button type="button" @click="trackOpen = true; $nextTick(() => $refs.trackInput?.focus())" class="hero-cine-textlink">
                 Track a parcel
             </button>
         </div>
 
-        <div class="hero-cine-trust reveal">
-            <span class="hct-item">
-                <svg width="14" height="14" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"/></svg>
-                From $3 intercity
-            </span>
-            <span class="hct-sep"></span>
-            <span class="hct-item">
-                <svg width="14" height="14" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"/></svg>
-                Same-day delivery
-            </span>
-            <span class="hct-sep"></span>
-            <span class="hct-item">
-                <svg width="14" height="14" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"/></svg>
-                Tracked live
-            </span>
-        </div>
+        <p class="hero-cine-served reveal">
+            Serving <strong>Harare</strong>, Bulawayo, Mutare, Gweru &amp; Masvingo.
+        </p>
     </div>
 
 </section>
