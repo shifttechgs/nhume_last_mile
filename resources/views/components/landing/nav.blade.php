@@ -1,27 +1,17 @@
 @props(['frosted' => false])
 <style>
+/* ── Flat full-width nav — BobGo-style ── */
 .nav-outer {
     position: fixed;
-    top: clamp(24px,3vw,36px);
-    left: clamp(16px,2vw,24px);
-    right: clamp(16px,2vw,24px);
+    top: 0; left: 0; right: 0;
     z-index: 100;
-    background: transparent;
-    border-radius: 8px;
-    border: 1px solid transparent;
-    transition: top 0.35s ease, left 0.35s ease, right 0.35s ease,
-                border-radius 0.35s ease, background 0.35s ease,
-                box-shadow 0.35s ease, border-color 0.35s ease;
-    pointer-events: all;
+    background: #fff;
+    border-bottom: 1px solid #f0f2ef;
+    transition: box-shadow 0.25s ease, border-color 0.25s ease;
 }
 .nav-outer.is-scrolled {
-    top: 0; left: 0; right: 0;
-    border-radius: 0;
-    background: rgba(255,255,255,0.95);
-    backdrop-filter: blur(20px) saturate(180%);
-    -webkit-backdrop-filter: blur(20px) saturate(180%);
-    border-color: rgba(12,26,15,0.07);
-    box-shadow: 0 2px 16px rgba(28,56,41,0.07);
+    box-shadow: 0 2px 16px rgba(28,56,41,0.08);
+    border-bottom-color: #e5e9e3;
 }
 .nav-bar {
     max-width: 1360px;
@@ -29,57 +19,91 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
-    position: relative;
-    padding: clamp(10px,1.2vh,14px) clamp(20px,3vw,40px);
+    padding: 0 clamp(20px,3vw,40px);
+    height: 68px;
 }
 .nav-logo { display: flex; align-items: center; text-decoration: none; flex-shrink: 0; }
-.nav-logo img { transition: width 0.35s ease; }
-.nav-outer.is-scrolled .nav-logo img { width: 100px; }
+
+/* ── Center links — no pill container ── */
 .nav-center {
     position: absolute;
     left: 50%; transform: translateX(-50%);
     display: flex; align-items: center; gap: 2px;
-    pointer-events: all;
-    background: rgba(255,255,255,0.88);
-    border: 1px solid rgba(0,0,0,0.07);
-    border-radius: 8px;
-    padding: 6px;
-    backdrop-filter: blur(12px);
-    -webkit-backdrop-filter: blur(12px);
+    background: none; border: none; border-radius: 0; padding: 0;
+    backdrop-filter: none;
 }
-.nav-right { display: flex; align-items: center; gap: 8px; pointer-events: all; }
+.nav-right { display: flex; align-items: center; gap: 8px; }
 .nav-link {
     display: inline-flex; align-items: center; gap: 4px;
+    font-family: 'DM Sans', system-ui, sans-serif;
     font-size: 14px; font-weight: 500;
-    color: #6b7280;
-    padding: 13px 16px;
+    color: #374151;
+    padding: 8px 14px;
     border-radius: 6px;
     transition: color 0.15s, background 0.15s;
     text-decoration: none; white-space: nowrap;
-    cursor: pointer; border: none; background: transparent; font-family: inherit;
+    cursor: pointer; border: none; background: transparent;
 }
-.nav-link:hover { color: #0b130a; background: rgba(0,0,0,0.05); }
-.nav-link.active { color: #0b130a; }
+.nav-link:hover { color: #1C3829; background: #f4f6f3; }
+.nav-link.active { color: #1C3829; font-weight: 600; }
 
-/* ── Logo swap (inner pages with dark hero only) ── */
+/* Logo swap not needed on flat nav — both logos same visibility */
 .logo-light { display: none; }
 .logo-dark  { display: block; }
-/* When over a dark hero and nav is transparent */
-.nav-outer.swap-logo:not(.is-scrolled) .logo-light { display: block; }
-.nav-outer.swap-logo:not(.is-scrolled) .logo-dark  { display: none; }
+
+/* ── Login link ── */
+.nav-login {
+    font-family: 'DM Sans', system-ui, sans-serif;
+    font-size: 14px; font-weight: 500;
+    color: #374151;
+    text-decoration: none;
+    padding: 8px 12px;
+    border-radius: 6px;
+    transition: color 0.15s, background 0.15s;
+    white-space: nowrap;
+}
+.nav-login:hover { color: #1C3829; background: #f4f6f3; }
+
+/* ── Pill buttons ── */
+.btn-nav-outline {
+    display: inline-flex; align-items: center; gap: 6px;
+    font-family: 'DM Sans', system-ui, sans-serif;
+    font-size: 14px; font-weight: 600;
+    color: #1C3829;
+    padding: 9px 20px;
+    border-radius: 9999px;
+    border: 1.5px solid #6bc630;
+    background: transparent;
+    text-decoration: none;
+    transition: background 0.15s;
+    white-space: nowrap; cursor: pointer;
+}
+.btn-nav-outline:hover { background: #f0fde4; }
+
+.btn-nav-fill {
+    display: inline-flex; align-items: center; gap: 7px;
+    font-family: 'DM Sans', system-ui, sans-serif;
+    font-size: 14px; font-weight: 600;
+    color: #fff;
+    padding: 9px 22px;
+    border-radius: 9999px; border: none;
+    background: #6bc630;
+    text-decoration: none;
+    transition: background 0.15s;
+    white-space: nowrap;
+}
+.btn-nav-fill:hover { background: #5aad28; }
 
 /* ── Dropdown ── */
-.nav-dropdown-wrap {
-    position: relative;
-}
+.nav-dropdown-wrap { position: relative; }
 .nav-dropdown {
     position: absolute;
-    top: calc(100% + 10px);
+    top: calc(100% + 8px);
     left: 50%; transform: translateX(-50%);
     min-width: 200px;
     background: #fff;
-    border: 1px solid rgba(12,26,15,0.08);
-    border-radius: 8px;
+    border: 1px solid #e5e9e3;
+    border-radius: 10px;
     box-shadow: 0 8px 32px rgba(28,56,41,0.12);
     padding: 6px;
     z-index: 200;
@@ -94,109 +118,69 @@
     text-decoration: none;
     transition: background 0.12s, color 0.12s;
 }
-.nav-dropdown a:hover { background: #f3f4f6; color: #0b130a; }
+.nav-dropdown a:hover { background: #f4f6f3; color: #1C3829; }
 .nav-dropdown a span.dd-icon {
     width: 28px; height: 28px; flex-shrink: 0;
-    border-radius: 5px; background: var(--shade);
+    border-radius: 5px; background: #f4f6f3;
     display: flex; align-items: center; justify-content: center;
 }
-.nav-dropdown-divider {
-    height: 1px; background: #f3f4f6;
-    margin: 4px 0;
-}
+.nav-dropdown-divider { height: 1px; background: #f0f2ef; margin: 4px 0; }
 
-.btn-nav-outline {
-    display: inline-flex; align-items: center; gap: 6px;
-    font-family: 'DM Sans', system-ui, sans-serif;
-    font-size: 14px; font-weight: 600;
-    color: #1C3829;
-    padding: 11px 20px;
-    border-radius: 6px;
-    border: 1px solid rgba(12,26,15,0.08);
-    background: rgba(255,255,255,0.75);
-    box-shadow: none; text-decoration: none;
-    transition: background 0.15s, transform 0.15s;
-    white-space: nowrap; cursor: pointer;
-}
-.btn-nav-outline:hover { background: #fff; }
-.nav-outer.is-scrolled .btn-nav-outline { background: rgba(255,255,255,0.9); }
-.nav-outer.is-scrolled .nav-bar { padding-top: 8px; padding-bottom: 8px; }
-.btn-nav-fill {
-    display: inline-flex; align-items: center; gap: 7px;
-    font-family: 'DM Sans', system-ui, sans-serif;
-    font-size: 14px; font-weight: 600;
-    color: #062e14;
-    padding: 11px 22px;
-    border-radius: 6px; border: none;
-    background: #6bc630;
-    text-decoration: none;
-    transition: background 0.15s;
-    white-space: nowrap;
-}
-.btn-nav-fill:hover { background: #5aad28; }
+/* ── Mobile ── */
 .nav-mobile-dropdown {
     position: fixed;
-    top: 84px; left: 20px; right: 20px; z-index: 99;
+    top: 72px; left: 0; right: 0; z-index: 99;
     background: #fff;
-    border-radius: 8px;
-    border: 1px solid rgba(12,26,15,0.08);
-    box-shadow: 0 12px 36px rgba(28,56,41,0.12);
-    padding: 16px;
-    max-height: calc(100vh - 110px);
+    border-top: 1px solid #f0f2ef;
+    box-shadow: 0 12px 36px rgba(28,56,41,0.1);
+    padding: 12px 20px 20px;
+    max-height: calc(100vh - 72px);
     overflow-y: auto;
 }
 .nav-mobile-btn {
     display: flex; align-items: center; justify-content: center;
-    width: 44px; height: 44px;
-    border-radius: 6px;
-    background: #fff;
-    border: 1px solid rgba(12,26,15,0.08);
-    color: #0b130a;
-    pointer-events: all; cursor: pointer;
+    width: 40px; height: 40px;
+    border-radius: 8px;
+    background: #f4f6f3;
+    border: none;
+    color: #1C3829;
+    cursor: pointer;
 }
 .mobile-section-label {
     font-family: 'DM Sans', system-ui, sans-serif;
     font-size: 10px; font-weight: 700;
     letter-spacing: 0.1em; text-transform: uppercase;
     color: #9ca3af;
-    padding: 10px 12px 4px;
+    padding: 10px 4px 4px;
 }
 .nav-desktop { display: none; }
 @media (min-width: 1024px) {
     .nav-desktop    { display: flex; }
     .nav-mobile-btn { display: none; }
 }
-@media (max-width: 767px) {
-    .nav-outer { top: 10px !important; left: 8px !important; right: 8px !important; }
-}
 </style>
 
 <script>
 (function(){
-    var threshold = 24;
     function onScroll(){
-        var y = window.pageYOffset || document.documentElement.scrollTop;
         var nav = document.getElementById('site-nav');
         if(!nav) return;
-        if(y > threshold){ nav.classList.add('is-scrolled'); }
+        if(window.pageYOffset > 10){ nav.classList.add('is-scrolled'); }
         else { nav.classList.remove('is-scrolled'); }
     }
     document.addEventListener('DOMContentLoaded', function(){
-        @if($frosted) document.getElementById('site-nav')?.classList.add('is-scrolled'); @endif
         window.addEventListener('scroll', onScroll, { passive: true });
         onScroll();
     });
 })();
 </script>
 
-<div id="site-nav" x-data="{ open: false, dd: '' }"
-     class="nav-outer{{ $frosted ? ' is-scrolled swap-logo' : '' }}">
+<div id="site-nav" x-data="{ open: false, dd: '' }" class="nav-outer">
     <div class="nav-bar">
 
         {{-- Logo --}}
         <a href="/" class="nav-logo" aria-label="Nhume home">
-            <img src="/images/nhume_logo_dark_bg.png" alt="Nhume" class="logo-light" style="width:140px;height:auto;">
-            <img src="/images/nhume_logo_v4.png"      alt="Nhume" class="logo-dark"  style="width:140px;height:auto;">
+            <img src="/images/nhume_logo_v4.png" alt="Nhume" style="width:120px;height:auto;">
         </a>
 
         {{-- Centered links (desktop) --}}
@@ -275,10 +259,9 @@
             @auth
                 <a href="{{ url('/dashboard') }}" class="btn-nav-fill">Dashboard</a>
             @else
-                <button type="button" @click="trackOpen = true; $nextTick(() => $refs.trackInput?.focus())" class="btn-nav-outline">Track</button>
-                <a href="{{ route('send') }}" class="btn-nav-fill">Book an errand
-                    <svg width="15" height="15" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"/></svg>
-                </a>
+                <a href="{{ route('login') }}" class="nav-login">Login</a>
+                <button type="button" @click="trackOpen = true; $nextTick(() => $refs.trackInput?.focus())" class="btn-nav-outline">Track my parcel</button>
+                <a href="{{ route('send') }}" class="btn-nav-fill">Get started</a>
             @endauth
         </div>
 

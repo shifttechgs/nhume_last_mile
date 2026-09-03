@@ -34,7 +34,8 @@
     /* ── Page hero banner ── */
     .lp-hero {
         background: var(--forest-deep);
-        padding: clamp(140px, 18vh, 200px) clamp(20px, 4vw, 48px) clamp(48px, 6vw, 80px);
+        padding: clamp(120px, 16vh, 160px) clamp(20px, 4vw, 48px) clamp(48px, 6vw, 80px);
+        margin-top: 68px; /* flat nav height */
         text-align: center;
     }
     .lp-eyebrow {
