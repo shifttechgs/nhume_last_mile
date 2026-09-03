@@ -1398,24 +1398,28 @@ body { font-family: var(--font); color: var(--text); background: #fff; -webkit-f
     position: relative;
     overflow: hidden;
     border-radius: 10px;
-    min-height: 92svh;
+    min-height: 88svh;
     display: flex;
     align-items: center;
     isolation: isolate;
+    background: var(--forest-deep);
 }
 .hero-cine-media {
     position: absolute; inset: 0;
     width: 100%; height: 100%;
     object-fit: cover;
     object-position: 66% center;
+    transform: scale(0.82);
+    transform-origin: 72% center;
     z-index: -2;
 }
 .hero-cine-scrim {
     position: absolute; inset: 0;
     z-index: -1;
     background:
-        linear-gradient(90deg, rgba(6,46,20,0.95) 0%, rgba(6,46,20,0.82) 30%, rgba(6,46,20,0.32) 58%, rgba(6,46,20,0) 80%),
+        linear-gradient(90deg, rgba(6,46,20,0.95) 0%, rgba(6,46,20,0.80) 30%, rgba(6,46,20,0.28) 58%, rgba(6,46,20,0) 82%),
         linear-gradient(0deg, rgba(6,46,20,0.58) 0%, rgba(6,46,20,0) 44%),
+        radial-gradient(125% 120% at 72% 48%, transparent 50%, rgba(6,46,20,0.92) 100%),
         linear-gradient(0deg, rgba(28,56,41,0.26), rgba(28,56,41,0.26));
 }
 .hero-cine-inner {
@@ -1464,7 +1468,7 @@ body { font-family: var(--font); color: var(--text); background: #fff; -webkit-f
 .hct-sep { width: 4px; height: 4px; border-radius: 50%; background: rgba(255,255,255,0.32); flex-shrink: 0; }
 @media (max-width: 760px) {
     .hero-cine { min-height: 86svh; }
-    .hero-cine-media { object-position: 60% center; }
+    .hero-cine-media { object-position: 60% center; transform: none; }
     .hero-cine-scrim {
         background:
             linear-gradient(0deg, rgba(6,46,20,0.96) 0%, rgba(6,46,20,0.62) 46%, rgba(6,46,20,0.38) 100%),
