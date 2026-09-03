@@ -1462,53 +1462,6 @@ body { font-family: var(--font); color: var(--text); background: #fff; -webkit-f
 .hct-item { display: inline-flex; align-items: center; gap: 7px; font-family: var(--font); font-size: 13.5px; font-weight: 500; color: rgba(255,255,255,0.85); }
 .hct-item svg { color: #8ed64a; flex-shrink: 0; }
 .hct-sep { width: 4px; height: 4px; border-radius: 50%; background: rgba(255,255,255,0.32); flex-shrink: 0; }
-
-/* ── Hero quote starter — 2-field, low-friction ── */
-.hero-quote {
-    display: flex;
-    align-items: center;
-    width: 100%;
-    max-width: 620px;
-    background: #fff;
-    border-radius: 9999px;
-    box-shadow: 0 26px 60px -20px rgba(6,46,20,0.5), 0 8px 20px -10px rgba(6,46,20,0.32);
-    padding: 7px 7px 7px 8px;
-    margin: 0 0 20px;
-}
-.hero-quote-field {
-    flex: 1;
-    display: flex;
-    align-items: center;
-    gap: 9px;
-    padding: 9px 14px;
-    min-width: 0;
-}
-.hero-quote-field svg { color: var(--green-mid); flex-shrink: 0; }
-.hero-quote-field input {
-    width: 100%; min-width: 0;
-    border: none; outline: none; background: none;
-    font-family: var(--font); font-size: 15px; color: var(--text);
-}
-.hero-quote-field input::placeholder { color: #9aa096; }
-.hero-quote-arrow { color: #c4c8c2; flex-shrink: 0; padding: 0 2px; display: flex; }
-.hero-quote-btn {
-    flex-shrink: 0;
-    display: inline-flex; align-items: center; gap: 7px;
-    background: var(--green); color: var(--forest-deep);
-    font-family: var(--font); font-size: 14.5px; font-weight: 700;
-    padding: 13px 26px; border-radius: 9999px; border: none;
-    cursor: pointer; white-space: nowrap;
-    transition: background 0.15s, transform 0.15s;
-}
-.hero-quote-btn:hover { background: var(--green-dark); transform: translateY(-1px); }
-@media (max-width: 620px) {
-    .hero-quote { flex-direction: column; align-items: stretch; border-radius: 20px; padding: 8px; max-width: 100%; }
-    .hero-quote-field { padding: 11px 14px; }
-    .hero-quote-field + .hero-quote-arrow + .hero-quote-field { border-top: 1px solid #eceae4; }
-    .hero-quote-arrow { display: none; }
-    .hero-quote-btn { justify-content: center; border-radius: 12px; padding: 14px; margin-top: 4px; }
-}
-
 @media (max-width: 760px) {
     .hero-cine { min-height: 86svh; }
     .hero-cine-media { object-position: 60% center; }
@@ -2239,26 +2192,11 @@ body { font-family: var(--font); color: var(--text); background: #fff; -webkit-f
             Book in under a minute. Real riders in your suburb, real drivers on the road. From $3.
         </p>
 
-        {{-- Low-friction quote starter — 2 fields → prefills the send wizard --}}
-        <form action="{{ route('send') }}" method="GET" class="hero-quote reveal">
-            <div class="hero-quote-field">
-                <svg width="17" height="17" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/><circle cx="12" cy="11" r="3"/></svg>
-                <input type="text" name="pickup" placeholder="Pickup suburb or city" aria-label="Pickup location" autocomplete="off">
-            </div>
-            <span class="hero-quote-arrow">
-                <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M14 5l7 7m0 0l-7 7m7-7H3"/></svg>
-            </span>
-            <div class="hero-quote-field">
-                <svg width="17" height="17" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M5 3v18m0-18l13 4-13 4"/></svg>
-                <input type="text" name="dropoff" placeholder="Destination" aria-label="Destination" autocomplete="off">
-            </div>
-            <button type="submit" class="hero-quote-btn">
-                Get a price
-                <svg width="15" height="15" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M13 5l7 7-7 7M20 12H4"/></svg>
-            </button>
-        </form>
-
         <div class="hero-cine-cta reveal">
+            <a href="{{ route('send') }}" class="hero-cta-primary">
+                Send a parcel
+                <svg width="15" height="15" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"/></svg>
+            </a>
             <button type="button" @click="trackOpen = true; $nextTick(() => $refs.trackInput?.focus())" class="hero-cta-ghost">
                 <svg width="15" height="15" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
                 Track a parcel
