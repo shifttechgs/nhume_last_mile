@@ -93,9 +93,9 @@
 .btn-nav-outline {
     display: inline-flex; align-items: center; gap: 6px;
     font-family: 'DM Sans', system-ui, sans-serif;
-    font-size: 15px; font-weight: 600;
+    font-size: 16px; font-weight: 600;
     color: #fff;
-    padding: 10px 22px;
+    padding: 10px 24px;
     border-radius: 9999px;
     border: 1.5px solid rgba(255,255,255,0.6);
     background: transparent;
@@ -112,9 +112,9 @@
 .btn-nav-fill {
     display: inline-flex; align-items: center; gap: 7px;
     font-family: 'DM Sans', system-ui, sans-serif;
-    font-size: 15px; font-weight: 600;
+    font-size: 16px; font-weight: 600;
     color: #fff;
-    padding: 10px 24px;
+    padding: 10px 26px;
     border-radius: 9999px; border: none;
     background: #6bc630;
     text-decoration: none;
