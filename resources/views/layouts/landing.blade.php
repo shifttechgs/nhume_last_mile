@@ -8,14 +8,16 @@
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="preconnect" href="https://api.fontshare.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,600;9..40,700;9..40,800&family=Inter:opsz,wght@14..32,500;14..32,600;14..32,700;14..32,800&display=swap" rel="stylesheet">
+    <link href="https://api.fontshare.com/v2/css?f[]=general-sans@500,600,700,800&display=swap" rel="stylesheet">
 
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 
     <style>
     :root {
         --font:        'DM Sans', system-ui, sans-serif;
-        --head:        'Inter', 'DM Sans', system-ui, sans-serif;
+        --head:        'General Sans', 'Inter', 'DM Sans', system-ui, sans-serif;
         --green:       #6bc630;
         --green-dark:  #5aad28;
         --green-light: #edf8df;
