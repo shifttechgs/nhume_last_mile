@@ -2091,10 +2091,6 @@ body { font-family: var(--font); color: var(--text); background: #fff; -webkit-f
             {{-- ── Floating scene: van, route & live cards ── --}}
             <div class="hero-scene reveal" aria-hidden="true">
 
-                {{-- twinkle sparkles (human touch) --}}
-                <span class="scene-sparkle sparkle-a"><svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2 C 12.5 8, 16 11.5, 22 12 C 16 12.5, 12.5 16, 12 22 C 11.5 16, 8 12.5, 2 12 C 8 11.5, 11.5 8, 12 2 Z"/></svg></span>
-                <span class="scene-sparkle sparkle-b"><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2 C 12.5 8, 16 11.5, 22 12 C 16 12.5, 12.5 16, 12 22 C 11.5 16, 8 12.5, 2 12 C 8 11.5, 11.5 8, 12 2 Z"/></svg></span>
-
                 {{-- card: driver status (top-left) --}}
                 <div class="scene-card sc-status">
                     <div class="sc-row" style="margin-bottom:11px;">
