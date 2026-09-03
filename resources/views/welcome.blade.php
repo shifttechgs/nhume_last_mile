@@ -1752,11 +1752,11 @@ body { font-family: var(--font); color: var(--text); background: #fff; -webkit-f
     animation-iteration-count: infinite;
     will-change: transform;
 }
-/* Tidy central cluster — cards grouped around the middle, gently overlapping */
-.sc-status { top: 10%;    left: 26%;  animation-name: floatA; animation-duration: 7.5s; animation-delay: -0.4s; }
-.sc-driver { top: 20%;    right: 27%; display: flex; align-items: center; gap: 11px; animation-name: floatC; animation-duration: 7.9s; animation-delay: -3.6s; }
-.sc-order  { bottom: 22%; left: 30%;  display: flex; align-items: center; gap: 11px; animation-name: floatB; animation-duration: 8.6s; animation-delay: -2.3s; z-index: 5; }
-.sc-pickup { bottom: 12%; right: 29%; animation-name: floatA; animation-duration: 9.2s; animation-delay: -1.1s; }
+/* Spread across the scene — balanced, airy composition */
+.sc-status { top: 6%;     left: 3%;   animation-name: floatA; animation-duration: 7.5s; animation-delay: -0.4s; }
+.sc-driver { top: 14%;    right: 4%;  display: flex; align-items: center; gap: 11px; animation-name: floatC; animation-duration: 7.9s; animation-delay: -3.6s; }
+.sc-order  { bottom: 14%; left: 8%;   display: flex; align-items: center; gap: 11px; animation-name: floatB; animation-duration: 8.6s; animation-delay: -2.3s; z-index: 5; }
+.sc-pickup { bottom: 9%;  right: 6%;  animation-name: floatA; animation-duration: 9.2s; animation-delay: -1.1s; }
 
 /* organic, non-synced drift + micro-rotation — a subtle human touch */
 @keyframes floatA {
