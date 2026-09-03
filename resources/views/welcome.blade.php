@@ -1423,78 +1423,28 @@ body { font-family: var(--font); color: var(--text); background: #fff; -webkit-f
     max-width: 1240px;
     width: 100%;
     margin: 0 auto;
-    padding: clamp(140px,19vh,210px) clamp(24px,5vw,64px) clamp(56px,8vh,96px);
-    display: grid;
-    grid-template-columns: 1.05fr minmax(360px, 452px);
-    gap: clamp(32px,5vw,72px);
-    align-items: center;
+    padding: clamp(150px,21vh,230px) clamp(24px,5vw,64px) clamp(56px,8vh,96px);
 }
-.hero-cine-copy { min-width: 0; }
 .hero-cine-eyebrow {
     display: inline-block;
     font-family: var(--font); font-size: 12px; font-weight: 700;
     letter-spacing: 0.16em; text-transform: uppercase;
     color: #8ed64a;
-    margin-bottom: 20px;
+    margin-bottom: 22px;
 }
 .hero-cine-h1 {
     font-family: var(--head);
-    font-size: clamp(34px,4vw,50px);
-    font-weight: 800; letter-spacing: -0.035em; line-height: 1.08;
-    color: #fff; margin: 0 0 22px;
+    font-size: clamp(38px,5.4vw,60px);
+    font-weight: 800; letter-spacing: -0.04em; line-height: 1.05;
+    color: #fff; margin: 0 0 22px; max-width: 1040px;
     text-shadow: 0 2px 30px rgba(6,46,20,0.35);
 }
 .hero-cine-accent { color: #8ed64a; }
 .hero-cine-sub {
     font-family: var(--font);
-    font-size: clamp(16px,1.5vw,18px);
+    font-size: clamp(16px,1.5vw,19px);
     color: rgba(255,255,255,0.74); line-height: 1.6;
-    max-width: 460px; margin: 0 0 30px;
-}
-
-/* ── Hero form card (right) ── */
-.hero-cine-aside { display: flex; justify-content: flex-end; }
-.hero-form-card {
-    width: 100%;
-    background: #fff;
-    border-radius: 22px;
-    padding: clamp(22px,2.2vw,28px);
-    box-shadow: 0 44px 90px -34px rgba(6,46,20,0.55), 0 14px 34px -18px rgba(6,46,20,0.30);
-}
-.hfc-title { font-family: var(--head); font-size: 20px; font-weight: 700; letter-spacing: -0.02em; color: var(--forest); margin: 0 0 4px; }
-.hfc-sub { font-family: var(--font); font-size: 13.5px; color: var(--text-2); margin: 0 0 18px; }
-.hfc-field {
-    display: flex; align-items: center; gap: 10px;
-    background: #f6f7f3; border: 1.5px solid #e6e8e2;
-    border-radius: 12px; padding: 12px 14px; margin-bottom: 10px;
-    transition: border-color 0.15s, background 0.15s;
-}
-.hfc-field:focus-within { border-color: var(--green); background: #fff; }
-.hfc-field svg { color: var(--green-mid); flex-shrink: 0; }
-.hfc-field input {
-    width: 100%; min-width: 0; border: none; outline: none; background: none;
-    font-family: var(--font); font-size: 14.5px; color: var(--text);
-}
-.hfc-field input::placeholder { color: #9aa096; }
-.hfc-btn {
-    width: 100%; margin-top: 6px;
-    display: inline-flex; align-items: center; justify-content: center; gap: 8px;
-    background: var(--green); color: var(--forest-deep);
-    font-family: var(--font); font-size: 15px; font-weight: 700;
-    padding: 14px; border-radius: 12px; border: none; cursor: pointer;
-    transition: background 0.15s, transform 0.15s;
-}
-.hfc-btn:hover { background: var(--green-dark); transform: translateY(-1px); }
-.hfc-track {
-    display: block; width: 100%; text-align: center; margin-top: 12px;
-    font-family: var(--font); font-size: 13px; font-weight: 500; color: var(--text-2);
-    background: none; border: none; cursor: pointer; text-decoration: none;
-}
-.hfc-track:hover { color: var(--forest); }
-@media (max-width: 900px) {
-    .hero-cine-inner { grid-template-columns: 1fr; gap: 30px; }
-    .hero-cine-aside { justify-content: stretch; }
-    .hero-form-card { max-width: 460px; }
+    max-width: 500px; margin: 0 0 36px;
 }
 .hero-cine-cta { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; margin-bottom: 30px; }
 .hero-cta-ghost {
@@ -2278,65 +2228,59 @@ body { font-family: var(--font); color: var(--text); background: #fff; -webkit-f
 
     {{-- Overlaid editorial copy --}}
     <div class="hero-cine-inner">
+        <span class="hero-cine-eyebrow reveal">Harare &amp; intercity Zimbabwe</span>
 
-        {{-- Left: copy --}}
-        <div class="hero-cine-copy">
-            <span class="hero-cine-eyebrow reveal">Harare &amp; intercity Zimbabwe</span>
+        <h1 class="hero-cine-h1 reveal">
+            <span class="h1-nowrap">Same-day errands and deliveries</span><br>
+            <span class="hero-cine-accent h1-nowrap">across Harare. Intercity too.</span>
+        </h1>
 
-            <h1 class="hero-cine-h1 reveal">
-                Same-day errands and deliveries
-                <span class="hero-cine-accent">across Harare. Intercity too.</span>
-            </h1>
+        <p class="hero-cine-sub reveal">
+            Book in under a minute. Real riders in your suburb, real drivers on the road. From $3.
+        </p>
 
-            <p class="hero-cine-sub reveal">
-                Real riders in your suburb, real drivers on the road. Book in under a minute — from $3.
-            </p>
-
-            <div class="hero-cine-trust reveal">
-                <span class="hct-item">
-                    <svg width="14" height="14" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"/></svg>
-                    From $3 intercity
-                </span>
-                <span class="hct-sep"></span>
-                <span class="hct-item">
-                    <svg width="14" height="14" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"/></svg>
-                    Same-day delivery
-                </span>
-                <span class="hct-sep"></span>
-                <span class="hct-item">
-                    <svg width="14" height="14" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"/></svg>
-                    Tracked live
-                </span>
+        {{-- Low-friction quote starter — 2 fields → prefills the send wizard --}}
+        <form action="{{ route('send') }}" method="GET" class="hero-quote reveal">
+            <div class="hero-quote-field">
+                <svg width="17" height="17" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/><circle cx="12" cy="11" r="3"/></svg>
+                <input type="text" name="pickup" placeholder="Pickup suburb or city" aria-label="Pickup location" autocomplete="off">
             </div>
+            <span class="hero-quote-arrow">
+                <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M14 5l7 7m0 0l-7 7m7-7H3"/></svg>
+            </span>
+            <div class="hero-quote-field">
+                <svg width="17" height="17" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M5 3v18m0-18l13 4-13 4"/></svg>
+                <input type="text" name="dropoff" placeholder="Destination" aria-label="Destination" autocomplete="off">
+            </div>
+            <button type="submit" class="hero-quote-btn">
+                Get a price
+                <svg width="15" height="15" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M13 5l7 7-7 7M20 12H4"/></svg>
+            </button>
+        </form>
+
+        <div class="hero-cine-cta reveal">
+            <button type="button" @click="trackOpen = true; $nextTick(() => $refs.trackInput?.focus())" class="hero-cta-ghost">
+                <svg width="15" height="15" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
+                Track a parcel
+            </button>
         </div>
 
-        {{-- Right: quote-starter form card --}}
-        <div class="hero-cine-aside reveal">
-            <div class="hero-form-card">
-                <p class="hfc-title">Send a parcel</p>
-                <p class="hfc-sub">Two quick details and we'll price your trip.</p>
-
-                <form action="{{ route('send') }}" method="GET">
-                    <div class="hfc-field">
-                        <svg width="17" height="17" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/><circle cx="12" cy="11" r="3"/></svg>
-                        <input type="text" name="pickup" placeholder="Pickup suburb or city" aria-label="Pickup location" autocomplete="off">
-                    </div>
-                    <div class="hfc-field">
-                        <svg width="17" height="17" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M5 3v18m0-18l13 4-13 4"/></svg>
-                        <input type="text" name="dropoff" placeholder="Destination" aria-label="Destination" autocomplete="off">
-                    </div>
-                    <button type="submit" class="hfc-btn">
-                        Get a price
-                        <svg width="15" height="15" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M13 5l7 7-7 7M20 12H4"/></svg>
-                    </button>
-                </form>
-
-                <button type="button" @click="trackOpen = true; $nextTick(() => $refs.trackInput?.focus())" class="hfc-track">
-                    Track a parcel instead
-                </button>
-            </div>
+        <div class="hero-cine-trust reveal">
+            <span class="hct-item">
+                <svg width="14" height="14" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"/></svg>
+                From $3 intercity
+            </span>
+            <span class="hct-sep"></span>
+            <span class="hct-item">
+                <svg width="14" height="14" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"/></svg>
+                Same-day delivery
+            </span>
+            <span class="hct-sep"></span>
+            <span class="hct-item">
+                <svg width="14" height="14" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"/></svg>
+                Tracked live
+            </span>
         </div>
-
     </div>
 
 </section>
