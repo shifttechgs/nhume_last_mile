@@ -1682,10 +1682,9 @@ body { font-family: var(--font); color: var(--text); background: #fff; -webkit-f
     flex: 1 1 auto;
     min-height: 200px;
     z-index: 0;
-    opacity: 0.55;
+    opacity: 1;
     transition: opacity 0.3s ease;
 }
-.hero-scene:hover { opacity: 0.8; }
 .cta-scene, .cta-scene:hover { opacity: 0.45; }
 .cta-scene .scene-card { opacity: 0.85; }
 /* form card sits above the scene */
@@ -1741,22 +1740,23 @@ body { font-family: var(--font); color: var(--text); background: #fff; -webkit-f
     position: absolute;
     z-index: 4;
     background: #fff;
-    border: 1px solid #e8e5df;
+    border: 1px solid #eceae4;
     border-radius: 16px;
-    box-shadow: none;
+    box-shadow: 0 18px 44px rgba(28,56,41,0.12), 0 3px 10px rgba(28,56,41,0.05);
     padding: 14px 16px 14px;
     padding-bottom: 0;
-    opacity: 0.45;
+    opacity: 1;
     width: max-content;
-    max-width: 240px;
+    max-width: 236px;
     animation-timing-function: cubic-bezier(0.45, 0, 0.55, 1);
     animation-iteration-count: infinite;
     will-change: transform;
 }
-.sc-status { top: 5%;    left: 0;   animation-name: floatA; animation-duration: 7.5s; animation-delay: -0.4s; }
-.sc-order  { bottom: 12%; left: 4%;  display: flex; align-items: center; gap: 11px; animation-name: floatB; animation-duration: 8.6s; animation-delay: -2.3s; }
-.sc-driver { top: 12%;   right: 0;  display: flex; align-items: center; gap: 11px; animation-name: floatC; animation-duration: 7.9s; animation-delay: -3.6s; }
-.sc-pickup { bottom: 8%; right: 2%; animation-name: floatA; animation-duration: 9.2s; animation-delay: -1.1s; }
+/* Tidy central cluster — cards grouped around the middle, gently overlapping */
+.sc-status { top: 10%;    left: 26%;  animation-name: floatA; animation-duration: 7.5s; animation-delay: -0.4s; }
+.sc-driver { top: 20%;    right: 27%; display: flex; align-items: center; gap: 11px; animation-name: floatC; animation-duration: 7.9s; animation-delay: -3.6s; }
+.sc-order  { bottom: 22%; left: 30%;  display: flex; align-items: center; gap: 11px; animation-name: floatB; animation-duration: 8.6s; animation-delay: -2.3s; z-index: 5; }
+.sc-pickup { bottom: 12%; right: 29%; animation-name: floatA; animation-duration: 9.2s; animation-delay: -1.1s; }
 
 /* organic, non-synced drift + micro-rotation — a subtle human touch */
 @keyframes floatA {
@@ -1785,8 +1785,8 @@ body { font-family: var(--font); color: var(--text); background: #fff; -webkit-f
     pointer-events: none;
     animation: twinkle 3.2s ease-in-out infinite;
 }
-.sparkle-a { top: 8%;    right: 15%; }
-.sparkle-b { bottom: 30%; left: 22%; animation-delay: -1.5s; }
+.sparkle-a { top: 4%;    right: 30%; }
+.sparkle-b { bottom: 26%; left: 23%; animation-delay: -1.5s; }
 @keyframes twinkle {
     0%,100% { transform: scale(0.55) rotate(0deg); opacity: 0.3; }
     50%     { transform: scale(1) rotate(18deg); opacity: 0.95; }
