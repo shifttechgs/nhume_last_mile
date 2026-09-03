@@ -24,8 +24,14 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
-    padding: 0 clamp(20px,3vw,40px);
-    height: 68px;
+    /* Airy at rest — sits lower on the hero */
+    padding: clamp(22px,3.4vh,40px) clamp(20px,3vw,40px) clamp(18px,2.4vh,26px);
+    transition: padding 0.3s ease;
+}
+/* Compact once stuck */
+.nav-outer.is-scrolled .nav-bar {
+    padding-top: 12px;
+    padding-bottom: 12px;
 }
 .nav-logo { display: flex; align-items: center; text-decoration: none; flex-shrink: 0; }
 
@@ -182,6 +188,11 @@
 @media (min-width: 1024px) {
     .nav-desktop    { display: flex; }
     .nav-mobile-btn { display: none; }
+}
+/* Keep the bar compact on mobile so the dropdown stays aligned */
+@media (max-width: 1023px) {
+    .nav-bar { padding-top: 14px; padding-bottom: 14px; }
+    .nav-outer.is-scrolled .nav-bar { padding-top: 12px; padding-bottom: 12px; }
 }
 </style>
 
