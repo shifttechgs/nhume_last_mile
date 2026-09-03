@@ -1739,15 +1739,17 @@ body { font-family: var(--font); color: var(--text); background: #fff; -webkit-f
 .scene-card {
     position: absolute;
     z-index: 4;
-    background: #fff;
-    border: 1px solid #eceae4;
-    border-radius: 16px;
-    box-shadow: 0 18px 44px rgba(28,56,41,0.12), 0 3px 10px rgba(28,56,41,0.05);
-    padding: 14px 16px 14px;
+    background: #fdfcfb;               /* a hair of warmth so they sit in the scene */
+    border: 1px solid #edece7;
+    border-radius: 15px;
+    /* soft, diffuse shadow — resting on light rather than punching out */
+    box-shadow: 0 26px 52px -18px rgba(28,56,41,0.13),
+                0 10px 24px -14px rgba(28,56,41,0.08);
+    padding: 13px 15px;
     padding-bottom: 0;
     opacity: 1;
     width: max-content;
-    max-width: 236px;
+    max-width: 212px;
     animation-timing-function: cubic-bezier(0.45, 0, 0.55, 1);
     animation-iteration-count: infinite;
     will-change: transform;
