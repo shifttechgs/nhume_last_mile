@@ -1426,22 +1426,11 @@ body { font-family: var(--font); color: var(--text); background: #fff; -webkit-f
     padding: clamp(150px,21vh,230px) clamp(24px,5vw,64px) clamp(56px,8vh,96px);
 }
 .hero-cine-eyebrow {
-    display: inline-flex; align-items: center; gap: 8px;
-    font-family: var(--font); font-size: 12.5px; font-weight: 600;
-    letter-spacing: 0.02em; color: #c3f2a2;
-    background: rgba(107,198,48,0.12);
-    border: 1px solid rgba(107,198,48,0.28);
-    padding: 7px 15px; border-radius: 999px;
-    margin-bottom: 24px;
-}
-.hcw-dot {
-    width: 7px; height: 7px; border-radius: 50%; background: #6bc630;
-    animation: hcwpulse 2s infinite;
-}
-@keyframes hcwpulse {
-    0%   { box-shadow: 0 0 0 0 rgba(107,198,48,0.6); }
-    70%  { box-shadow: 0 0 0 8px rgba(107,198,48,0); }
-    100% { box-shadow: 0 0 0 0 rgba(107,198,48,0); }
+    display: inline-block;
+    font-family: var(--font); font-size: 12px; font-weight: 700;
+    letter-spacing: 0.16em; text-transform: uppercase;
+    color: #8ed64a;
+    margin-bottom: 22px;
 }
 .hero-cine-h1 {
     font-family: var(--head);
@@ -1483,7 +1472,6 @@ body { font-family: var(--font); color: var(--text); background: #fff; -webkit-f
     }
     .hero-cine-inner { padding-top: clamp(120px,15vh,160px); }
 }
-@media (prefers-reduced-motion: reduce) { .hcw-dot { animation: none; } }
 
 /* ══ Hero tabbed form ══ */
 .htf-wrap {
@@ -2193,9 +2181,7 @@ body { font-family: var(--font); color: var(--text); background: #fff; -webkit-f
 
     {{-- Overlaid editorial copy --}}
     <div class="hero-cine-inner">
-        <span class="hero-cine-eyebrow reveal">
-            <span class="hcw-dot"></span> Live across Harare · intercity Zimbabwe
-        </span>
+        <span class="hero-cine-eyebrow reveal">Harare &amp; intercity Zimbabwe</span>
 
         <h1 class="hero-cine-h1 reveal">
             <span class="h1-nowrap">Same-day errands and deliveries</span><br>
