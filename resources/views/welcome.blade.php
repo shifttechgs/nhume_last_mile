@@ -2799,137 +2799,141 @@ body { font-family: var(--font); color: var(--text); background: #fff; -webkit-f
 <section id="routes" style="padding:var(--section-y) 0;background:var(--shade);overflow:hidden">
     <div style="max-width:1120px;margin:0 auto;padding:0 clamp(20px,4vw,48px)">
 
-        {{-- Section heading --}}
-        <div class="reveal routes-head" style="margin-bottom:clamp(40px,5vw,64px)">
-            <div>
-                <p class="eyebrow mb-4">Routes</p>
-                <h2 style="font-family:var(--head);font-size:clamp(32px,4vw,52px);font-weight:700;letter-spacing:-0.03em;line-height:1.1;color:var(--forest-deep);margin:0">Local Harare errands.<br>Intercity parcels.</h2>
-            </div>
-            <p style="font-family:var(--font);font-size:15px;color:#6b7280;max-width:340px;line-height:1.65;margin:0;padding-bottom:6px">Two services, one platform. Get things done across Harare's upmarket suburbs or ship between cities — same-day, every day.</p>
+        {{-- Heading --}}
+        <div class="reveal" style="margin-bottom:clamp(40px,5vw,56px)">
+            <p class="eyebrow" style="margin-bottom:12px">Routes</p>
+            <h2 style="font-family:var(--head);font-size:clamp(32px,4vw,52px);font-weight:700;letter-spacing:-0.03em;line-height:1.1;color:var(--forest-deep);margin:0">Local Harare errands.<br>Intercity parcels.</h2>
         </div>
 
-        {{-- ── HARARE LOCAL ──────────────────────────────────── --}}
-        <div class="reveal" style="margin-bottom:48px">
-            <div style="display:flex;align-items:center;gap:12px;margin-bottom:20px">
-                <div style="display:flex;align-items:center;gap:8px">
-                    <svg width="16" height="16" fill="none" stroke="var(--green-mid)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M12 2v3M12 19v3M2 12h3M19 12h3"/></svg>
-                    <span style="font-family:var(--font);font-size:11px;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:var(--forest-deep)">Harare Local Errands</span>
-                </div>
-                <div style="flex:1;height:1px;background:#e5e7eb"></div>
-                <span style="font-family:var(--font);font-size:12px;color:#9ca3af">Same-day · Upmarket suburbs</span>
-            </div>
+        {{-- ── HARARE LOCAL: single dark panel, two-column editorial split ── --}}
+        <div class="reveal" style="background:var(--forest-deep);border-radius:8px;overflow:hidden;margin-bottom:16px">
+            <div style="display:grid;grid-template-columns:1fr 1fr;min-height:320px">
 
-            <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:16px">
-
-                {{-- Local live card --}}
-                <div style="background:#fff;border:1px solid #e5e7eb;border-radius:16px;padding:28px;display:flex;flex-direction:column">
-                    <span style="display:inline-flex;align-items:center;font-family:var(--font);font-size:11px;font-weight:600;color:var(--green-mid);margin-bottom:28px">Taking bookings</span>
-                    <p style="font-family:var(--font);font-size:10.5px;font-weight:700;letter-spacing:0.1em;color:#9ca3af;text-transform:uppercase;margin:0 0 6px">Harare</p>
-                    <h3 style="font-family:var(--head);font-size:21px;font-weight:700;color:var(--forest-deep);letter-spacing:-0.02em;margin:0 0 10px;line-height:1.2">Upmarket Suburbs</h3>
-                    <p style="font-family:var(--font);font-size:14px;color:#6b7280;line-height:1.65;margin:0 0 16px;flex:1">Same-day errands and deliveries across Harare's upmarket areas. Our riders handle pickups, drop-offs, and runs so you don't have to.</p>
-                    {{-- Suburb tags --}}
-                    <div style="display:flex;flex-wrap:wrap;gap:6px;margin-bottom:20px">
-                        @foreach(['Borrowdale','Highlands','Avondale','Mount Pleasant','Chisipite','Glen Lorne','Greystone Park','Mandara','Gunhill','Greendale'] as $suburb)
-                        <span style="font-family:var(--font);font-size:11.5px;font-weight:500;color:var(--forest-deep);background:#f0fde4;border:1px solid #d1fae5;border-radius:20px;padding:3px 10px">{{ $suburb }}</span>
-                        @endforeach
+                {{-- Left: coverage --}}
+                <div style="padding:clamp(28px,4vw,48px);display:flex;flex-direction:column;justify-content:space-between">
+                    <div>
+                        <p style="font-family:var(--font);font-size:10.5px;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;color:var(--green);margin:0 0 16px">Harare Local · Same day</p>
+                        <h3 style="font-family:var(--head);font-size:clamp(20px,2.2vw,26px);font-weight:700;letter-spacing:-0.025em;line-height:1.2;color:#fff;margin:0 0 16px">Riders already in your suburb.<br>Errands done in hours.</h3>
+                        <p style="font-family:var(--font);font-size:13.5px;color:rgba(255,255,255,0.42);line-height:1.7;margin:0 0 24px">Borrowdale · Highlands · Avondale · Mount Pleasant · Chisipite · Glen Lorne · Greystone Park · Mandara · Gunhill · Greendale</p>
                     </div>
-                    <a href="{{ route('send') }}" style="font-family:var(--font);font-size:14px;font-weight:600;color:var(--forest-deep);text-decoration:none">Book a local errand →</a>
+                    <a href="{{ route('send') }}" style="display:inline-flex;align-items:center;gap:7px;font-family:var(--font);font-size:14px;font-weight:600;color:var(--green);text-decoration:none;align-self:flex-start">
+                        Book a local errand
+                        <svg width="13" height="13" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M17 8l4 4m0 0l-4 4m4-4H3"/></svg>
+                    </a>
                 </div>
 
-                {{-- What we handle --}}
-                <div style="background:var(--forest-deep);border-radius:16px;padding:28px;display:flex;flex-direction:column;gap:0">
-                    <p style="font-family:var(--font);font-size:11px;font-weight:700;letter-spacing:0.1em;color:rgba(255,255,255,0.4);text-transform:uppercase;margin:0 0 20px">What we handle</p>
+                {{-- Right: what we handle — editorial list --}}
+                <div style="border-left:1px solid rgba(255,255,255,0.07);padding:clamp(28px,4vw,48px)">
                     @foreach([
-                        ['Parcel pickups & drop-offs', 'Collect from one address, deliver to another — within hours.'],
-                        ['Document runs', 'Contracts, invoices, ID copies. Safe hands, fast delivery.'],
-                        ['Grocery & pharmacy runs', 'We collect from your preferred store and bring it to your door.'],
-                        ['Business errands', 'Bank deposits, stationery, anything you need moved around Harare.'],
+                        ['Parcel pickups & drop-offs', 'One address to another, within hours.'],
+                        ['Document runs',              'Contracts, invoices, IDs. Safe hands, fast.'],
+                        ['Grocery & pharmacy',         'We collect from your store and bring it home.'],
+                        ['Business errands',           'Bank runs, stationery, anything around Harare.'],
                     ] as [$title, $desc])
-                    <div style="display:flex;gap:12px;padding:14px 0;border-bottom:1px solid rgba(255,255,255,0.08);">
-                        <div style="width:7px;height:7px;border-radius:50%;background:var(--green-mid);flex-shrink:0;margin-top:6px"></div>
+                    <div style="padding:16px 0;border-bottom:1px solid rgba(255,255,255,0.07);display:flex;gap:14px;align-items:flex-start">
+                        <div style="width:5px;height:5px;border-radius:50%;background:var(--green);flex-shrink:0;margin-top:8px"></div>
                         <div>
-                            <p style="font-family:var(--head);font-size:14px;font-weight:600;color:#fff;margin:0 0 3px">{{ $title }}</p>
-                            <p style="font-family:var(--font);font-size:13px;color:rgba(255,255,255,0.5);margin:0;line-height:1.5">{{ $desc }}</p>
+                            <p style="font-family:var(--head);font-size:14px;font-weight:600;color:#fff;margin:0 0 2px">{{ $title }}</p>
+                            <p style="font-family:var(--font);font-size:13px;color:rgba(255,255,255,0.4);margin:0;line-height:1.55">{{ $desc }}</p>
                         </div>
                     </div>
                     @endforeach
-                    <div style="margin-top:24px">
-                        <a href="{{ route('send') }}" style="display:inline-flex;align-items:center;gap:7px;font-family:var(--font);font-size:14px;font-weight:600;color:var(--green-mid);text-decoration:none">
-                            Book now
-                            <svg width="14" height="14" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"/></svg>
-                        </a>
-                    </div>
                 </div>
 
             </div>
         </div>
 
-        {{-- ── INTERCITY ─────────────────────────────────────── --}}
+        {{-- ── INTERCITY: departure-board table ── --}}
         <div class="reveal">
-            <div style="display:flex;align-items:center;gap:12px;margin-bottom:20px">
-                <div style="display:flex;align-items:center;gap:8px">
-                    <svg width="16" height="16" fill="none" stroke="var(--green-mid)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><path d="M3 17l2 2 4-4"/><path d="M13 6h8"/><path d="M13 12h8"/><path d="M13 18h8"/></svg>
-                    <span style="font-family:var(--font);font-size:11px;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:var(--forest-deep)">Intercity Routes</span>
-                </div>
-                <div style="flex:1;height:1px;background:#e5e7eb"></div>
-                <span style="font-family:var(--font);font-size:12px;color:#9ca3af">Long-distance · Harare ↔ Zimbabwe</span>
+
+            {{-- Table label row --}}
+            <div style="display:flex;align-items:center;gap:12px;margin-bottom:0">
+                <span style="font-family:var(--font);font-size:10.5px;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;color:var(--text-2);white-space:nowrap">Intercity</span>
+                <div style="flex:1;height:1px;background:var(--border)"></div>
+                <span style="font-family:var(--font);font-size:12px;color:#9ca3af;white-space:nowrap">Long-distance · Zimbabwe</span>
             </div>
 
-            <div class="routes-grid">
+            {{-- Board --}}
+            <div style="background:#fff;border:1px solid var(--border);border-radius:8px;overflow:hidden;margin-top:12px">
 
-                {{-- Harare → Bulawayo LIVE --}}
-                <div style="background:#fff;border:1px solid #e5e7eb;border-radius:16px;padding:28px;display:flex;flex-direction:column">
-                    <span style="display:inline-flex;align-items:center;font-family:var(--font);font-size:11px;font-weight:600;color:var(--green-mid);margin-bottom:28px">Taking bookings</span>
-                    <p style="font-family:var(--font);font-size:10.5px;font-weight:700;letter-spacing:0.1em;color:#9ca3af;text-transform:uppercase;margin:0 0 6px">Zimbabwe</p>
-                    <h3 style="font-family:var(--head);font-size:21px;font-weight:700;color:var(--forest-deep);letter-spacing:-0.02em;margin:0 0 10px;line-height:1.2">Harare ↔ Bulawayo</h3>
-                    <p style="font-family:var(--font);font-size:14px;color:#6b7280;line-height:1.65;margin:0 0 20px;flex:1">Zimbabwe's busiest corridor. Drivers running daily, both directions. Door collection available.</p>
-                    <div style="display:flex;align-items:center;gap:12px;flex-wrap:wrap;margin-bottom:20px">
-                        <span style="font-family:var(--font);font-size:12px;color:#6b7280;display:inline-flex;align-items:center;gap:5px">
-                            <svg width="12" height="12" fill="none" stroke="currentColor" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="12,6 12,12 16,14"/></svg>
-                            4–6 hrs
-                        </span>
-                        <span style="font-family:var(--font);font-size:12px;color:#6b7280;display:inline-flex;align-items:center;gap:5px">
-                            <svg width="12" height="12" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
-                            Multiple drivers daily
-                        </span>
+                {{-- Header row --}}
+                <div class="route-board-row route-board-head">
+                    <span>Route</span>
+                    <span>Distance</span>
+                    <span>Journey time</span>
+                    <span>Frequency</span>
+                    <span></span>
+                </div>
+
+                @foreach([
+                    ['Harare','Bulawayo',    '439 km','4–6 hrs','Daily, both ways',   true,  'send',     'Send a parcel'],
+                    ['Harare','Mutare',      '263 km','3–4 hrs','Growing weekly',     true,  'send',     'Send a parcel'],
+                    ['Bulawayo','Vic Falls', '439 km','6 hrs',  'Weekly',             false, 'register', 'Join waitlist'],
+                    ['Harare','Gweru',       '275 km','3.5 hrs','Weekly',             false, 'register', 'Join waitlist'],
+                ] as [$from, $to, $dist, $dur, $freq, $live, $routeName, $cta])
+                <div class="route-board-row{{ $live ? '' : ' route-board-soon' }}">
+                    <div>
+                        <p style="font-family:var(--head);font-size:15px;font-weight:700;color:var(--forest-deep);margin:0;letter-spacing:-0.01em">{{ $from }} ↔ {{ $to }}</p>
+                        @if($live)
+                        <span style="font-family:var(--font);font-size:11px;font-weight:600;color:var(--green-mid)">Taking bookings</span>
+                        @else
+                        <span style="font-family:var(--font);font-size:11px;color:#9ca3af">Coming soon</span>
+                        @endif
                     </div>
-                    <a href="{{ route('send') }}" style="font-family:var(--font);font-size:14px;font-weight:600;color:var(--forest-deep);text-decoration:none">Send a parcel →</a>
+                    <span style="font-family:var(--font);font-size:14px;color:var(--text-2)">{{ $dist }}</span>
+                    <span style="font-family:var(--font);font-size:14px;color:var(--text-2)">{{ $dur }}</span>
+                    <span style="font-family:var(--font);font-size:14px;color:var(--text-2)">{{ $freq }}</span>
+                    <a href="{{ route($routeName) }}" style="font-family:var(--font);font-size:13.5px;font-weight:600;color:{{ $live ? 'var(--forest-deep)' : '#9ca3af' }};text-decoration:none;white-space:nowrap">{{ $cta }} →</a>
                 </div>
-
-                {{-- Harare → Mutare LIVE --}}
-                <div style="background:#fff;border:1px solid #e5e7eb;border-radius:16px;padding:28px;display:flex;flex-direction:column">
-                    <span style="display:inline-flex;align-items:center;font-family:var(--font);font-size:11px;font-weight:600;color:var(--green-mid);margin-bottom:28px">Taking bookings</span>
-                    <p style="font-family:var(--font);font-size:10.5px;font-weight:700;letter-spacing:0.1em;color:#9ca3af;text-transform:uppercase;margin:0 0 6px">Zimbabwe</p>
-                    <h3 style="font-family:var(--head);font-size:21px;font-weight:700;color:var(--forest-deep);letter-spacing:-0.02em;margin:0 0 10px;line-height:1.2">Harare ↔ Mutare</h3>
-                    <p style="font-family:var(--font);font-size:14px;color:#6b7280;line-height:1.65;margin:0 0 20px;flex:1">Eastern highlands corridor. New drivers joining weekly, parcels and documents welcome.</p>
-                    <div style="display:flex;align-items:center;gap:12px;flex-wrap:wrap;margin-bottom:20px">
-                        <span style="font-family:var(--font);font-size:12px;color:#6b7280;display:inline-flex;align-items:center;gap:5px">
-                            <svg width="12" height="12" fill="none" stroke="currentColor" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="12,6 12,12 16,14"/></svg>
-                            3–4 hrs
-                        </span>
-                        <span style="font-family:var(--font);font-size:12px;color:#6b7280;display:inline-flex;align-items:center;gap:5px">
-                            <svg width="12" height="12" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
-                            Growing driver pool
-                        </span>
-                    </div>
-                    <a href="{{ route('send') }}" style="font-family:var(--font);font-size:14px;font-weight:600;color:var(--forest-deep);text-decoration:none">Send a parcel →</a>
-                </div>
-
-                {{-- More corridors --}}
-                <div style="background:#fff;border:1px solid #e5e7eb;border-radius:16px;padding:28px;display:flex;flex-direction:column;opacity:0.55">
-                    <span style="display:inline-flex;align-items:center;background:var(--forest-deep);color:rgba(255,255,255,0.7);font-family:var(--font);font-size:10.5px;font-weight:700;letter-spacing:0.07em;padding:5px 11px;border-radius:6px;width:fit-content;margin-bottom:28px">COMING SOON</span>
-                    <p style="font-family:var(--font);font-size:10.5px;font-weight:700;letter-spacing:0.1em;color:#9ca3af;text-transform:uppercase;margin:0 0 6px">Zimbabwe</p>
-                    <h3 style="font-family:var(--head);font-size:21px;font-weight:700;color:var(--forest-deep);letter-spacing:-0.02em;margin:0 0 10px;line-height:1.2">Bulawayo → Vic Falls<br>+ more</h3>
-                    <p style="font-family:var(--font);font-size:14px;color:#6b7280;line-height:1.65;margin:0 0 20px;flex:1">Gweru, Masvingo, and the SA corridor expanding soon. Register your interest now.</p>
-                    <a href="{{ route('register') }}" style="font-family:var(--font);font-size:14px;font-weight:600;color:var(--forest-deep);text-decoration:none">Join the waitlist →</a>
-                </div>
+                @endforeach
 
             </div>
         </div>
-
 
     </div>
 </section>
+
+<style>
+.route-board-row {
+    display: grid;
+    grid-template-columns: 2fr 1fr 1fr 1.2fr 130px;
+    gap: 0;
+    padding: 18px 28px;
+    border-bottom: 1px solid var(--border);
+    align-items: center;
+}
+.route-board-row:last-child { border-bottom: none; }
+.route-board-head {
+    background: var(--shade);
+    border-bottom: 1px solid var(--border);
+    padding-top: 12px;
+    padding-bottom: 12px;
+}
+.route-board-head span {
+    font-family: var(--font);
+    font-size: 10.5px;
+    font-weight: 700;
+    letter-spacing: 0.09em;
+    text-transform: uppercase;
+    color: #9ca3af;
+}
+.route-board-soon { opacity: 0.5; }
+@media (max-width: 860px) {
+    .route-board-row { grid-template-columns: 1fr 1fr; gap: 8px 0; padding: 16px 20px; }
+    .route-board-head { display: none; }
+    .route-board-row > span:nth-child(2),
+    .route-board-row > span:nth-child(3),
+    .route-board-row > span:nth-child(4) { font-size: 12px; color: #9ca3af; }
+}
+@media (max-width: 640px) {
+    .route-board-row { grid-template-columns: 1fr; }
+}
+@media (max-width: 700px) {
+    .route-board-row[style] { grid-template-columns: 1fr !important; }
+    [style*="grid-template-columns:1fr 1fr;min-height"] { grid-template-columns: 1fr !important; }
+    [style*="border-left:1px solid rgba(255,255,255,0.07)"] { border-left: none !important; border-top: 1px solid rgba(255,255,255,0.07); }
+}
+</style>
 
 
 {{-- ══════════════════════════════════════════════════
