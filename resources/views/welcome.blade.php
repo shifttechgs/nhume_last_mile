@@ -2830,7 +2830,7 @@ body { font-family: var(--font); color: var(--text); background: #fff; -webkit-f
                 ['Harare',   'Bulawayo',   "Zimbabwe's busiest corridor", '439 km · 4–6 hrs · Daily both ways',  true,  'send',     'Send a parcel'],
                 ['Harare',   'Mutare',     'Eastern highlands',           '263 km · 3–4 hrs · Growing weekly',   true,  'send',     'Send a parcel'],
                 ['Bulawayo', 'Vic Falls',  'Western corridor',            '439 km · ~6 hrs · Weekly',            false, 'register', 'Coming soon'],
-                ['Harare',   'Gweru',      'Midlands corridor',           '275 km · 3.5 hrs · Weekly',           false, 'register', 'Coming soon'],
+                ['Harare',   'Gweru',      'Midlands corridor',           '275 km · 3.5 hrs · Weekly',           true,  'send',     'Send a parcel'],
             ] as [$from, $to, $label, $meta, $live, $routeName, $cta])
             <div style="display:flex;align-items:center;justify-content:space-between;gap:32px;padding:clamp(24px,3.2vw,36px) 0;border-bottom:1px solid var(--border);{{ !$live ? 'opacity:0.38' : '' }}">
                 <div style="min-width:0">
