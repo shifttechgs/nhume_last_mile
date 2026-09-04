@@ -2813,7 +2813,11 @@ body { font-family: var(--font); color: var(--text); background: #fff; -webkit-f
             </div>
             <h3 style="font-family:var(--head);font-size:clamp(28px,4vw,46px);font-weight:700;letter-spacing:-0.03em;line-height:1.1;color:var(--forest-deep);margin:0 0 18px">Riders already in your suburb.<br>Same day, every day.</h3>
             <p style="font-family:var(--font);font-size:15px;color:var(--text-2);line-height:1.72;margin:0 0 16px;max-width:580px">Pickups, drop-offs, grocery runs, document deliveries — handled the same day. No car, no hassle.</p>
-            <p style="font-family:var(--font);font-size:13.5px;color:var(--text-2);line-height:1.9;margin:0">Borrowdale · Highlands · Avondale · Mount Pleasant · Chisipite · Glen Lorne · Greystone Park · Mandara · Gunhill · Greendale</p>
+            <div style="display:flex;flex-wrap:wrap;gap:7px;margin-top:4px">
+                @foreach(['Borrowdale','Highlands','Avondale','Mount Pleasant','Chisipite','Glen Lorne','Greystone Park','Mandara','Gunhill','Greendale'] as $s)
+                <span style="font-family:var(--font);font-size:12.5px;font-weight:500;color:var(--text-2);border:1px solid var(--border);border-radius:4px;padding:4px 10px;background:var(--white)">{{ $s }}</span>
+                @endforeach
+            </div>
         </div>
 
         {{-- INTERCITY --}}
