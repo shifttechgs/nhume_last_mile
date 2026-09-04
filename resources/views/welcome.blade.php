@@ -2813,7 +2813,7 @@ body { font-family: var(--font); color: var(--text); background: #fff; -webkit-f
             </div>
             <h3 style="font-family:var(--head);font-size:clamp(28px,4vw,46px);font-weight:700;letter-spacing:-0.03em;line-height:1.1;color:var(--forest-deep);margin:0 0 18px">Riders already in your suburb.<br>Same day, every day.</h3>
             <p style="font-family:var(--font);font-size:15px;color:var(--text-2);line-height:1.72;margin:0 0 16px;max-width:580px">Pickups, drop-offs, grocery runs, document deliveries — handled the same day. No car, no hassle.</p>
-            <p style="font-family:var(--font);font-size:13.5px;color:#9ca3af;line-height:1.9;margin:0">Borrowdale · Highlands · Avondale · Mount Pleasant · Chisipite · Glen Lorne · Greystone Park · Mandara · Gunhill · Greendale</p>
+            <p style="font-family:var(--font);font-size:13.5px;color:var(--text-2);line-height:1.9;margin:0">Borrowdale · Highlands · Avondale · Mount Pleasant · Chisipite · Glen Lorne · Greystone Park · Mandara · Gunhill · Greendale</p>
         </div>
 
         {{-- INTERCITY --}}
