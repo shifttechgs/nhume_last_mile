@@ -1407,6 +1407,37 @@ body { font-family: var(--font); color: var(--text); background: #fff; -webkit-f
         linear-gradient(0deg, rgba(6,46,20,0.58) 0%, rgba(6,46,20,0) 44%),
         linear-gradient(0deg, rgba(28,56,41,0.26), rgba(28,56,41,0.26));
 }
+/* ── Diagonal brand stripes — Grab-style geometric accent on the photo side ── */
+.hero-cine-stripe {
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+    pointer-events: none;
+    overflow: hidden;
+}
+.hero-cine-stripe::before,
+.hero-cine-stripe::after {
+    content: "";
+    position: absolute;
+    top: -40%;
+    height: 180%;
+    background: var(--green);
+    transform: rotate(-20deg);
+    transform-origin: top center;
+}
+.hero-cine-stripe::before {
+    right: 24%;
+    width: 5px;
+    opacity: 0.5;
+}
+.hero-cine-stripe::after {
+    right: 17%;
+    width: 3px;
+    opacity: 0.28;
+}
+@media (max-width: 640px) {
+    .hero-cine-stripe { display: none; }
+}
 .hero-cine-inner {
     position: relative;
     max-width: 1240px;
@@ -2181,6 +2212,7 @@ body { font-family: var(--font); color: var(--text); background: #fff; -webkit-f
          alt="A Nhume GO rider delivering a parcel across Harare"
          fetchpriority="high">
     <span class="hero-cine-scrim" aria-hidden="true"></span>
+    <div class="hero-cine-stripe" aria-hidden="true"></div>
 
     {{-- Overlaid editorial copy --}}
     <div class="hero-cine-inner">
@@ -2200,9 +2232,9 @@ body { font-family: var(--font); color: var(--text); background: #fff; -webkit-f
                 Send a parcel
                 <svg width="15" height="15" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"/></svg>
             </a>
-            <button type="button" @click="trackOpen = true; $nextTick(() => $refs.trackInput?.focus())" class="hero-cine-textlink">
-                Track a parcel
-            </button>
+            <a href="{{ route('journeys') }}" class="hero-cine-textlink">
+                Browse journeys
+            </a>
         </div>
 
         <p class="hero-cine-served reveal">
@@ -2454,7 +2486,7 @@ body { font-family: var(--font); color: var(--text); background: #fff; -webkit-f
                 </div>
 
                 <a href="{{ route('send') }}" class="how-cta">
-                    Get started
+                    Send a parcel
                     <svg width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"/></svg>
                 </a>
             </div>
@@ -2715,7 +2747,7 @@ body { font-family: var(--font); color: var(--text); background: #fff; -webkit-f
                     <p class="why-desc">Errands and parcels handled by real people — riders in your suburb, drivers already on the road. No depots, no anonymous strangers.</p>
                 </div>
                 <a href="{{ route('send') }}" class="why-cta">
-                    Get started
+                    Send a parcel
                     <svg width="14" height="14" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"/></svg>
                 </a>
             </div>
@@ -3163,7 +3195,7 @@ body { font-family: var(--font); color: var(--text); background: #fff; -webkit-f
 
         <div style="display:flex;align-items:center;justify-content:center;gap:12px;flex-wrap:wrap;margin-bottom:32px">
             <a href="{{ route('send') }}" style="display:inline-flex;align-items:center;gap:8px;background:var(--green);color:var(--forest-deep);font-family:var(--font);font-size:15px;font-weight:700;padding:14px 28px;border-radius:12px;text-decoration:none;transition:background 0.2s" onmouseover="this.style.background='#5aad28'" onmouseout="this.style.background='var(--green)'">
-                Book an errand
+                Send a parcel
                 <svg width="14" height="14" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M17 8l4 4m0 0l-4 4m4-4H3"/></svg>
             </a>
             <a href="{{ route('register') }}" style="display:inline-flex;align-items:center;font-family:var(--font);font-size:15px;font-weight:600;padding:13px 26px;border-radius:12px;text-decoration:none;border:1.5px solid rgba(255,255,255,0.2);color:rgba(255,255,255,0.65);transition:all 0.2s" onmouseover="this.style.borderColor='rgba(255,255,255,0.45)';this.style.color='#fff'" onmouseout="this.style.borderColor='rgba(255,255,255,0.2)';this.style.color='rgba(255,255,255,0.65)'">
