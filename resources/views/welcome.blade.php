@@ -2796,144 +2796,54 @@ body { font-family: var(--font); color: var(--text); background: #fff; -webkit-f
 {{-- ══════════════════════════════════════════════════
      ROUTES
 ══════════════════════════════════════════════════ --}}
-<section id="routes" style="padding:var(--section-y) 0;background:var(--shade);overflow:hidden">
-    <div style="max-width:1120px;margin:0 auto;padding:0 clamp(20px,4vw,48px)">
+<section id="routes" style="padding:var(--section-y) 0;background:#fff">
+    <div style="max-width:1040px;margin:0 auto;padding:0 clamp(20px,4vw,48px)">
 
         {{-- Heading --}}
-        <div class="reveal" style="margin-bottom:clamp(40px,5vw,56px)">
-            <p class="eyebrow" style="margin-bottom:12px">Routes</p>
-            <h2 style="font-family:var(--head);font-size:clamp(32px,4vw,52px);font-weight:700;letter-spacing:-0.03em;line-height:1.1;color:var(--forest-deep);margin:0">Local Harare errands.<br>Intercity parcels.</h2>
+        <div class="reveal" style="margin-bottom:clamp(52px,7vw,80px)">
+            <p class="eyebrow" style="margin-bottom:14px">Routes</p>
+            <h2 style="font-family:var(--head);font-size:clamp(34px,4.5vw,56px);font-weight:700;letter-spacing:-0.035em;line-height:1.08;color:var(--forest-deep);margin:0">Where we run.</h2>
         </div>
 
-        {{-- ── HARARE LOCAL: single dark panel, two-column editorial split ── --}}
-        <div class="reveal" style="background:var(--forest-deep);border-radius:8px;overflow:hidden;margin-bottom:16px">
-            <div style="display:grid;grid-template-columns:1fr 1fr;min-height:320px">
-
-                {{-- Left: coverage --}}
-                <div style="padding:clamp(28px,4vw,48px);display:flex;flex-direction:column;justify-content:space-between">
-                    <div>
-                        <p style="font-family:var(--font);font-size:10.5px;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;color:var(--green);margin:0 0 16px">Harare Local · Same day</p>
-                        <h3 style="font-family:var(--head);font-size:clamp(20px,2.2vw,26px);font-weight:700;letter-spacing:-0.025em;line-height:1.2;color:#fff;margin:0 0 16px">Riders already in your suburb.<br>Errands done in hours.</h3>
-                        <p style="font-family:var(--font);font-size:13.5px;color:rgba(255,255,255,0.42);line-height:1.7;margin:0 0 24px">Borrowdale · Highlands · Avondale · Mount Pleasant · Chisipite · Glen Lorne · Greystone Park · Mandara · Gunhill · Greendale</p>
-                    </div>
-                    <a href="{{ route('send') }}" style="display:inline-flex;align-items:center;gap:7px;font-family:var(--font);font-size:14px;font-weight:600;color:var(--green);text-decoration:none;align-self:flex-start">
-                        Book a local errand
-                        <svg width="13" height="13" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M17 8l4 4m0 0l-4 4m4-4H3"/></svg>
-                    </a>
-                </div>
-
-                {{-- Right: what we handle — editorial list --}}
-                <div style="border-left:1px solid rgba(255,255,255,0.07);padding:clamp(28px,4vw,48px)">
-                    @foreach([
-                        ['Parcel pickups & drop-offs', 'One address to another, within hours.'],
-                        ['Document runs',              'Contracts, invoices, IDs. Safe hands, fast.'],
-                        ['Grocery & pharmacy',         'We collect from your store and bring it home.'],
-                        ['Business errands',           'Bank runs, stationery, anything around Harare.'],
-                    ] as [$title, $desc])
-                    <div style="padding:16px 0;border-bottom:1px solid rgba(255,255,255,0.07);display:flex;gap:14px;align-items:flex-start">
-                        <div style="width:5px;height:5px;border-radius:50%;background:var(--green);flex-shrink:0;margin-top:8px"></div>
-                        <div>
-                            <p style="font-family:var(--head);font-size:14px;font-weight:600;color:#fff;margin:0 0 2px">{{ $title }}</p>
-                            <p style="font-family:var(--font);font-size:13px;color:rgba(255,255,255,0.4);margin:0;line-height:1.55">{{ $desc }}</p>
-                        </div>
-                    </div>
-                    @endforeach
-                </div>
-
+        {{-- LOCAL HARARE --}}
+        <div class="reveal" style="margin-bottom:clamp(52px,7vw,80px)">
+            <div style="display:flex;align-items:baseline;justify-content:space-between;gap:24px;border-top:1.5px solid var(--forest-deep);padding-top:20px;margin-bottom:28px">
+                <span style="font-family:var(--font);font-size:10.5px;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;color:var(--forest-deep)">Harare Local</span>
+                <a href="{{ route('send') }}" style="font-family:var(--font);font-size:14px;font-weight:600;color:var(--forest-deep);text-decoration:none;flex-shrink:0">Book a local errand →</a>
             </div>
+            <h3 style="font-family:var(--head);font-size:clamp(28px,4vw,46px);font-weight:700;letter-spacing:-0.03em;line-height:1.1;color:var(--forest-deep);margin:0 0 18px">Riders already in your suburb.<br>Same day, every day.</h3>
+            <p style="font-family:var(--font);font-size:15px;color:var(--text-2);line-height:1.72;margin:0 0 16px;max-width:580px">Pickups, drop-offs, grocery runs, document deliveries — handled the same day. No car, no hassle.</p>
+            <p style="font-family:var(--font);font-size:13.5px;color:#9ca3af;line-height:1.9;margin:0">Borrowdale · Highlands · Avondale · Mount Pleasant · Chisipite · Glen Lorne · Greystone Park · Mandara · Gunhill · Greendale</p>
         </div>
 
-        {{-- ── INTERCITY: departure-board table ── --}}
+        {{-- INTERCITY --}}
         <div class="reveal">
-
-            {{-- Table label row --}}
-            <div style="display:flex;align-items:center;gap:12px;margin-bottom:0">
-                <span style="font-family:var(--font);font-size:10.5px;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;color:var(--text-2);white-space:nowrap">Intercity</span>
-                <div style="flex:1;height:1px;background:var(--border)"></div>
-                <span style="font-family:var(--font);font-size:12px;color:#9ca3af;white-space:nowrap">Long-distance · Zimbabwe</span>
+            <div style="border-top:1.5px solid var(--forest-deep);padding-top:20px;margin-bottom:0">
+                <span style="font-family:var(--font);font-size:10.5px;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;color:var(--forest-deep)">Intercity</span>
             </div>
 
-            {{-- Board --}}
-            <div style="background:#fff;border:1px solid var(--border);border-radius:8px;overflow:hidden;margin-top:12px">
-
-                {{-- Header row --}}
-                <div class="route-board-row route-board-head">
-                    <span>Route</span>
-                    <span>Distance</span>
-                    <span>Journey time</span>
-                    <span>Frequency</span>
-                    <span></span>
+            @foreach([
+                ['Harare',   'Bulawayo',   "Zimbabwe's busiest corridor", '439 km · 4–6 hrs · Daily both ways',  true,  'send',     'Send a parcel'],
+                ['Harare',   'Mutare',     'Eastern highlands',           '263 km · 3–4 hrs · Growing weekly',   true,  'send',     'Send a parcel'],
+                ['Bulawayo', 'Vic Falls',  'Western corridor',            '439 km · ~6 hrs · Weekly',            false, 'register', 'Coming soon'],
+                ['Harare',   'Gweru',      'Midlands corridor',           '275 km · 3.5 hrs · Weekly',           false, 'register', 'Coming soon'],
+            ] as [$from, $to, $label, $meta, $live, $routeName, $cta])
+            <div style="display:flex;align-items:center;justify-content:space-between;gap:32px;padding:clamp(24px,3.2vw,36px) 0;border-bottom:1px solid var(--border);{{ !$live ? 'opacity:0.38' : '' }}">
+                <div style="min-width:0">
+                    <h3 style="font-family:var(--head);font-size:clamp(26px,3.4vw,42px);font-weight:700;letter-spacing:-0.03em;line-height:1.08;color:var(--forest-deep);margin:0 0 7px">{{ $from }} ↔ {{ $to }}</h3>
+                    <p style="font-family:var(--font);font-size:13.5px;color:#9ca3af;margin:0;line-height:1.5">{{ $label }} · {{ $meta }}</p>
                 </div>
-
-                @foreach([
-                    ['Harare','Bulawayo',    '439 km','4–6 hrs','Daily, both ways',   true,  'send',     'Send a parcel'],
-                    ['Harare','Mutare',      '263 km','3–4 hrs','Growing weekly',     true,  'send',     'Send a parcel'],
-                    ['Bulawayo','Vic Falls', '439 km','6 hrs',  'Weekly',             false, 'register', 'Join waitlist'],
-                    ['Harare','Gweru',       '275 km','3.5 hrs','Weekly',             false, 'register', 'Join waitlist'],
-                ] as [$from, $to, $dist, $dur, $freq, $live, $routeName, $cta])
-                <div class="route-board-row{{ $live ? '' : ' route-board-soon' }}">
-                    <div>
-                        <p style="font-family:var(--head);font-size:15px;font-weight:700;color:var(--forest-deep);margin:0;letter-spacing:-0.01em">{{ $from }} ↔ {{ $to }}</p>
-                        @if($live)
-                        <span style="font-family:var(--font);font-size:11px;font-weight:600;color:var(--green-mid)">Taking bookings</span>
-                        @else
-                        <span style="font-family:var(--font);font-size:11px;color:#9ca3af">Coming soon</span>
-                        @endif
-                    </div>
-                    <span style="font-family:var(--font);font-size:14px;color:var(--text-2)">{{ $dist }}</span>
-                    <span style="font-family:var(--font);font-size:14px;color:var(--text-2)">{{ $dur }}</span>
-                    <span style="font-family:var(--font);font-size:14px;color:var(--text-2)">{{ $freq }}</span>
-                    <a href="{{ route($routeName) }}" style="font-family:var(--font);font-size:13.5px;font-weight:600;color:{{ $live ? 'var(--forest-deep)' : '#9ca3af' }};text-decoration:none;white-space:nowrap">{{ $cta }} →</a>
-                </div>
-                @endforeach
-
+                @if($live)
+                <a href="{{ route($routeName) }}" style="font-family:var(--font);font-size:14px;font-weight:600;color:var(--forest-deep);text-decoration:none;white-space:nowrap;flex-shrink:0">{{ $cta }} →</a>
+                @else
+                <span style="font-family:var(--font);font-size:13.5px;color:#9ca3af;white-space:nowrap;flex-shrink:0">{{ $cta }}</span>
+                @endif
             </div>
+            @endforeach
         </div>
 
     </div>
 </section>
-
-<style>
-.route-board-row {
-    display: grid;
-    grid-template-columns: 2fr 1fr 1fr 1.2fr 130px;
-    gap: 0;
-    padding: 18px 28px;
-    border-bottom: 1px solid var(--border);
-    align-items: center;
-}
-.route-board-row:last-child { border-bottom: none; }
-.route-board-head {
-    background: var(--shade);
-    border-bottom: 1px solid var(--border);
-    padding-top: 12px;
-    padding-bottom: 12px;
-}
-.route-board-head span {
-    font-family: var(--font);
-    font-size: 10.5px;
-    font-weight: 700;
-    letter-spacing: 0.09em;
-    text-transform: uppercase;
-    color: #9ca3af;
-}
-.route-board-soon { opacity: 0.5; }
-@media (max-width: 860px) {
-    .route-board-row { grid-template-columns: 1fr 1fr; gap: 8px 0; padding: 16px 20px; }
-    .route-board-head { display: none; }
-    .route-board-row > span:nth-child(2),
-    .route-board-row > span:nth-child(3),
-    .route-board-row > span:nth-child(4) { font-size: 12px; color: #9ca3af; }
-}
-@media (max-width: 640px) {
-    .route-board-row { grid-template-columns: 1fr; }
-}
-@media (max-width: 700px) {
-    .route-board-row[style] { grid-template-columns: 1fr !important; }
-    [style*="grid-template-columns:1fr 1fr;min-height"] { grid-template-columns: 1fr !important; }
-    [style*="border-left:1px solid rgba(255,255,255,0.07)"] { border-left: none !important; border-top: 1px solid rgba(255,255,255,0.07); }
-}
-</style>
 
 
 {{-- ══════════════════════════════════════════════════
