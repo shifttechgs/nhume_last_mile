@@ -18,6 +18,24 @@ class JourneySeeder extends Seeder
         $extraRoutes = [
             [
                 'origin_city'          => 'Harare',
+                'destination_city'     => 'Bulawayo',
+                'origin_code'          => 'HRE',
+                'destination_code'     => 'BUQ',
+                'distance_km'          => 439,
+                'typical_duration_mins'=> 300,
+                'is_active'            => true,
+            ],
+            [
+                'origin_city'          => 'Bulawayo',
+                'destination_city'     => 'Harare',
+                'origin_code'          => 'BUQ',
+                'destination_code'     => 'HRE',
+                'distance_km'          => 439,
+                'typical_duration_mins'=> 300,
+                'is_active'            => true,
+            ],
+            [
+                'origin_city'          => 'Harare',
                 'destination_city'     => 'Mutare',
                 'origin_code'          => 'HRE',
                 'destination_code'     => 'UTA',
