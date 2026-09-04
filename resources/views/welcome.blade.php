@@ -2736,38 +2736,30 @@ body { font-family: var(--font); color: var(--text); background: #fff; -webkit-f
     {{-- LEFT: text --}}
     <div class="reveal" style="padding:var(--section-y) clamp(28px,5vw,72px);display:flex;flex-direction:column;justify-content:center">
         <p class="eyebrow" style="color:var(--green);margin-bottom:18px">Drive, ride &amp; earn</p>
-        <h2 style="font-family:var(--head);font-size:clamp(32px,4vw,52px);font-weight:700;letter-spacing:-0.03em;line-height:1.1;color:#fff;margin:0 0 26px">
-            Turn your wheels into income.
+        <h2 style="font-family:var(--head);font-size:clamp(32px,4vw,52px);font-weight:700;letter-spacing:-0.03em;line-height:1.08;color:#fff;margin:0 0 36px">
+            Turn your wheels<br>into income.
         </h2>
 
-        {{-- Two pathway cards --}}
-        <div style="display:flex;flex-direction:column;gap:14px;margin-bottom:36px;">
+        {{-- Two pathways — editorial list, no card containers --}}
+        <div style="border-top:1px solid rgba(255,255,255,0.1);margin-bottom:40px">
 
-            {{-- Intercity transporter --}}
-            <div style="background:rgba(255,255,255,0.055);border:1px solid rgba(255,255,255,0.09);border-radius:14px;padding:18px 20px;">
-                <div style="display:flex;align-items:center;gap:10px;margin-bottom:10px;">
-                    <span style="width:32px;height:32px;border-radius:8px;background:rgba(107,198,48,0.15);display:flex;align-items:center;justify-content:center;flex-shrink:0;">
-                        <svg width="15" height="15" fill="none" stroke="var(--green)" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7h12m0 0l-4-4m4 4l-4 4m0 6H4m0 0l4 4m-4-4l4-4"/></svg>
-                    </span>
-                    <span style="font-family:var(--head);font-size:14px;font-weight:700;color:#fff;">Intercity transporter</span>
-                    <span style="font-family:var(--font);font-size:10.5px;font-weight:600;color:var(--green);background:rgba(107,198,48,0.14);border-radius:9999px;padding:3px 9px;margin-left:auto;">Car · Van · Truck</span>
+            <div style="padding:24px 0;border-bottom:1px solid rgba(255,255,255,0.07)">
+                <div style="display:flex;align-items:baseline;justify-content:space-between;gap:12px;margin-bottom:9px">
+                    <span style="font-family:var(--head);font-size:16px;font-weight:700;color:#fff;letter-spacing:-0.01em">Intercity transporter</span>
+                    <span style="font-family:var(--font);font-size:10.5px;font-weight:700;color:var(--green);letter-spacing:0.08em;text-transform:uppercase;flex-shrink:0">Car · Van · Truck</span>
                 </div>
-                <p style="font-family:var(--font);font-size:13.5px;color:rgba(255,255,255,0.6);line-height:1.6;margin:0;">Already driving Harare–Bulawayo? Earn on the parcel space you would have left empty.</p>
+                <p style="font-family:var(--font);font-size:14px;color:rgba(255,255,255,0.48);line-height:1.7;margin:0">Already driving Harare–Bulawayo? Earn on the parcel space you'd have left empty.</p>
             </div>
 
-            {{-- Bike rider --}}
-            <div style="background:rgba(255,255,255,0.055);border:1px solid rgba(255,255,255,0.09);border-radius:14px;padding:18px 20px;">
-                <div style="display:flex;align-items:center;gap:10px;margin-bottom:10px;">
-                    <span style="width:32px;height:32px;border-radius:8px;background:rgba(107,198,48,0.15);display:flex;align-items:center;justify-content:center;flex-shrink:0;">
-                        <svg width="15" height="15" fill="none" stroke="var(--green)" viewBox="0 0 24 24"><circle cx="5" cy="18" r="3" stroke-width="2"/><circle cx="19" cy="18" r="3" stroke-width="2"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4l-1 6h6l-3 5M5 18l4-5h2"/></svg>
-                    </span>
-                    <span style="font-family:var(--head);font-size:14px;font-weight:700;color:#fff;">Local bike rider</span>
-                    <span style="font-family:var(--font);font-size:10.5px;font-weight:600;color:var(--amber);background:rgba(201,169,110,0.14);border-radius:9999px;padding:3px 9px;margin-left:auto;">Bicycle · Moto</span>
+            <div style="padding:24px 0;border-bottom:1px solid rgba(255,255,255,0.07)">
+                <div style="display:flex;align-items:baseline;justify-content:space-between;gap:12px;margin-bottom:9px">
+                    <span style="font-family:var(--head);font-size:16px;font-weight:700;color:#fff;letter-spacing:-0.01em">Local bike rider</span>
+                    <span style="font-family:var(--font);font-size:10.5px;font-weight:700;color:var(--amber);letter-spacing:0.08em;text-transform:uppercase;flex-shrink:0">Bicycle · Moto</span>
                 </div>
-                <p style="font-family:var(--font);font-size:13.5px;color:rgba(255,255,255,0.6);line-height:1.6;margin:0 0 8px;">Do local deliveries and errands within your city on your own schedule. No car needed.</p>
-                <p style="font-family:var(--font);font-size:12px;color:var(--green);margin:0;">
-                    <svg width="12" height="12" fill="none" stroke="currentColor" viewBox="0 0 24 24" style="display:inline;vertical-align:-2px;margin-right:4px;"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
-                    No bike? Nhume fleet bikes available for approved riders.
+                <p style="font-family:var(--font);font-size:14px;color:rgba(255,255,255,0.48);line-height:1.7;margin:0 0 10px">Deliveries and errands in your suburb, on your schedule. No car needed.</p>
+                <p style="font-family:var(--font);font-size:12.5px;color:var(--green);margin:0;display:flex;align-items:center;gap:5px">
+                    <svg width="11" height="11" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
+                    No bike? Fleet bikes available for approved riders.
                 </p>
             </div>
         </div>
@@ -2777,7 +2769,7 @@ body { font-family: var(--font); color: var(--text); background: #fff; -webkit-f
                 Join as a driver or rider
                 <svg width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"/></svg>
             </a>
-            <p style="font-family:var(--font);font-size:12px;color:rgba(255,255,255,0.4);margin-top:14px">Free to join. Commission only when you earn.</p>
+            <p style="font-family:var(--font);font-size:12.5px;color:rgba(255,255,255,0.3);margin-top:16px;letter-spacing:0.01em">Free to join. Commission only when you earn.</p>
         </div>
     </div>
 
@@ -2785,20 +2777,17 @@ body { font-family: var(--font); color: var(--text); background: #fff; -webkit-f
     <div class="reveal transporter-photo" style="position:relative;overflow:hidden;min-height:0">
         <img src="/images/nhume-rider-go.jpg" alt="Nhume GO rider"
              style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:40% 30%">
-        {{-- gradient left edge to blend into section --}}
-        <div style="position:absolute;inset:0;background:linear-gradient(90deg,rgba(6,30,14,0.65) 0%,transparent 40%)"></div>
-        {{-- bottom gradient for chip legibility --}}
-        <div style="position:absolute;inset:0;background:linear-gradient(0deg,rgba(6,30,14,0.7) 0%,transparent 40%)"></div>
-        {{-- badge chip --}}
-        <div style="position:absolute;bottom:28px;left:28px;display:flex;align-items:center;gap:12px;background:rgba(4,16,8,0.78);backdrop-filter:blur(12px);border:1px solid rgba(255,255,255,0.1);border-radius:14px;padding:12px 18px">
-            <div>
-                <p style="font-family:var(--head);font-size:14px;font-weight:700;color:#fff;margin:0">Nhume GO</p>
-                <p style="font-family:var(--font);font-size:12px;color:rgba(255,255,255,0.5);margin:3px 0 0">Same-day errands &amp; local runs</p>
-            </div>
-            <span style="display:inline-flex;align-items:center;gap:5px;font-family:var(--font);font-size:11px;font-weight:700;color:var(--green);background:rgba(107,198,48,0.14);border-radius:9999px;padding:4px 10px;white-space:nowrap">
-                <svg width="11" height="11" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
-                Moving what matters
-            </span>
+        {{-- gradient left edge --}}
+        <div style="position:absolute;inset:0;background:linear-gradient(90deg,rgba(6,30,14,0.6) 0%,transparent 38%)" aria-hidden="true"></div>
+        {{-- diagonal brand stripes — matches hero treatment --}}
+        <div style="position:absolute;inset:0;overflow:hidden;pointer-events:none" aria-hidden="true">
+            <div style="position:absolute;top:-40%;right:22%;width:4px;height:180%;background:var(--green);opacity:0.42;transform:rotate(-20deg);transform-origin:top center"></div>
+            <div style="position:absolute;top:-40%;right:15%;width:2.5px;height:180%;background:var(--green);opacity:0.22;transform:rotate(-20deg);transform-origin:top center"></div>
+        </div>
+        {{-- bottom label — solid, no blur --}}
+        <div style="position:absolute;bottom:0;left:0;right:0;padding:28px clamp(20px,3vw,32px);background:linear-gradient(0deg,rgba(4,14,8,0.88) 0%,transparent 100%)" aria-hidden="true">
+            <p style="font-family:var(--font);font-size:10.5px;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:var(--green);margin:0 0 4px">Nhume GO</p>
+            <p style="font-family:var(--head);font-size:18px;font-weight:700;color:#fff;margin:0;letter-spacing:-0.02em">Same-day errands &amp; local runs</p>
         </div>
     </div>
 </section>
